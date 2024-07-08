@@ -143,9 +143,20 @@ public class Shell extends Decorations {
 		this (display, null, style, 0, false);
 	}
 
+
+
 	Shell (Display display, Shell parent, int style, long handle, boolean embedded) {
 
-		super ();
+		if( 1 == 1) {
+
+			this.display = display;
+
+			return;
+
+		}
+
+
+//		super ();
 		checkSubclass ();
 		if (display == null) display = Display.getCurrent ();
 		if (display == null) display = Display.getDefault ();
@@ -201,17 +212,23 @@ public class Shell extends Decorations {
 
 
 	public void setText(String text) {
-		window.setTitle("Swing PoC: " + text);
+//		window.setTitle("Swing PoC: " + text);
 
 	}
 
 	public void open() {
-		window.setVisible(true);
+
+		display.i.setVisible(true);
+
+
+//		window.setVisible(true);
 	}
 
 	@Override
 	public boolean isDisposed() {
-		return window == null;
+
+
+		return display.i.isDisposed();
 	}
 
 	@Override

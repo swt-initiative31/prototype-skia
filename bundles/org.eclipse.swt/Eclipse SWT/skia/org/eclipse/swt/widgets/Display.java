@@ -8,8 +8,11 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.internal.*;
+import org.eclipse.swt.uno.*;
 
 public class Display extends Device {
+
+	UnoInstance i;
 
 	/* Windows and Events */
 	Event [] eventQueue;
@@ -93,8 +96,13 @@ public class Display extends Device {
 	 *
 	 * @param data the device data
 	 */
+
+
+
 	public Display (DeviceData data) {
 		super (data);
+		i = new UnoInstance();
+
 	}
 
 	/**
@@ -190,6 +198,12 @@ public class Display extends Device {
 //	 * @see #wake
 	 */
 	public boolean readAndDispatch () {
+
+		if( 1 == 1 ) {
+			return true;
+		}
+
+
 		checkDevice ();
 		// Not needed for Swing, maybe for UNO
 		//
