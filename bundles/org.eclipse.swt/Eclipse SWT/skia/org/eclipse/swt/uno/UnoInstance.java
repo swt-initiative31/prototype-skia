@@ -102,10 +102,9 @@ public class UnoInstance {
 			@Override
 			public void windowClosing(EventObject arg0) {
 				System.out.println("windowClosing");
-				UnoLoader.terminate();
+				w.dispose();
 				disposed = true;
-
-
+				UnoLoader.terminate();
 			}
 
 			@Override

@@ -7,6 +7,106 @@ import javax.swing.*;
 import org.eclipse.swt.*;
 
 
+/**
+ * Instances of this class represent the "windows"
+ * which the desktop or "window manager" is managing.
+ * Instances that do not have a parent (that is, they
+ * are built using the constructor, which takes a
+ * <code>Display</code> as the argument) are described
+ * as <em>top level</em> shells. Instances that do have
+ * a parent are described as <em>secondary</em> or
+ * <em>dialog</em> shells.
+ * <p>
+ * Instances are always displayed in one of the maximized,
+ * minimized or normal states:</p>
+ * <ul>
+ * <li>
+ * When an instance is marked as <em>maximized</em>, the
+ * window manager will typically resize it to fill the
+ * entire visible area of the display, and the instance
+ * is usually put in a state where it can not be resized
+ * (even if it has style <code>RESIZE</code>) until it is
+ * no longer maximized.
+ * </li><li>
+ * When an instance is in the <em>normal</em> state (neither
+ * maximized or minimized), its appearance is controlled by
+ * the style constants which were specified when it was created
+ * and the restrictions of the window manager (see below).
+ * </li><li>
+ * When an instance has been marked as <em>minimized</em>,
+ * its contents (client area) will usually not be visible,
+ * and depending on the window manager, it may be
+ * "iconified" (that is, replaced on the desktop by a small
+ * simplified representation of itself), relocated to a
+ * distinguished area of the screen, or hidden. Combinations
+ * of these changes are also possible.
+ * </li>
+ * </ul>
+ * <p>
+ * The <em>modality</em> of an instance may be specified using
+ * style bits. The modality style bits are used to determine
+ * whether input is blocked for other shells on the display.
+ * The <code>PRIMARY_MODAL</code> style allows an instance to block
+ * input to its parent. The <code>APPLICATION_MODAL</code> style
+ * allows an instance to block input to every other shell in the
+ * display. The <code>SYSTEM_MODAL</code> style allows an instance
+ * to block input to all shells, including shells belonging to
+ * different applications.
+ * </p><p>
+ * Note: The styles supported by this class are treated
+ * as <em>HINT</em>s, since the window manager for the
+ * desktop on which the instance is visible has ultimate
+ * control over the appearance and behavior of decorations
+ * and modality. For example, some window managers only
+ * support resizable windows and will always assume the
+ * RESIZE style, even if it is not set. In addition, if a
+ * modality style is not supported, it is "upgraded" to a
+ * more restrictive modality style that is supported. For
+ * example, if <code>PRIMARY_MODAL</code> is not supported,
+ * it would be upgraded to <code>APPLICATION_MODAL</code>.
+ * A modality style may also be "downgraded" to a less
+ * restrictive style. For example, most operating systems
+ * no longer support <code>SYSTEM_MODAL</code> because
+ * it can freeze up the desktop, so this is typically
+ * downgraded to <code>APPLICATION_MODAL</code>.</p>
+ * <dl>
+ * <dt><b>Styles:</b></dt>
+ * <dd>BORDER, CLOSE, MIN, MAX, NO_MOVE, NO_TRIM, RESIZE, TITLE, ON_TOP, TOOL, SHEET</dd>
+ * <dd>APPLICATION_MODAL, MODELESS, PRIMARY_MODAL, SYSTEM_MODAL</dd>
+ * <dt><b>Events:</b></dt>
+ * <dd>Activate, Close, Deactivate, Deiconify, Iconify</dd>
+ * </dl>
+ * <p>
+ * Class <code>SWT</code> provides two "convenience constants"
+ * for the most commonly required style combinations:</p>
+ * <dl>
+ * <dt><code>SHELL_TRIM</code></dt>
+ * <dd>
+ * the result of combining the constants which are required
+ * to produce a typical application top level shell: (that
+ * is, <code>CLOSE | TITLE | MIN | MAX | RESIZE</code>)
+ * </dd>
+ * <dt><code>DIALOG_TRIM</code></dt>
+ * <dd>
+ * the result of combining the constants which are required
+ * to produce a typical application dialog shell: (that
+ * is, <code>TITLE | CLOSE | BORDER</code>)
+ * </dd>
+ * </dl>
+ * <p>
+ * Note: Only one of the styles APPLICATION_MODAL, MODELESS,
+ * PRIMARY_MODAL and SYSTEM_MODAL may be specified.
+ * </p><p>
+ * IMPORTANT: This class is <em>not</em> intended to be subclassed.
+ * </p>
+ *
+ * @see Decorations
+ * @see SWT
+ * @see <a href="http://www.eclipse.org/swt/snippets/#shell">Shell snippets</a>
+ * @see <a href="http://www.eclipse.org/swt/examples.php">SWT Example: ControlExample</a>
+ * @see <a href="http://www.eclipse.org/swt/">Sample code and further information</a>
+ * @noextend This class is not intended to be subclassed by clients.
+ */
 public class Shell extends Decorations {
 
 	JFrame window = null;
@@ -217,7 +317,6 @@ public class Shell extends Decorations {
 	}
 
 	public void open() {
-
 		display.i.setVisible(true);
 
 
@@ -226,8 +325,6 @@ public class Shell extends Decorations {
 
 	@Override
 	public boolean isDisposed() {
-
-
 		return display.i.isDisposed();
 	}
 
