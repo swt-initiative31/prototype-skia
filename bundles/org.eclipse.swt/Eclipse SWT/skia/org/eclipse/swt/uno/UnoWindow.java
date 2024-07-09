@@ -6,23 +6,22 @@ import com.sun.star.awt.*;
 import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 
-public class UnoInstance {
+public class UnoWindow extends UnoComponent{
 
 	XWindow w;
 	XWindowPeer p;
 	XTopWindow tw;
 	boolean disposed = false;
-	com.sun.star.awt.Rectangle rec;
+	com.sun.star.awt.Rectangle posSize;
 
-	public UnoInstance() {
-
-		UnoLoader.init();
+	public UnoWindow() {
+		super();
 
 		w = UnoLoader.createWindow();
 
 		// There seems to be a bug, we have to reset the position...
-		w.setPosSize(100, 100, 1000, 1000, com.sun.star.awt.PosSize.POSSIZE);
-		rec = new com.sun.star.awt.Rectangle(100, 100, 1000, 1000);
+		posSize = new com.sun.star.awt.Rectangle(100, 100, 1000, 1000);
+		w.setPosSize(posSize.X, posSize.Y, posSize.Width, posSize.Height, com.sun.star.awt.PosSize.POSSIZE);
 
 
 		tw = UnoRuntime.queryInterface(XTopWindow.class, w);
@@ -136,11 +135,21 @@ public class UnoInstance {
 		return p;
 	}
 
-	public Rectangle getClientArea() {
+	@Override
+	public Rectangle getFrame() {
+		com.sun.star.awt.Rectangle posSize = w.getPosSize();
+		return new Rectangle(posSize.X, posSize.Y, posSize.Width, posSize.Height);
 
+	}
 
-		return new Rectangle(rec.X, rec.Y, rec.Width, rec.Height);
+	@Override
+	public void setFrame(Rectangle frame) {
+		w.setPosSize(frame.x, frame.y, frame.width, frame.height, com.sun.star.awt.PosSize.POSSIZE);
+	}
 
+	// This is most probably wrong. In UNO there isn't something like a content pane
+	public UnoWindow getContentPane() {
+		return this;
 	}
 
 }

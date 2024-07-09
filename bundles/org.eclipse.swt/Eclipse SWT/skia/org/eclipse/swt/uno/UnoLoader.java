@@ -104,4 +104,11 @@ public class UnoLoader {
 
 		return w;
 	}
+
+	public static org.eclipse.swt.graphics.Point GetScreenSize() {
+//		com.sun.star.awt.Rectangle posSize = xDesktop.getCurrentFrame().getContainerWindow().getPosSize();
+		return new org.eclipse.swt.graphics.Point(1920//posSize.Width
+												, 1080//posSize.Height
+					);
+	}
 }

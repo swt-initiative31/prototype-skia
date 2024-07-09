@@ -2,10 +2,11 @@ package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.uno.*;
 
 public abstract class Control extends Widget {
 
-	public java.awt.Container view;
+	public UnoComponent view;
 
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
@@ -135,9 +136,10 @@ public abstract class Control extends Widget {
 	}
 
 	void setFont(java.awt.Font font) {
-		if (view instanceof java.awt.Component) {
-			((java.awt.Component) view).setFont(font);
-		}
+//      TODO
+//		if (view instanceof java.awt.Component) {
+//			((java.awt.Component) view).setFont(font);
+//		}
 	}
 
 	@Override
@@ -212,16 +214,16 @@ public abstract class Control extends Widget {
 	}
 
 	void setZOrder() {
-		java.awt.Container topView = topView();
+		UnoComponent topView = topView();
 		// TODO
 //		parent.contentView().add(topView, OS.NSWindowBelow, null);
 	}
 
-	java.awt.Container topView() {
+	UnoComponent topView() {
 		return view;
 	}
 
-	java.awt.Container contentView() {
+	UnoComponent contentView() {
 		return view;
 	}
 
@@ -435,14 +437,15 @@ public abstract class Control extends Widget {
 		Display display = this.display;
 		Control oldIgnoreFocusControl = display.ignoreFocusControl;
 		display.ignoreFocusControl = this;
-		java.awt.Container topView = topView();
-		if (move && resize) {
-			topView.setBounds(x, y, width, height);
-		} else if (move) {
-			topView.setLocation(x, y);
-		} else if (resize) {
-			topView.setSize(width, height);
-		}
+		UnoComponent topView = topView();
+//      ToDo
+//		if (move && resize) {
+//			topView.setBounds(x, y, width, height);
+//		} else if (move) {
+//			topView.setLocation(x, y);
+//		} else if (resize) {
+//			topView.setSize(width, height);
+//		}
 		display.ignoreFocusControl = oldIgnoreFocusControl;
 	}
 

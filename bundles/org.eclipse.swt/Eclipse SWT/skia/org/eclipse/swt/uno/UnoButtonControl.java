@@ -9,11 +9,11 @@ import com.sun.star.uno.*;
 import com.sun.star.uno.Exception;
 
 public class UnoButtonControl {
-	private final UnoInstance instance;
+	private final UnoWindow instance;
 	XWindow w;
 	XButton xButton;
 
-	public UnoButtonControl(UnoInstance instance) {
+	public UnoButtonControl(UnoWindow instance) {
 		this.instance = instance;
 
 		XComponentContext xContext = UnoLoader.xContext;

@@ -1,7 +1,5 @@
 package org.eclipse.swt.widgets;
 
-import java.awt.*;
-
 import javax.swing.*;
 
 import org.eclipse.swt.*;
@@ -38,23 +36,25 @@ public class Composite extends Scrollable {
 	}
 
 	Control [] _getChildren () {
-		java.awt.Container containerView = contentView();
-		if (containerView == null) return new Control [0];
-		Component[] component = containerView.getComponents();
-		int count = (int)component.length;
-		Control [] children = new Control [count];
-		if (count == 0) return children;
-		int j = 0;
-		for (int i=0; i<count; i++){
-			Widget widget = display.getWidget (component[count - i - 1]);
-			if (widget != null && widget != this && widget instanceof Control) {
-				children [j++] = (Control) widget;
-			}
-		}
-		if (j == count) return children;
-		Control [] newChildren = new Control [j];
-		System.arraycopy (children, 0, newChildren, 0, j);
-		return newChildren;
+		return new Control [0];
+//      TODO
+//		UnoWindow containerView = contentView();
+//		if (containerView == null) return new Control [0];
+//		Component[] component = containerView.getComponents();
+//		int count = (int)component.length;
+//		Control [] children = new Control [count];
+//		if (count == 0) return children;
+//		int j = 0;
+//		for (int i=0; i<count; i++){
+//			Widget widget = display.getWidget (component[count - i - 1]);
+//			if (widget != null && widget != this && widget instanceof Control) {
+//				children [j++] = (Control) widget;
+//			}
+//		}
+//		if (j == count) return children;
+//		Control [] newChildren = new Control [j];
+//		System.arraycopy (children, 0, newChildren, 0, j);
+//		return newChildren;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class Composite extends Scrollable {
 		JPanel widget = new JPanel();
 		widget.setBounds(rect);
 //		widget.setFocusRingType(OS.NSFocusRingTypeExterior);
-		view = widget;
+//      TODO  view = widget.get;
 //		if (scrollView != null) {
 //			NSClipView contentView = scrollView.contentView();
 //			contentView.setAutoresizesSubviews(true);

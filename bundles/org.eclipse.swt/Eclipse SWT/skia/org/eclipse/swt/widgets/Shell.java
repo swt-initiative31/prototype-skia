@@ -1,10 +1,10 @@
 package org.eclipse.swt.widgets;
 
-import java.awt.*;
 
-import javax.swing.*;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.uno.*;
 
 
 /**
@@ -109,7 +109,7 @@ import org.eclipse.swt.*;
  */
 public class Shell extends Decorations {
 
-	JFrame window = null;
+	UnoWindow window = null;
 	boolean opened, moved, resized, fullScreen, center, deferFlushing, scrolling, isPopup;
 
 
@@ -246,17 +246,7 @@ public class Shell extends Decorations {
 
 
 	Shell (Display display, Shell parent, int style, long handle, boolean embedded) {
-
-		if( 1 == 1) {
-
-			this.display = display;
-
-			return;
-
-		}
-
-
-//		super ();
+		super ();
 		checkSubclass ();
 		if (display == null) display = Display.getCurrent ();
 		if (display == null) display = Display.getDefault ();
@@ -312,20 +302,17 @@ public class Shell extends Decorations {
 
 
 	public void setText(String text) {
+//		TODO Implement setTitle. Is not supported by UNO's XWindow
 //		window.setTitle("Swing PoC: " + text);
-
 	}
 
 	public void open() {
-		display.i.setVisible(true);
-
-
-//		window.setVisible(true);
+		window.setVisible(true);
 	}
 
 	@Override
 	public boolean isDisposed() {
-		return display.i.isDisposed();
+		return window.isDisposed();
 	}
 
 	@Override
@@ -338,7 +325,7 @@ public class Shell extends Decorations {
 	void createHandle () {
 		state |= HIDDEN;
 		if (window == null && view == null) {
-			window = new JFrame();
+			window = new UnoWindow();
 //			int styleMask = OS.NSBorderlessWindowMask;
 //			if ((style & (SWT.TOOL | SWT.SHEET)) != 0) {
 //				window = (NSWindow) new SWTWindow().alloc ();
@@ -378,7 +365,6 @@ public class Shell extends Decorations {
 //				// TOOL shells always become key, so disable that behavior.
 //				((NSPanel)window).setBecomesKeyOnlyIfNeeded(false);
 //			}
-			window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //window.setReleasedWhenClosed(true);
 //			if ((style & SWT.NO_TRIM) == 0) {
 //				NSSize size = window.minSize();
 //				size.width = NSWindow.minFrameWidthWithTitle(NSString.string(), styleMask);
@@ -390,21 +376,19 @@ public class Shell extends Decorations {
 //				}
 //			}
 //			display.cascadeWindow(window, screen);
-			java.awt.Dimension screenFrame = Toolkit.getDefaultToolkit().getScreenSize();
-			int width = screenFrame.width * 5 / 8;
-			int height = screenFrame.height * 5 / 8;
-			java.awt.Dimension frameSize = window.getSize();
-			java.awt.Point frameLocation = window.getLocation();
-			frameLocation.y = screenFrame.height - ((screenFrame.height - (frameLocation.y + frameSize.height)) + height);
-			frameSize.width = width;
-			frameSize.height = height;
-			window.setSize(frameSize);
-			window.setLocation(frameLocation);
+			Point screenFrame = UnoLoader.GetScreenSize();
+			int width = screenFrame.x * 5 / 8;
+			int height = screenFrame.y * 5 / 8;
+			Rectangle frame = window.getFrame();
+			frame.y = screenFrame.y - ((screenFrame.y - (frame.y + frame.height)) + height);
+			frame.width = width;
+			frame.height = height;
+			window.setFrame(frame);
 //			if ((style & SWT.ON_TOP) != 0) {
 //				window.setLevel(OS.NSStatusWindowLevel);
 //			}
 			super.createHandle ();
-			topView().setVisible(false);
+			window.setVisible(false);
 		} else {
 			state &= ~HIDDEN;
 
@@ -425,7 +409,7 @@ public class Shell extends Decorations {
 				// In that case we will hold on to the foreign view, create our own SWTCanvasView (which overwrites 'view') and then
 				// add it to the foreign view.
 				super.createHandle();
-				view.add(topView());
+				// TODO view.add(topView());
 			}
 
 			style |= SWT.NO_BACKGROUND;

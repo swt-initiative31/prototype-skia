@@ -122,7 +122,7 @@ public abstract class Scrollable extends Control {
 //			NSRect bounds = contentView.bounds();
 //			return new Rectangle((int)bounds.x, (int)bounds.y, (int)size.width, (int)size.height);
 //		} else {
-			java.awt.Rectangle rect = view.getBounds();
+			Rectangle rect = view.getFrame();
 			return new Rectangle(0, 0, (int)rect.width, (int)rect.height);
 //		}
 	}

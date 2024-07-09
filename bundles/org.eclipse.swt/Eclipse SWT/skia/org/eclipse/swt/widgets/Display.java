@@ -8,7 +8,6 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.internal.*;
-import org.eclipse.swt.uno.*;
 
 /**
  * Instances of this class are responsible for managing the
@@ -90,8 +89,6 @@ import org.eclipse.swt.uno.*;
  * @noextend This class is not intended to be subclassed by clients.
  */
 public class Display extends Device {
-
-	UnoInstance i;
 
 	/* Windows and Events */
 	Event [] eventQueue;
@@ -177,8 +174,6 @@ public class Display extends Device {
 	 */
 	public Display (DeviceData data) {
 		super (data);
-		i = new UnoInstance();
-
 	}
 
 	/**

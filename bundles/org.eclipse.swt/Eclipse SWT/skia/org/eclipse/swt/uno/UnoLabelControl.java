@@ -10,12 +10,12 @@ import com.sun.star.uno.Exception;
 
 public class UnoLabelControl {
 
-	private final UnoInstance instance;
+	private final UnoWindow instance;
 	XFixedText xFixedText;
 	XWindow w;
 
 
-	public UnoLabelControl(UnoInstance instance) {
+	public UnoLabelControl(UnoWindow instance) {
 		this.instance = instance;
 
 		XComponentContext xContext = UnoLoader.xContext;
