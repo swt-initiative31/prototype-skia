@@ -269,12 +269,6 @@ public class Display extends Device {
 //	 * @see #wake
 	 */
 	public boolean readAndDispatch () {
-
-		if( 1 == 1 ) {
-			return true;
-		}
-
-
 		checkDevice ();
 		// Not needed for Swing, maybe for UNO
 		//
