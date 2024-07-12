@@ -1,7 +1,5 @@
 package org.eclipse.swt.uno;
 
-import org.eclipse.swt.graphics.Rectangle;
-
 import com.sun.star.awt.*;
 import com.sun.star.beans.*;
 import com.sun.star.lang.*;
@@ -10,12 +8,11 @@ import com.sun.star.uno.Exception;
 
 public class UnoLabelControl {
 
-	private final UnoWindow instance;
+	private final UnoComponent instance;
 	XFixedText xFixedText;
 	XWindow w;
 
-
-	public UnoLabelControl(UnoWindow instance) {
+	public UnoLabelControl(UnoComponent instance) {
 		this.instance = instance;
 
 		XComponentContext xContext = UnoLoader.xContext;
@@ -87,9 +84,9 @@ public class UnoLabelControl {
 		xFixedText.setText(text);
 	}
 
-	public void setBounds(Rectangle rect) {
+	public void setBounds(int x, int y, int width, int height) {
 
-		w.setPosSize(rect.x, rect.y, rect.width, rect.height,   com.sun.star.awt.PosSize.POSSIZE);
+		w.setPosSize(x, y, width, height, com.sun.star.awt.PosSize.POSSIZE);
 
 	}
 

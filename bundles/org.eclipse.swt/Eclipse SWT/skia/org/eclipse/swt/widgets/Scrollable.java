@@ -98,64 +98,57 @@ public abstract class Scrollable extends Control {
 		return null;
 	}
 
-
 	/**
-	 * Returns a rectangle which describes the area of the
-	 * receiver which is capable of displaying data (that is,
-	 * not covered by the "trimmings").
+	 * Returns a rectangle which describes the area of the receiver which is capable
+	 * of displaying data (that is, not covered by the "trimmings").
 	 *
 	 * @return the client area
 	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
+	 * @exception SWTException
+	 *                         <ul>
+	 *                         <li>ERROR_WIDGET_DISPOSED - if the receiver has been
+	 *                         disposed</li>
+	 *                         <li>ERROR_THREAD_INVALID_ACCESS - if not called from
+	 *                         the thread that created the receiver</li>
+	 *                         </ul>
 	 *
 	 * @see #computeTrim
 	 */
-	public Rectangle getClientArea () {
+	public Rectangle getClientArea() {
 		checkWidget();
-// 		TODO
-//		if (scrollView != null) {
-//			NSSize size = scrollView.contentSize();
-//			NSClipView contentView = scrollView.contentView();
-//			NSRect bounds = contentView.bounds();
-//			return new Rectangle((int)bounds.x, (int)bounds.y, (int)size.width, (int)size.height);
-//		} else {
-			Rectangle rect = view.getFrame();
-			return new Rectangle(0, 0, (int)rect.width, (int)rect.height);
+		com.sun.star.awt.Rectangle rect = handle.getFrame();
+		return new Rectangle(0, 0, rect.Width, rect.Height);
 //		}
 	}
 
-
 	/**
-	 * Given a desired <em>client area</em> for the receiver
-	 * (as described by the arguments), returns the bounding
-	 * rectangle which would be required to produce that client
-	 * area.
+	 * Given a desired <em>client area</em> for the receiver (as described by the
+	 * arguments), returns the bounding rectangle which would be required to produce
+	 * that client area.
 	 * <p>
-	 * In other words, it returns a rectangle such that, if the
-	 * receiver's bounds were set to that rectangle, the area
-	 * of the receiver which is capable of displaying data
-	 * (that is, not covered by the "trimmings") would be the
-	 * rectangle described by the arguments (relative to the
-	 * receiver's parent).
+	 * In other words, it returns a rectangle such that, if the receiver's bounds
+	 * were set to that rectangle, the area of the receiver which is capable of
+	 * displaying data (that is, not covered by the "trimmings") would be the
+	 * rectangle described by the arguments (relative to the receiver's parent).
 	 * </p>
 	 *
-	 * @param x the desired x coordinate of the client area
-	 * @param y the desired y coordinate of the client area
-	 * @param width the desired width of the client area
+	 * @param x      the desired x coordinate of the client area
+	 * @param y      the desired y coordinate of the client area
+	 * @param width  the desired width of the client area
 	 * @param height the desired height of the client area
 	 * @return the required bounds to produce the given client area
 	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
+	 * @exception SWTException
+	 *                         <ul>
+	 *                         <li>ERROR_WIDGET_DISPOSED - if the receiver has been
+	 *                         disposed</li>
+	 *                         <li>ERROR_THREAD_INVALID_ACCESS - if not called from
+	 *                         the thread that created the receiver</li>
+	 *                         </ul>
 	 *
 	 * @see #getClientArea
 	 */
-	public Rectangle computeTrim (int x, int y, int width, int height) {
+	public Rectangle computeTrim(int x, int y, int width, int height) {
 		checkWidget();
 //		if (scrollView != null) {
 //			java.awt.Dimension size = new java.awt.Dimension();
@@ -175,7 +168,7 @@ public abstract class Scrollable extends Control {
 //			x -= frame.x;
 //			y -= frame.y;
 //		}
-		return new Rectangle (x, y, width, height);
+		return new Rectangle(x, y, width, height);
 	}
 
 }

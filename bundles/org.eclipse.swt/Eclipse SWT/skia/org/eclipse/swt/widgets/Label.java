@@ -3,6 +3,7 @@ package org.eclipse.swt.widgets;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.internal.*;
+import org.eclipse.swt.uno.*;
 
 /**
  * Instances of this class represent a non-selectable user interface object that
@@ -41,6 +42,7 @@ public class Label extends Control {
 	String text = "";
 	Image image;
 	boolean isImageMode; // Resolves ambiguity when both image and text are set
+	private UnoLabelControl unoControl;
 	static final int MARGIN = 4;
 
 	/**
@@ -88,6 +90,7 @@ public class Label extends Control {
 	 */
 	public Label(Composite parent, int style) {
 		super(parent, checkStyle(style));
+		unoControl = new UnoLabelControl(parent.handle);
 	}
 
 	static int checkStyle(int style) {
@@ -282,12 +285,15 @@ public class Label extends Control {
 	public void setText(String string) {
 		checkWidget();
 
-		// TODO: UNO implementation
+		unoControl.setText(string);
+
 
 	}
 
 	void updateStyleBits(boolean isEnabled) {
 		// TODO: UNO implementation
 	}
+
+
 
 }

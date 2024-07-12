@@ -1,12 +1,13 @@
 package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.uno.*;
 
 public abstract class Control extends Widget {
 
-	public UnoComponent view;
+	public UnoComponent handle;
 
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
@@ -220,11 +221,11 @@ public abstract class Control extends Widget {
 	}
 
 	UnoComponent topView() {
-		return view;
+		return handle;
 	}
 
 	UnoComponent contentView() {
-		return view;
+		return handle;
 	}
 
 	void setRelations() {
@@ -543,6 +544,21 @@ public abstract class Control extends Widget {
 	public void setEnabled(boolean enabled) {
 		checkWidget();
 // TODO: UNO implementation
+	}
+
+
+	public void pack() {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	public void addControlListener(ControlListener listener) {
+		checkWidget ();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		TypedListener typedListener = new TypedListener (listener);
+		addListener (SWT.Resize,typedListener);
+		addListener (SWT.Move,typedListener);
 	}
 
 }

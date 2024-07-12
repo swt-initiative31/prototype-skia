@@ -1,12 +1,10 @@
 package org.eclipse.swt.uno;
 
-import org.eclipse.swt.graphics.Rectangle;
-
 import com.sun.star.awt.*;
 import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 
-public class UnoWindow extends UnoComponent{
+public class UnoWindow extends UnoComponent {
 
 	XWindow w;
 	XWindowPeer p;
@@ -131,6 +129,7 @@ public class UnoWindow extends UnoComponent{
 		return disposed;
 	}
 
+	@Override
 	public XWindowPeer getPeer() {
 		return p;
 	}
@@ -143,13 +142,16 @@ public class UnoWindow extends UnoComponent{
 	}
 
 	@Override
-	public void setFrame(Rectangle frame) {
-		w.setPosSize(frame.x, frame.y, frame.width, frame.height, com.sun.star.awt.PosSize.POSSIZE);
+	public void setFrame(com.sun.star.awt.Rectangle frame) {
+		w.setPosSize(frame.X, frame.Y, frame.Width, frame.Height, com.sun.star.awt.PosSize.POSSIZE);
 	}
 
 	// This is most probably wrong. In UNO there isn't something like a content pane
 	public UnoWindow getContentPane() {
 		return this;
 	}
+
+
+
 
 }

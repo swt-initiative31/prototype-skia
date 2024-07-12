@@ -670,4 +670,11 @@ public abstract class Widget {
 	void setOpenGLContext(Object value) {
 	}
 
+	public void addListener (int eventType, Listener listener) {
+		checkWidget();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (eventTable == null) eventTable = new EventTable ();
+		eventTable.hook (eventType, listener);
+	}
+
 }

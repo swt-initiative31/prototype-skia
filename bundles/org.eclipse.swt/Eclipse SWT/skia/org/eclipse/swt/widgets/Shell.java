@@ -324,8 +324,9 @@ public class Shell extends Decorations {
 	@Override
 	void createHandle () {
 		state |= HIDDEN;
-		if (window == null && view == null) {
+		if (window == null && handle == null) {
 			window = new UnoWindow();
+			handle = window;
 //			int styleMask = OS.NSBorderlessWindowMask;
 //			if ((style & (SWT.TOOL | SWT.SHEET)) != 0) {
 //				window = (NSWindow) new SWTWindow().alloc ();
@@ -379,10 +380,10 @@ public class Shell extends Decorations {
 			Point screenFrame = UnoLoader.GetScreenSize();
 			int width = screenFrame.x * 5 / 8;
 			int height = screenFrame.y * 5 / 8;
-			Rectangle frame = window.getFrame();
-			frame.y = screenFrame.y - ((screenFrame.y - (frame.y + frame.height)) + height);
-			frame.width = width;
-			frame.height = height;
+			com.sun.star.awt.Rectangle frame = window.getFrame();
+			frame.Y = screenFrame.y - ((screenFrame.y - (frame.Y + frame.Height)) + height);
+			frame.Width = width;
+			frame.Height = height;
 			window.setFrame(frame);
 //			if ((style & SWT.ON_TOP) != 0) {
 //				window.setLevel(OS.NSStatusWindowLevel);
@@ -397,9 +398,9 @@ public class Shell extends Decorations {
 				// It may already have a content view, so if it does, grab and retain, since we release()
 				// the view at disposal time.  Otherwise, create a new 'view' that will be used as the window's
 				// content view in setZOrder.
-				view = window.getContentPane();
+				handle = window.getContentPane();
 
-				if (view == null) {
+				if (handle == null) {
 					super.createHandle();
 //				} else {
 //					TODO ? view.retain();
