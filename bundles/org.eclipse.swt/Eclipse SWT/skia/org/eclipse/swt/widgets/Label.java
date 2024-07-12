@@ -294,6 +294,4 @@ public class Label extends Control {
 		// TODO: UNO implementation
 	}
 
-
-
 }

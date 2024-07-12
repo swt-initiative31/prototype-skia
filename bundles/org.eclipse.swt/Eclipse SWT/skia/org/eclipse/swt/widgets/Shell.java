@@ -380,11 +380,11 @@ public class Shell extends Decorations {
 			Point screenFrame = UnoLoader.GetScreenSize();
 			int width = screenFrame.x * 5 / 8;
 			int height = screenFrame.y * 5 / 8;
-			com.sun.star.awt.Rectangle frame = window.getFrame();
-			frame.Y = screenFrame.y - ((screenFrame.y - (frame.Y + frame.Height)) + height);
-			frame.Width = width;
-			frame.Height = height;
-			window.setFrame(frame);
+			Rectangle frame = window.getBounds();
+			frame.y = screenFrame.y - ((screenFrame.y - (frame.y + frame.height)) + height);
+			frame.width = width;
+			frame.height = height;
+			window.setBounds(frame);
 //			if ((style & SWT.ON_TOP) != 0) {
 //				window.setLevel(OS.NSStatusWindowLevel);
 //			}

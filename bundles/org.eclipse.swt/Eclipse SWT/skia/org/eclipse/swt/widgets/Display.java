@@ -8,6 +8,7 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.internal.*;
+import org.eclipse.swt.uno.*;
 
 /**
  * Instances of this class are responsible for managing the
@@ -139,7 +140,7 @@ public class Display extends Device {
 	Control currentControl, trackingControl, tooltipControl, ignoreFocusControl;
 	Widget tooltipTarget;
 
-	static Map<java.awt.Component, Widget> widgetMap;
+	static Map<UnoControl, Widget> widgetMap;
 	int loopCount;
 
 	GCData[] contexts;
@@ -269,12 +270,6 @@ public class Display extends Device {
 //	 * @see #wake
 	 */
 	public boolean readAndDispatch () {
-
-		if( 1 == 1 ) {
-			return true;
-		}
-
-
 		checkDevice ();
 		// Not needed for Swing, maybe for UNO
 		//
@@ -769,13 +764,23 @@ public class Display extends Device {
 		return widgetMap.get(view);
 	}
 
-	void addWidget (java.awt.Component view, Widget widget) {
+	void addWidget (UnoControl view, Widget widget) {
 		if (view == null) return;
 
 		if (widgetMap.get(view) == null) {
 			widgetMap.put(view, widget);
 		}
 	}
+
+	Widget removeWidget (UnoControl view) {
+		if (view == null) return null;
+
+		Widget widget = widgetMap.get(view);
+		widgetMap.remove(view);
+		return widget;
+	}
+
+
 
 	void error (int code) {
 		SWT.error(code);

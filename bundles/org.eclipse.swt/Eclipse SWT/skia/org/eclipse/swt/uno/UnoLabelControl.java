@@ -6,20 +6,19 @@ import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 import com.sun.star.uno.Exception;
 
-public class UnoLabelControl {
+public class UnoLabelControl extends UnoControl {
 
-	private final UnoComponent instance;
+	private final UnoControl parent;
 	XFixedText xFixedText;
-	XWindow w;
 
-	public UnoLabelControl(UnoComponent instance) {
-		this.instance = instance;
+	public UnoLabelControl(UnoControl window) {
+		this.parent = window;
 
 		XComponentContext xContext = UnoLoader.xContext;
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
 		XToolkit xToolkit = UnoLoader.xToolkit;
 
-		XWindowPeer windowPeer = instance.getPeer();
+		XWindowPeer windowPeer = window.getPeer();
 
 		Object fixedTextModel;
 		try {
@@ -83,11 +82,4 @@ public class UnoLabelControl {
 	public void setText(String text) {
 		xFixedText.setText(text);
 	}
-
-	public void setBounds(int x, int y, int width, int height) {
-
-		w.setPosSize(x, y, width, height, com.sun.star.awt.PosSize.POSSIZE);
-
-	}
-
 }

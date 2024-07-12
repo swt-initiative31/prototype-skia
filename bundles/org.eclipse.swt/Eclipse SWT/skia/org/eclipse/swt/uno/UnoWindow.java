@@ -4,12 +4,8 @@ import com.sun.star.awt.*;
 import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 
-public class UnoWindow extends UnoComponent {
+public class UnoWindow extends UnoControl {
 
-	XWindow w;
-	XWindowPeer p;
-	XTopWindow tw;
-	boolean disposed = false;
 	com.sun.star.awt.Rectangle posSize;
 
 	public UnoWindow() {
@@ -119,39 +115,9 @@ public class UnoWindow extends UnoComponent {
 
 	}
 
-	public void setVisible(boolean visible) {
-
-		w.setVisible(visible);
-
-	}
-
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	@Override
-	public XWindowPeer getPeer() {
-		return p;
-	}
-
-	@Override
-	public Rectangle getFrame() {
-		com.sun.star.awt.Rectangle posSize = w.getPosSize();
-		return new Rectangle(posSize.X, posSize.Y, posSize.Width, posSize.Height);
-
-	}
-
-	@Override
-	public void setFrame(com.sun.star.awt.Rectangle frame) {
-		w.setPosSize(frame.X, frame.Y, frame.Width, frame.Height, com.sun.star.awt.PosSize.POSSIZE);
-	}
-
 	// This is most probably wrong. In UNO there isn't something like a content pane
 	public UnoWindow getContentPane() {
 		return this;
 	}
-
-
-
 
 }

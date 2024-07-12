@@ -7,7 +7,7 @@ import org.eclipse.swt.uno.*;
 
 public abstract class Control extends Widget {
 
-	public UnoComponent handle;
+	public UnoControl handle;
 
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
@@ -215,16 +215,16 @@ public abstract class Control extends Widget {
 	}
 
 	void setZOrder() {
-		UnoComponent topView = topView();
+		UnoControl topView = topView();
 		// TODO
 //		parent.contentView().add(topView, OS.NSWindowBelow, null);
 	}
 
-	UnoComponent topView() {
+	UnoControl topView() {
 		return handle;
 	}
 
-	UnoComponent contentView() {
+	UnoControl contentView() {
 		return handle;
 	}
 
@@ -438,7 +438,7 @@ public abstract class Control extends Widget {
 		Display display = this.display;
 		Control oldIgnoreFocusControl = display.ignoreFocusControl;
 		display.ignoreFocusControl = this;
-		UnoComponent topView = topView();
+		UnoControl topView = topView();
 //      ToDo
 //		if (move && resize) {
 //			topView.setBounds(x, y, width, height);
@@ -519,6 +519,14 @@ public abstract class Control extends Widget {
 
 	boolean hasBorder() {
 		return (style & SWT.BORDER) != 0;
+	}
+
+	/*
+	 * Answers a boolean indicating whether a Label that precedes the receiver in
+	 * a layout should be read by screen readers as the recevier's label.
+	 */
+	boolean isDescribedByLabel () {
+		return true;
 	}
 
 	Point computeSizeInPixels(int wHint, int hHint, boolean changed) {

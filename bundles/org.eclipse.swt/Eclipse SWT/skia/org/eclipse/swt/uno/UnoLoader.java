@@ -16,6 +16,7 @@ public class UnoLoader {
 
 	 static XComponentContext xContext;
 	 static XMultiComponentFactory xMCF;
+	 static XMultiServiceFactory xMSF;
 	 static XToolkit xToolkit;
 	 static XDesktop xDesktop;
 

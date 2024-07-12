@@ -116,9 +116,8 @@ public abstract class Scrollable extends Control {
 	 */
 	public Rectangle getClientArea() {
 		checkWidget();
-		com.sun.star.awt.Rectangle rect = handle.getFrame();
-		return new Rectangle(0, 0, rect.Width, rect.Height);
-//		}
+		Rectangle rect = handle.getBounds();
+		return new Rectangle(0, 0, (int)rect.width, (int)rect.height);
 	}
 
 	/**
