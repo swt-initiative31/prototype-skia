@@ -516,9 +516,33 @@ public abstract class Control extends Widget {
 		this.layoutData = layoutData;
 	}
 
-	boolean hasBorder () {
+	boolean hasBorder() {
 		return (style & SWT.BORDER) != 0;
 	}
 
+	Point computeSizeInPixels(int wHint, int hHint, boolean changed) {
+		int width = DEFAULT_WIDTH;
+		int height = DEFAULT_HEIGHT;
+		if (wHint != SWT.DEFAULT)
+			width = wHint;
+		if (hHint != SWT.DEFAULT)
+			height = hHint;
+		int border = getBorderWidthInPixels();
+		width += border * 2;
+		height += border * 2;
+		return new Point(width, height);
+	}
+
+	int getBorderWidthInPixels() {
+
+		// TODO: OS implementation...
+
+		return 0;
+	}
+
+	public void setEnabled(boolean enabled) {
+		checkWidget();
+// TODO: UNO implementation
+	}
 
 }

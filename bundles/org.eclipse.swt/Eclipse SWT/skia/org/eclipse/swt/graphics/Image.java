@@ -86,6 +86,8 @@ public final class Image extends Resource implements Drawable {
 	 */
 	public int type;
 
+	private int currentDeviceZoom = 100;
+
 	/**
 	 * the handle to the OS image resource (Warning: This field is platform
 	 * dependent)
@@ -607,5 +609,33 @@ public final class Image extends Resource implements Drawable {
 //		}
 		return DPIUtil.autoScaleImageData(device, getImageData(100), zoom, 100);
 	}
+
+	public Rectangle getBounds() {
+		if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
+		return getBounds (100);
+	}
+
+	Rectangle getBounds(int zoom) {
+		if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
+		// Read the bounds in pixels from native layer.
+		Rectangle bounds = getBoundsInPixelsFromNative();
+		if (bounds != null && zoom != currentDeviceZoom) {
+			bounds = DPIUtil.autoScaleBounds(bounds, zoom, currentDeviceZoom);
+		}
+		return bounds;
+	}
+
+	private Rectangle getBoundsInPixelsFromNative() {
+
+		// TODO: UNO implementation
+		switch (type) {
+			case SWT.BITMAP:
+			case SWT.ICON:
+			default:
+				SWT.error(SWT.ERROR_INVALID_IMAGE);
+				return null;
+		}
+	}
+
 
 }
