@@ -3,7 +3,7 @@ package org.eclipse.swt.uno;
 import org.eclipse.swt.graphics.Rectangle;
 
 import com.sun.star.awt.*;
-import com.sun.star.uno.Exception;
+import com.sun.star.uno.*;
 
 public abstract class UnoControl {
 
@@ -16,6 +16,10 @@ public abstract class UnoControl {
 
 	static {
 		UnoLoader.init();
+	}
+
+	protected static <T> T qi(Class<T> aType, Object o) {
+		return UnoRuntime.queryInterface(aType, o);
 	}
 
 	public void setVisible(boolean visible) {
@@ -41,7 +45,8 @@ public abstract class UnoControl {
 	}
 
 	public void dispose() {
-		System.out.println("WARN: Not implemented yet: " + new Exception().getStackTrace()[0]);
+		w.dispose();
+		disposed = true;
 	}
 
 }

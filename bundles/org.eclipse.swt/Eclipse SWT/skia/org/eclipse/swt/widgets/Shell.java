@@ -302,8 +302,7 @@ public class Shell extends Decorations {
 
 
 	public void setText(String text) {
-//		TODO Implement setTitle. Is not supported by UNO's XWindow
-//		window.setTitle("Swing PoC: " + text);
+		//window.setTitle("Skia PoC: " + text);
 	}
 
 	public void open() {

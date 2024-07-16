@@ -3,7 +3,6 @@ package org.eclipse.swt.uno;
 import java.lang.RuntimeException;
 
 import com.sun.star.awt.*;
-import com.sun.star.beans.*;
 import com.sun.star.comp.helper.*;
 import com.sun.star.frame.*;
 import com.sun.star.lang.*;
@@ -20,7 +19,7 @@ public class UnoLoader {
 	 static XToolkit xToolkit;
 	 static XDesktop xDesktop;
 
-	public static <T> T qi(Class<T> aType, Object o) {
+	private static <T> T qi(Class<T> aType, Object o) {
 		return UnoRuntime.queryInterface(aType, o);
 	}
 
@@ -67,43 +66,6 @@ public class UnoLoader {
 
 	public static void terminate() {
 		xDesktop.terminate();
-	}
-
-	public static XWindow createWindow() {
-
-		// Describe the properties of the container window.
-		// Tip: It is possible to use native window handle of a java window
-		// as parent for this. see chapter "OfficeBean" for further informations
-		com.sun.star.awt.WindowDescriptor aDescriptor = new com.sun.star.awt.WindowDescriptor();
-
-		aDescriptor.Type = com.sun.star.awt.WindowClass.TOP;
-		aDescriptor.WindowServiceName = "window";
-		aDescriptor.ParentIndex = -1;
-		aDescriptor.Parent = null;
-		aDescriptor.Bounds = new com.sun.star.awt.Rectangle(100, 100, 800, 800);
-
-		aDescriptor.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER
-				| com.sun.star.awt.WindowAttribute.MOVEABLE | com.sun.star.awt.WindowAttribute.SIZEABLE
-				| com.sun.star.awt.WindowAttribute.CLOSEABLE;
-
-		com.sun.star.awt.XWindowPeer xPeer = xToolkit.createWindow(aDescriptor);
-		com.sun.star.awt.XWindow w = (com.sun.star.awt.XWindow) UnoRuntime
-				.queryInterface(com.sun.star.awt.XWindow.class, xPeer);
-
-		w.setVisible(true);
-
-
-		XPropertySet prop = qi(XPropertySet.class, w);
-
-
-
-		// Konvertieren Sie das Fenster in einen Controller
-		XController xController = UnoRuntime.queryInterface(XController.class, w);
-
-		// Erhalten Sie das XModel vom XController
-
-
-		return w;
 	}
 
 	public static org.eclipse.swt.graphics.Point GetScreenSize() {

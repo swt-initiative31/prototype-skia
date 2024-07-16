@@ -11,14 +11,14 @@ public class UnoLabelControl extends UnoControl {
 	private final UnoControl parent;
 	XFixedText xFixedText;
 
-	public UnoLabelControl(UnoControl window) {
-		this.parent = window;
+	public UnoLabelControl(UnoControl parent) {
+		this.parent = parent;
 
 		XComponentContext xContext = UnoLoader.xContext;
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
 		XToolkit xToolkit = UnoLoader.xToolkit;
 
-		XWindowPeer windowPeer = window.getPeer();
+		XWindowPeer parentWindowPeer = parent.getPeer();
 
 		Object fixedTextModel;
 		try {
@@ -50,7 +50,7 @@ public class UnoLabelControl extends UnoControl {
 
 			// test for setting colors: blue
 
-			xControl.createPeer(xToolkit, windowPeer);
+			xControl.createPeer(xToolkit, parentWindowPeer);
 
 //		-------------------------------------- just some testing, not important...
 			XView view = xControl.getView();
@@ -70,7 +70,7 @@ public class UnoLabelControl extends UnoControl {
 			w = UnoRuntime.queryInterface(XWindow.class, peer);
 
 			// There seems to be a bug, we have to reset the position...
-			w.setPosSize(100, 100, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
+			w.setPosSize(0, 0, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
