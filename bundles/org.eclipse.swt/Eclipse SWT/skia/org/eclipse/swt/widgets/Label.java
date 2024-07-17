@@ -282,10 +282,10 @@ public class Label extends Control {
 	 *                                     receiver</li>
 	 *                                     </ul>
 	 */
-	public void setText(String string) {
+	public void setText(String text) {
 		checkWidget();
-
-		getHandle().setText(string);
+		this.text = text;
+		_setText();
 	}
 
 	void updateStyleBits(boolean isEnabled) {
@@ -298,4 +298,53 @@ public class Label extends Control {
 
 	}
 
+	/**
+	 * Sets the receiver's image to the argument, which may be null indicating that
+	 * no image should be displayed.
+	 *
+	 * @param image the image to display on the receiver (may be null)
+	 *
+	 * @exception IllegalArgumentException
+	 *                                     <ul>
+	 *                                     <li>ERROR_INVALID_ARGUMENT - if the image
+	 *                                     has been disposed</li>
+	 *                                     </ul>
+	 * @exception SWTException
+	 *                                     <ul>
+	 *                                     <li>ERROR_WIDGET_DISPOSED - if the
+	 *                                     receiver has been disposed</li>
+	 *                                     <li>ERROR_THREAD_INVALID_ACCESS - if not
+	 *                                     called from the thread that created the
+	 *                                     receiver</li>
+	 *                                     </ul>
+	 */
+	public void setImage(Image image) {
+		checkWidget();
+		if ((style & SWT.SEPARATOR) != 0)
+			return;
+		if (image != null) {
+			if (image.isDisposed())
+				error(SWT.ERROR_INVALID_ARGUMENT);
+
+			this.image = image;
+			isImageMode = true;
+//			NSImage current = imageView.image();
+//			if (current != null && current.id == image.handle.id) {
+//				imageView.setImage(null);
+//			}
+//			imageView.setImage(image.handle);
+//			((NSBox) view).setContentView(imageView);
+		} else {
+			if (this.image == null)
+				return; // do nothing if image is already null
+
+			this.image = image;
+//			imageView.setImage(null);
+			_setText();
+		}
+	}
+
+	private void _setText() {
+		getHandle().setText(text);
+	}
 }

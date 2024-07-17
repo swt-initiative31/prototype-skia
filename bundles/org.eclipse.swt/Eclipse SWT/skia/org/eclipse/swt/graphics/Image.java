@@ -15,6 +15,7 @@ package org.eclipse.swt.graphics;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.internal.*;
+import org.eclipse.swt.uno.*;
 
 /**
  * Instances of this class are graphics which have been prepared for display on
@@ -100,7 +101,7 @@ public final class Image extends Resource implements Drawable {
 	 *
 	 * @noreference This field is not intended to be referenced by clients.
 	 */
-	public Object handle; // Todo
+	public UnoImage handle; // Todo
 
 	/**
 	 * The GC the image is currently selected in.

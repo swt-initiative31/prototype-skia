@@ -27,25 +27,25 @@ public class Snippet34 {
 
 public static void main (String[] args) {
 	Display display = new Display();
-//	Image image = new Image (display, 16, 16);
-//	Color color = display.getSystemColor (SWT.COLOR_RED);
-//	GC gc = new GC (image);
-//	gc.setBackground (color);
-//	gc.fillRectangle (image.getBounds ());
-//	gc.dispose ();
+	Image image = new Image (display, 16, 16);
+	Color color = display.getSystemColor (SWT.COLOR_RED);
+	GC gc = new GC (image);
+	gc.setBackground (color);
+	gc.fillRectangle (image.getBounds ());
+	gc.dispose ();
 	Shell shell = new Shell (display);
 	shell.setText("Snippet 34");
 	Label label = new Label (shell, SWT.BORDER);
 	Rectangle clientArea = shell.getClientArea ();
 	label.setLocation (clientArea.x, clientArea.y);
-//	label.setImage (image);
+	label.setImage (image);
 	label.pack ();
 	shell.pack ();
 	shell.open ();
 	while (!shell.isDisposed ()) {
 		if (!display.readAndDispatch ()) display.sleep ();
 	}
-//	image.dispose ();
+	image.dispose ();
 	display.dispose ();
 }
 
