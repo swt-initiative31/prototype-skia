@@ -669,4 +669,8 @@ public abstract class Control extends Widget {
 	 */
 	protected abstract UnoControl getHandle();
 
+	public void setVisible(boolean b) {
+		getHandle().setVisible(b);
+	}
+
 }
