@@ -2,6 +2,7 @@ package org.eclipse.swt.widgets;
 
 import java.awt.*;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.function.*;
 
 import org.eclipse.swt.*;
@@ -90,7 +91,7 @@ import org.eclipse.swt.uno.*;
  * @see <a href="http://www.eclipse.org/swt/">Sample code and further information</a>
  * @noextend This class is not intended to be subclassed by clients.
  */
-public class Display extends Device {
+public class Display extends Device implements Executor {
 
 	/* Windows and Events */
 	Event [] eventQueue;
@@ -234,7 +235,110 @@ public class Display extends Device {
 	void createDisplay (DeviceData data) {
 		// I guess this is not necessary for Swing, but most probably for UNO
 	}
+	
+	/**
+	 * Executes the given runnable in the user-interface thread of this Display.
+	 * <ul>
+	 * <li>If the calling thread is the user-interface thread of this display it is
+	 * executed immediately and the method returns after the command has run, as with
+	 * the method {@link Display#syncExec(Runnable)}.</li>
+	 * <li>In all other cases the <code>run()</code> method of the runnable is
+	 * asynchronously executed as with the method
+	 * {@link Display#asyncExec(Runnable)} at the next reasonable opportunity. The
+	 * caller of this method continues to run in parallel, and is not notified when
+	 * the runnable has completed.</li>
+	 * </ul>
+	 * <p>
+	 * This can be used in cases where one want to execute some piece of code that
+	 * should be guaranteed to run in the user-interface thread regardless of the
+	 * current thread.
+	 * </p>
+	 *
+	 * <p>
+	 * Note that at the time the runnable is invoked, widgets that have the receiver
+	 * as their display may have been disposed. Therefore, it is advised to check
+	 * for this case inside the runnable before accessing the widget.
+	 * </p>
+	 *
+	 * @param runnable the runnable to execute in the user-interface thread, never
+	 *                 <code>null</code>
+	 * @throws RejectedExecutionException if this task cannot be accepted for
+	 *                                    execution
+	 * @throws NullPointerException       if runnable is null
+	 */
+	@Override
+	public void execute(Runnable runnable) {
+		Objects.requireNonNull(runnable);
+		if (isDisposed()) {
+			throw new RejectedExecutionException(new SWTException (SWT.ERROR_WIDGET_DISPOSED, null));
+		}
+		if (thread == Thread.currentThread()) {
+			syncExec(runnable);
+		} else {
+			asyncExec(runnable);
+		}
+	}
 
+	/**
+	 * Causes the <code>run()</code> method of the runnable to
+	 * be invoked by the user-interface thread at the next
+	 * reasonable opportunity. The caller of this method continues
+	 * to run in parallel, and is not notified when the
+	 * runnable has completed.  Specifying <code>null</code> as the
+	 * runnable simply wakes the user-interface thread when run.
+	 * <p>
+	 * Note that at the time the runnable is invoked, widgets
+	 * that have the receiver as their display may have been
+	 * disposed. Therefore, it is necessary to check for this
+	 * case inside the runnable before accessing the widget.
+	 * </p>
+	 *
+	 * @param runnable code to run on the user-interface thread or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see #syncExec
+	 */
+	public void asyncExec (Runnable runnable) {
+		synchronized (Device.class) {
+			if (isDisposed ()) error (SWT.ERROR_DEVICE_DISPOSED);
+			synchronizer.asyncExec (runnable);
+		}
+	}
+	
+	/**
+	 * Causes the <code>run()</code> method of the runnable to
+	 * be invoked by the user-interface thread at the next
+	 * reasonable opportunity. The thread which calls this method
+	 * is suspended until the runnable completes.  Specifying <code>null</code>
+	 * as the runnable simply wakes the user-interface thread.
+	 * <p>
+	 * Note that at the time the runnable is invoked, widgets
+	 * that have the receiver as their display may have been
+	 * disposed. Therefore, it is necessary to check for this
+	 * case inside the runnable before accessing the widget.
+	 * </p>
+	 *
+	 * @param runnable code to run on the user-interface thread or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_FAILED_EXEC - if an exception occurred when executing the runnable</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see #asyncExec
+	 */
+	public void syncExec (Runnable runnable) {
+		Synchronizer synchronizer;
+		synchronized (Device.class) {
+			if (isDisposed ()) error (SWT.ERROR_DEVICE_DISPOSED);
+			synchronizer = this.synchronizer;
+		}
+		synchronizer.syncExec (runnable);
+	}
+	
 	static void register (Display display) {
 		synchronized (Device.class) {
 			for (int i=0; i<Displays.length; i++) {
