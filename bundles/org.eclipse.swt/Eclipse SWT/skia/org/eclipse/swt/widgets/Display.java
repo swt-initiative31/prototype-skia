@@ -125,7 +125,7 @@ public class Display extends Device {
 	boolean smallFonts;
 
 	/* System Colors */
-	int [][] colors;
+	double [][] colors;
 	int [] alternateSelectedControlTextColor, selectedControlTextColor;
 	private int [] alternateSelectedControlColor, secondarySelectedControlColor;
 
@@ -750,7 +750,7 @@ public class Display extends Device {
 
 	Color getWidgetColor (int id) {
 		if (0 <= id && id < colors.length && colors [id] != null) {
-			return Color.swing_new (this, colors [id]);
+			return Color.skia_new (this, colors [id]);
 		}
 		return null;
 	}

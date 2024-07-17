@@ -13,6 +13,10 @@
  *******************************************************************************/
 package org.eclipse.swt.graphics;
 
+import java.util.regex.*;
+
+import org.eclipse.swt.uno.*;
+
 /**
  * Instances of this class are descriptions of GCs in terms
  * of unallocated platform-specific data fields.
@@ -29,9 +33,9 @@ public final class GCData {
 	public Device device;
 	public int style, state = -1;
 
-//	public double [] foreground, background;
-//	public Pattern foregroundPattern;
-//	public Pattern backgroundPattern;
+	public double [] foreground, background;
+	public Pattern foregroundPattern;
+	public Pattern backgroundPattern;
 //	public Font font;
 //	public int alpha = 0xFF;
 //	public float lineWidth;
@@ -53,8 +57,8 @@ public final class GCData {
 //	public NSLayoutManager layoutManager;
 //	/** @noreference This field is not intended to be referenced by clients. */
 //	public NSTextContainer textContainer;
-//	/** @noreference This field is not intended to be referenced by clients. */
-//	public NSColor fg, bg;
+	/** @noreference This field is not intended to be referenced by clients. */
+	public UnoColor fg, bg;
 //	public double drawXOffset, drawYOffset;
 //	/** @noreference This field is not intended to be referenced by clients. */
 //	public NSRect paintRect;

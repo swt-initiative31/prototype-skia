@@ -11,7 +11,7 @@ public abstract class Control extends Widget {
 
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
-	int[] foreground, background;
+	double[] foreground, background;
 
 	Object layoutData;
 
@@ -257,9 +257,9 @@ public abstract class Control extends Widget {
 //		if (control.backgroundImage != null) {
 //			setBackgroundImage (control.backgroundImage.handle);
 //		} else {
-		int[] color = control.background != null ? control.background : control.defaultBackground().handle;
-		java.awt.Color awtColor = new java.awt.Color(color[0], color[1], color[2], color[3]);
-		setBackgroundColor(awtColor);
+		double[] color = control.background != null ? control.background : control.defaultBackground().handle;
+		UnoColor unoColor = new UnoColor(color[0], color[1], color[2], color[3]);
+		setBackgroundColor(unoColor);
 //		}
 	}
 
@@ -279,7 +279,7 @@ public abstract class Control extends Widget {
 		return display.getWidgetColor(SWT.COLOR_WIDGET_BACKGROUND);
 	}
 
-	void setBackgroundColor(java.awt.Color nsColor) {
+	void setBackgroundColor(UnoColor UnoColor) {
 	}
 
 	boolean isTransparent() {
@@ -568,5 +568,26 @@ public abstract class Control extends Widget {
 		addListener (SWT.Resize,typedListener);
 		addListener (SWT.Move,typedListener);
 	}
+
+	/**
+	 * Sets the receiver's location to the point specified by
+	 * the arguments which are relative to the receiver's
+	 * parent (or its display if its parent is null), unless
+	 * the receiver is a shell. In this case, the point is
+	 * relative to the display.
+	 *
+	 * @param x the new x coordinate for the receiver
+	 * @param y the new y coordinate for the receiver
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setLocation (int x, int y) {
+		checkWidget();
+		setBounds (x, y, 0, 0, true, false);
+	}
+
 
 }

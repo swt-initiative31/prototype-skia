@@ -14,6 +14,7 @@
 package org.eclipse.swt.graphics;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.uno.*;
 
 /**
  * Class <code>GC</code> is where all of the drawing capabilities that are
@@ -56,7 +57,25 @@ import org.eclipse.swt.*;
  * @see <a href="http://www.eclipse.org/swt/">Sample code and further information</a>
  */
 public final class GC extends Resource {
-	public Object handle; //TODO set the right type
+	public UnoControl handle; //TODO set the right type
+	public GCData data;
+
+	final static int FOREGROUND = 1 << 0;
+	final static int BACKGROUND = 1 << 1;
+	final static int FONT = 1 << 2;
+	final static int LINE_STYLE = 1 << 3;
+	final static int LINE_CAP = 1 << 4;
+	final static int LINE_JOIN = 1 << 5;
+	final static int LINE_WIDTH = 1 << 6;
+	final static int LINE_MITERLIMIT = 1 << 7;
+	final static int FOREGROUND_FILL = 1 << 8;
+	final static int DRAW_OFFSET = 1 << 9;
+	final static int CLIPPING = 1 << 10;
+	final static int TRANSFORM = 1 << 11;
+	final static int VISIBLE_REGION = 1 << 12;
+	final static int DRAW = CLIPPING | TRANSFORM | FOREGROUND | LINE_WIDTH | LINE_STYLE  | LINE_CAP  | LINE_JOIN | LINE_MITERLIMIT | DRAW_OFFSET;
+	final static int FILL = CLIPPING | TRANSFORM | BACKGROUND;
+
 
 	GC() {
 	}
@@ -308,4 +327,31 @@ public final class GC extends Resource {
 //			uncheckGC(pool);
 //		}
 	}
+
+	/**
+	 * Sets the background color. The background color is used
+	 * for fill operations and as the background color when text
+	 * is drawn.
+	 *
+	 * @param color the new background color for the receiver
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the color is null</li>
+	 *    <li>ERROR_INVALID_ARGUMENT - if the color has been disposed</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_GRAPHIC_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 */
+	public void setBackground(Color color) {
+		if (handle == null) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
+		if (color == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+		if (color.isDisposed()) SWT.error(SWT.ERROR_INVALID_ARGUMENT);
+		data.background = color.handle;
+		data.backgroundPattern = null;
+		if (data.bg != null) data.bg.release();
+		data.bg = null;
+		data.state &= ~BACKGROUND;
+	}
+
 }
