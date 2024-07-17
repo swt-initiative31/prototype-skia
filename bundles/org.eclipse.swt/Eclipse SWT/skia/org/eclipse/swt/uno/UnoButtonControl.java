@@ -1,8 +1,13 @@
 package org.eclipse.swt.uno;
 
+import java.util.function.*;
+
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.*;
 
 import com.sun.star.awt.*;
+import com.sun.star.awt.MouseEvent;
 import com.sun.star.beans.*;
 import com.sun.star.lang.*;
 import com.sun.star.uno.*;
@@ -10,9 +15,11 @@ import com.sun.star.uno.Exception;
 
 public class UnoButtonControl extends UnoControl{
 	XButton xButton;
+	private final Button source;
 
-	public UnoButtonControl(UnoControl parent) {
+	public UnoButtonControl(UnoControl parent, Button source) {
 		super(parent);
+		this.source = source;
 
 		XComponentContext xContext = UnoLoader.xContext;
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
@@ -68,8 +75,6 @@ public class UnoButtonControl extends UnoControl{
 	static int count = 0;
 
 	public void addMouseListener(org.eclipse.swt.events.MouseListener listener) {
-
-
 		getWindow().addMouseListener(new XMouseListener() {
 
 			@Override
@@ -85,20 +90,38 @@ public class UnoButtonControl extends UnoControl{
 			@Override
 			public void mousePressed(com.sun.star.awt.MouseEvent arg0) {
 				listener.mouseDown(null);
-
 			}
 
 			@Override
 			public void mouseExited(com.sun.star.awt.MouseEvent arg0) {
-
+				System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 			}
 
 			@Override
 			public void mouseEntered(com.sun.star.awt.MouseEvent arg0) {
-
+				System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 			}
 		});
+	}
 
+	public void addActionListener(Consumer<SelectionEvent> actionConsumer) {
+		xButton.addActionListener(new XActionListener() {
+
+			@Override
+			public void disposing(EventObject arg0) {
+				System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Event evt = new Event();
+				evt.button = 1; // assume the first button was pressed
+				evt.widget = source;
+				// TODO (VISJEE) fill the event
+				SelectionEvent selEvt = new SelectionEvent(evt);
+				actionConsumer.accept(selEvt);
+			}
+		});
 	}
 
 	@Override

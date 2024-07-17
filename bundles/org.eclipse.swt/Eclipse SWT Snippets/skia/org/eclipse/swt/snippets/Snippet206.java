@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.swt.snippets;
 
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
+
 /*
  * Button example snippet: a Button with text and image
  *
@@ -35,6 +37,9 @@ public static void main(String[] args) {
 	shell.setText("Snippet 206");
 	shell.setLayout (new GridLayout());
 	Button button = new Button(shell, SWT.PUSH);
+
+	button.addSelectionListener(widgetSelectedAdapter(e -> System.out.println("Received evt: " + e )));
+
 	button.setImage(image);
 	button.setText("Button hola");
 	button.setSize(133, 150);

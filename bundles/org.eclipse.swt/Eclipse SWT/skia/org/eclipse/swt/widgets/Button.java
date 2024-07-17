@@ -14,6 +14,8 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import org.eclipse.swt.*;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.uno.*;
 
@@ -50,7 +52,7 @@ public class  Button extends Control  {
 
 	public Button(Composite parent, int style) {
 		super(parent, style);
-		this.buttonControl = new UnoButtonControl(parent.getHandle());
+		this.buttonControl = new UnoButtonControl(parent.getHandle(), this);
 	}
 
 	public void setImage(Image image) {
@@ -64,5 +66,64 @@ public class  Button extends Control  {
 	@Override
 	protected UnoButtonControl getHandle() {
 		return buttonControl;
+	}
+
+	/**
+	 * Adds the listener to the collection of listeners who will
+	 * be notified when the control is selected by the user, by sending
+	 * it one of the messages defined in the <code>SelectionListener</code>
+	 * interface.
+	 * <p>
+	 * <code>widgetSelected</code> is called when the control is selected by the user.
+	 * <code>widgetDefaultSelected</code> is not called.
+	 * </p>
+	 * <p>
+	 * When the <code>SWT.RADIO</code> style bit is set, the <code>widgetSelected</code> method is
+	 * also called when the receiver loses selection because another item in the same radio group
+	 * was selected by the user. During <code>widgetSelected</code> the application can use
+	 * <code>getSelection()</code> to determine the current selected state of the receiver.
+	 * </p>
+	 *
+	 * @param listener the listener which should be notified
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see SelectionListener
+	 * @see #removeSelectionListener
+	 * @see SelectionEvent
+	 */
+	public void addSelectionListener (SelectionListener listener) {
+		buttonControl.addActionListener(listener::widgetSelected);
+	}
+
+	/**
+	 * Removes the listener from the collection of listeners who will
+	 * be notified when the control is selected by the user.
+	 *
+	 * @param listener the listener which should no longer be notified
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see SelectionListener
+	 * @see #addSelectionListener
+	 */
+	public void removeSelectionListener (SelectionListener listener) {
+		checkWidget ();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (eventTable == null) return;
+		eventTable.unhook (SWT.Selection, listener);
+		eventTable.unhook (SWT.DefaultSelection,listener);
 	}
 }
