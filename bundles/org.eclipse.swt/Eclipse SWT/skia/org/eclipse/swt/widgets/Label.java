@@ -43,6 +43,7 @@ public class Label extends Control {
 	Image image;
 	boolean isImageMode; // Resolves ambiguity when both image and text are set
 	static final int MARGIN = 4;
+	private final UnoLabelControl unoLabel;
 
 	/**
 	 * Constructs a new instance of this class given its parent and a style value
@@ -88,7 +89,8 @@ public class Label extends Control {
 	 * @see Widget#getStyle
 	 */
 	public Label(Composite parent, int style) {
-		super(parent, new UnoLabelControl(parent.handle), checkStyle(style));
+		super(parent, checkStyle(style));
+		this.unoLabel = new UnoLabelControl(parent.getHandle());
 	}
 
 	static int checkStyle(int style) {
@@ -292,7 +294,7 @@ public class Label extends Control {
 
 	@Override
 	protected UnoLabelControl getHandle() {
-		return (UnoLabelControl) super.getHandle();
+		return unoLabel;
 
 	}
 

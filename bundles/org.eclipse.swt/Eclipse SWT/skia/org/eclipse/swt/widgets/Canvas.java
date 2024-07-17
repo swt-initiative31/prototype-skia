@@ -42,6 +42,8 @@ import org.eclipse.swt.uno.*;
  */
 public class Canvas extends Composite {
 
+	private final UnoCanvas unoCanvas;
+
 	Caret caret;
 	IME ime;
 
@@ -49,6 +51,7 @@ public class Canvas extends Composite {
 	 * Prevents uninitialized instances from being created outside the package.
 	 */
 	Canvas() {
+		unoCanvas = null;
 	}
 
 	/**
@@ -84,7 +87,7 @@ public class Canvas extends Composite {
 	 */
 	public Canvas(Composite parent, int style) {
 		super(parent, style);
-		handle = new UnoCanvas(parent.handle);
+		unoCanvas = new UnoCanvas(parent.getHandle());
 	}
 
 	/**
@@ -280,7 +283,10 @@ public class Canvas extends Composite {
 		this.ime = ime;
 	}
 
-
+	@Override
+	protected UnoControl getHandle() {
+		return unoCanvas;
+	}
 
 
 }

@@ -7,8 +7,6 @@ import org.eclipse.swt.uno.*;
 
 public abstract class Control extends Widget {
 
-	public UnoControl handle;
-
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
 	double[] foreground, background;
@@ -18,7 +16,6 @@ public abstract class Control extends Widget {
 	Font font;
 
 	Control() {
-		handle = null;
 	}
 
 	/**
@@ -57,9 +54,8 @@ public abstract class Control extends Widget {
 	 * @see Widget#checkSubclass
 	 * @see Widget#getStyle
 	 */
-	public Control(Composite parent, UnoControl handle, int style) {
+	public Control(Composite parent, int style) {
 		super(parent, style);
-		this.handle = handle;
 		this.parent = parent;
 		createWidget();
 	}
@@ -222,11 +218,11 @@ public abstract class Control extends Widget {
 	}
 
 	UnoControl topView() {
-		return handle;
+		return getHandle();
 	}
 
 	UnoControl contentView() {
-		return handle;
+		return getHandle();
 	}
 
 	void setRelations() {
@@ -440,11 +436,11 @@ public abstract class Control extends Widget {
 		Control oldIgnoreFocusControl = display.ignoreFocusControl;
 		display.ignoreFocusControl = this;
 		if (move && resize) {
-			handle.setBounds(new Rectangle(x, y, width, height));
+			getHandle().setBounds(new Rectangle(x, y, width, height));
 		} else if (move) {
-			handle.setLocation(x, y);
+			getHandle().setLocation(x, y);
 		} else if (resize) {
-			handle.setSize(width, height);
+			getHandle().setSize(width, height);
 		}
 		display.ignoreFocusControl = oldIgnoreFocusControl;
 	}
@@ -671,8 +667,6 @@ public abstract class Control extends Widget {
 	 * This method should be overriden by subclasses and the return type should be changed to the proper subclass of <code>UnoControl</code>
 	 * @return the <code>handle</code>
 	 */
-	protected UnoControl getHandle() {
-		return handle;
-	}
+	protected abstract UnoControl getHandle();
 
 }

@@ -2,7 +2,6 @@ package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.uno.*;
 
 public abstract class Scrollable extends Control {
 	ScrollBar horizontalBar, verticalBar;
@@ -47,7 +46,7 @@ public abstract class Scrollable extends Control {
 	 * @see Widget#getStyle
 	 */
 	public Scrollable(Composite parent, int style) {
-		super(parent, new UnoScrollableControl() ,style);
+		super(parent, style);
 	}
 
 	@Override
@@ -117,7 +116,7 @@ public abstract class Scrollable extends Control {
 	 */
 	public Rectangle getClientArea() {
 		checkWidget();
-		Rectangle rect = handle.getBounds();
+		Rectangle rect = getHandle().getBounds();
 		return new Rectangle(0, 0, (int)rect.width, (int)rect.height);
 	}
 

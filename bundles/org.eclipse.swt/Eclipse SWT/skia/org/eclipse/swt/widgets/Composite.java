@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import org.eclipse.swt.*;
 
-public class Composite extends Scrollable {
+public abstract class Composite extends Scrollable {
 	Layout layout;
 	int layoutCount, backgroundMode;
 

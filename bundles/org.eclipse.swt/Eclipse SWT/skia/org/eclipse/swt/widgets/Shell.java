@@ -324,9 +324,8 @@ public class Shell extends Decorations {
 	@Override
 	void createHandle () {
 		state |= HIDDEN;
-		if (window == null && handle == null) {
+		if (window == null) {
 			window = new UnoWindow();
-			handle = window;
 //			int styleMask = OS.NSBorderlessWindowMask;
 //			if ((style & (SWT.TOOL | SWT.SHEET)) != 0) {
 //				window = (NSWindow) new SWTWindow().alloc ();
@@ -393,25 +392,25 @@ public class Shell extends Decorations {
 		} else {
 			state &= ~HIDDEN;
 
-			if (window != null) {
-				// In the FOREIGN_HANDLE case, 'window' is an NSWindow created on our behalf.
-				// It may already have a content view, so if it does, grab and retain, since we release()
-				// the view at disposal time.  Otherwise, create a new 'view' that will be used as the window's
-				// content view in setZOrder.
-				handle = window.getContentPane();
-
-				if (handle == null) {
-					super.createHandle();
-//				} else {
-//					TODO ? view.retain();
-				}
-			} else {
+//			if (window != null) {
+//				// In the FOREIGN_HANDLE case, 'window' is an NSWindow created on our behalf.
+//				// It may already have a content view, so if it does, grab and retain, since we release()
+//				// the view at disposal time.  Otherwise, create a new 'view' that will be used as the window's
+//				// content view in setZOrder.
+//				handle = window.getContentPane();
+//
+//				if (handle == null) {
+//					super.createHandle();
+////				} else {
+////					TODO ? view.retain();
+//				}
+//			} else {
 				// In the embedded case, 'view' is already set to the NSView we should add the window's content view to as a subview.
 				// In that case we will hold on to the foreign view, create our own SWTCanvasView (which overwrites 'view') and then
 				// add it to the foreign view.
 				super.createHandle();
 				// TODO view.add(topView());
-			}
+//			}
 
 			style |= SWT.NO_BACKGROUND;
 		}
@@ -449,4 +448,10 @@ public class Shell extends Decorations {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	protected UnoWindow getHandle() {
+		return window;
+	}
+
 }

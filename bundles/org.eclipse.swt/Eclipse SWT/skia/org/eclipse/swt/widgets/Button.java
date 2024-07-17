@@ -46,8 +46,11 @@ import org.eclipse.swt.uno.*;
  */
 public class  Button extends Control  {
 
+	private final UnoButtonControl buttonControl;
+
 	public Button(Composite parent, int style) {
-		super(parent, new UnoButtonControl(parent.handle), style);
+		super(parent, style);
+		this.buttonControl = new UnoButtonControl(parent.getHandle());
 	}
 
 	public void setImage(Image image) {
@@ -60,6 +63,6 @@ public class  Button extends Control  {
 
 	@Override
 	protected UnoButtonControl getHandle() {
-		return (UnoButtonControl) handle;
+		return buttonControl;
 	}
 }
