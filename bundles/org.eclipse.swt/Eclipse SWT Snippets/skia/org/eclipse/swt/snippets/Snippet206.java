@@ -38,7 +38,7 @@ public static void main(String[] args) {
 	button.setImage(image);
 	button.setText("Button hola");
 	button.setSize(133, 150);
-	button.setLocation(320, 110);
+	button.setLocation(120, 110);
 
 	shell.setSize(300, 500);
 	shell.open();
