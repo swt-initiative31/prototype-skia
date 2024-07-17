@@ -12,6 +12,6 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="uno_jar/libreoffice.jar"/>
 	<classpathentry kind="lib" path="uno_jar/unoloader.jar"/>
-	<classpathentry kind="lib" path="/home/linuxsub/git/prototype-skia-libreoffice/instdir/program"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -4,6 +4,12 @@ import org.eclipse.swt.*;
 
 public class Decorations extends Canvas {
 
+	/**
+	 * Prevents uninitialized instances from being created outside the package.
+	 */
+	Decorations () {
+	}
+
 
 	static int checkStyle (int style) {
 		if ((style & SWT.NO_TRIM) != 0) {

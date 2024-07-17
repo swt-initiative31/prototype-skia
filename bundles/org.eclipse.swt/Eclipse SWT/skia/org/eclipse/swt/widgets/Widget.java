@@ -1,5 +1,7 @@
 package org.eclipse.swt.widgets;
 
+import java.util.*;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.internal.*;
 
@@ -676,5 +678,28 @@ public abstract class Widget {
 		if (eventTable == null) eventTable = new EventTable ();
 		eventTable.hook (eventType, listener);
 	}
+
+
+	protected void addTypedListener (EventListener listener, int... eventTypes) {
+		checkWidget();
+		if (listener == null) {
+			SWT.error(SWT.ERROR_NULL_ARGUMENT);
+		}
+		TypedListener typedListener = new TypedListener(listener);
+		for (int eventType : eventTypes) {
+			_addListener(eventType, typedListener);
+		}
+	}
+
+	void _addListener (int eventType, Listener listener) {
+		if (eventTable == null) eventTable = new EventTable ();
+		eventTable.hook (eventType, listener);
+	}
+
+	void _removeListener (int eventType, Listener listener) {
+		if (eventTable == null) return;
+		eventTable.unhook (eventType, listener);
+	}
+
 
 }

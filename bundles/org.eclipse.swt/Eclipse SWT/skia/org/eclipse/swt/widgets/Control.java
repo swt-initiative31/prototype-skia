@@ -590,4 +590,9 @@ public abstract class Control extends Widget {
 	}
 
 
+
+	public void addPaintListener (PaintListener listener) {
+		addTypedListener(listener, SWT.Paint);
+	}
+
 }

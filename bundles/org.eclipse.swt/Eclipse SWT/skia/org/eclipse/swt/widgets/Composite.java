@@ -9,6 +9,15 @@ public class Composite extends Scrollable {
 	int layoutCount, backgroundMode;
 
 
+	public Composite(Composite parent, int style) {
+
+		super(parent, style);
+
+	}
+
+	Composite () {
+	}
+
 	/**
 	 * Returns a (possibly empty) array containing the receiver's children.
 	 * Children are returned in the order that they are drawn.  The topmost
