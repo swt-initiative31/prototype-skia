@@ -1,6 +1,6 @@
 package org.eclipse.swt.uno;
 
 // TODO (VISJEE)
-public class UnoScrollableControl extends UnoControl {
+public abstract class UnoScrollableControl extends UnoControl {
 
 }

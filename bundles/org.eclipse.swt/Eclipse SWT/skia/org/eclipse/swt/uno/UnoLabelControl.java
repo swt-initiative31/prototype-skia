@@ -10,6 +10,7 @@ public class UnoLabelControl extends UnoControl {
 
 	private final UnoControl parent;
 	XFixedText xFixedText;
+	private XControl xControl;
 
 	public UnoLabelControl(UnoControl parent) {
 		this.parent = parent;
@@ -40,7 +41,7 @@ public class UnoLabelControl extends UnoControl {
 
 			// Erzeugung der UnoControlFixedText-Instanz und Einsetzen des FixedText-Models
 			Object oControl = xMCF.createInstanceWithContext("com.sun.star.awt.UnoControlFixedText", xContext);
-			XControl xControl = UnoRuntime.queryInterface(XControl.class, oControl);
+			xControl = UnoRuntime.queryInterface(XControl.class, oControl);
 			// das Modell setzen
 			xControl.setModel(UnoRuntime.queryInterface(XControlModel.class, fixedTextModel));
 
@@ -65,12 +66,8 @@ public class UnoLabelControl extends UnoControl {
 			XControlModel model = xControl.getModel();
 			System.out.println("XControlModel: " + model);
 
-			XWindowPeer peer = xControl.getPeer();
-
-			w = UnoRuntime.queryInterface(XWindow.class, peer);
-
 			// There seems to be a bug, we have to reset the position...
-			w.setPosSize(0, 0, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
+			getWindow().setPosSize(0, 0, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -81,5 +78,16 @@ public class UnoLabelControl extends UnoControl {
 
 	public void setText(String text) {
 		xFixedText.setText(text);
+	}
+
+	@Override
+	protected XWindow getWindow() {
+		XWindowPeer peer = xControl.getPeer();
+		return UnoRuntime.queryInterface(XWindow.class, peer);
+	}
+
+	@Override
+	public XWindowPeer getPeer() {
+		return parent.getPeer();
 	}
 }

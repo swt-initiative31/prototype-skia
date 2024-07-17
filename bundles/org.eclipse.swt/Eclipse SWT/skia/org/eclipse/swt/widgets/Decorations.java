@@ -2,7 +2,7 @@ package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
 
-public class Decorations extends Canvas {
+public abstract class Decorations extends Canvas {
 
 	/**
 	 * Prevents uninitialized instances from being created outside the package.

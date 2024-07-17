@@ -15,7 +15,6 @@ package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.uno.*;
 
 /**
  * Instances of this class provide a surface for drawing arbitrary graphics.
@@ -40,9 +39,7 @@ import org.eclipse.swt.uno.*;
  * @see <a href="http://www.eclipse.org/swt/">Sample code and further
  *      information</a>
  */
-public class Canvas extends Composite {
-
-	private final UnoCanvas unoCanvas;
+public abstract class Canvas extends Composite {
 
 	Caret caret;
 	IME ime;
@@ -51,7 +48,6 @@ public class Canvas extends Composite {
 	 * Prevents uninitialized instances from being created outside the package.
 	 */
 	Canvas() {
-		unoCanvas = null;
 	}
 
 	/**
@@ -87,7 +83,6 @@ public class Canvas extends Composite {
 	 */
 	public Canvas(Composite parent, int style) {
 		super(parent, style);
-		unoCanvas = new UnoCanvas(parent.getHandle());
 	}
 
 	/**
@@ -281,11 +276,6 @@ public class Canvas extends Composite {
 		if (ime != null && ime.isDisposed())
 			error(SWT.ERROR_INVALID_ARGUMENT);
 		this.ime = ime;
-	}
-
-	@Override
-	protected UnoControl getHandle() {
-		return unoCanvas;
 	}
 
 

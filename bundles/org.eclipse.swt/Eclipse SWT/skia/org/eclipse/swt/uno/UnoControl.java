@@ -7,9 +7,6 @@ import com.sun.star.uno.*;
 
 public abstract class UnoControl {
 
-	XWindow w;
-	XWindowPeer p;
-	XTopWindow tw;
 	boolean disposed = false;
 
 	UnoControl parent;
@@ -23,29 +20,25 @@ public abstract class UnoControl {
 	}
 
 	public void setVisible(boolean visible) {
-		w.setVisible(visible);
+		getWindow().setVisible(visible);
 	}
 
 	public boolean isDisposed() {
 		return disposed;
 	}
 
-	public XWindowPeer getPeer() {
-		return p;
-	}
-
 	public Rectangle getBounds() {
-		com.sun.star.awt.Rectangle posSize = w.getPosSize();
+		com.sun.star.awt.Rectangle posSize = getWindow().getPosSize();
 		return new Rectangle(posSize.X, posSize.Y, posSize.Width, posSize.Height);
 
 	}
 
 	public void setBounds(Rectangle frame) {
-		w.setPosSize(frame.x, frame.y, frame.width, frame.height, com.sun.star.awt.PosSize.POSSIZE);
+		getWindow().setPosSize(frame.x, frame.y, frame.width, frame.height, com.sun.star.awt.PosSize.POSSIZE);
 	}
 
 	public void dispose() {
-		w.dispose();
+		getWindow().dispose();
 		disposed = true;
 	}
 
@@ -59,5 +52,7 @@ public abstract class UnoControl {
 		setBounds(new Rectangle(current.x, current.y, width, height));
 	}
 
-
+	public abstract XWindowPeer getPeer();
+	
+	protected abstract XWindow getWindow();
 }

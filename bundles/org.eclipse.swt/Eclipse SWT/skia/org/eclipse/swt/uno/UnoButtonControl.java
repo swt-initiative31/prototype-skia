@@ -18,8 +18,6 @@ public class UnoButtonControl extends UnoControl{
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
 		XToolkit xToolkit = UnoLoader.xToolkit;
 
-		XWindowPeer windowPeer = parent.getPeer();
-
 		Object buttonControl;
 		try {
 			buttonControl = xMCF.createInstanceWithContext("com.sun.star.awt.UnoControlButton", xContext);
@@ -39,20 +37,16 @@ public class UnoButtonControl extends UnoControl{
 
 			xButton = UnoRuntime.queryInterface(XButton.class, xcon);
 			xcon.setModel(UnoRuntime.queryInterface(XControlModel.class, buttonModel));
-			xcon.createPeer(xToolkit, windowPeer);
+			xcon.createPeer(xToolkit, getPeer());
 
 			XControlModel model = xcon.getModel();
 
 			System.out.println("XControlModel: " + model);
 
-			XWindowPeer peer = xcon.getPeer();
-
-			w = UnoRuntime.queryInterface(XWindow.class, peer);
-
 			// There seems to be a bug, we have to reset the position...
-			w.setPosSize(100, 100, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
+			getWindow().setPosSize(100, 100, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
 
-			w.setVisible(true);
+			getWindow().setVisible(true);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -67,7 +61,7 @@ public class UnoButtonControl extends UnoControl{
 	@Override
 	public void setBounds(Rectangle rect) {
 
-		w.setPosSize(rect.x, rect.y, rect.width, rect.height, com.sun.star.awt.PosSize.POSSIZE);
+		getWindow().setPosSize(rect.x, rect.y, rect.width, rect.height, com.sun.star.awt.PosSize.POSSIZE);
 
 	}
 
@@ -76,7 +70,7 @@ public class UnoButtonControl extends UnoControl{
 	public void addMouseListener(org.eclipse.swt.events.MouseListener listener) {
 
 
-		w.addMouseListener(new XMouseListener() {
+		getWindow().addMouseListener(new XMouseListener() {
 
 			@Override
 			public void disposing(EventObject arg0) {
@@ -105,6 +99,17 @@ public class UnoButtonControl extends UnoControl{
 			}
 		});
 
+	}
+
+	@Override
+	protected XWindow getWindow() {
+		XWindowPeer peer = UnoRuntime.queryInterface(XControl.class, xButton).getPeer();
+		return UnoRuntime.queryInterface(XWindow.class, peer);
+	}
+
+	@Override
+	public XWindowPeer getPeer() {
+		return parent.getPeer();
 	}
 
 }

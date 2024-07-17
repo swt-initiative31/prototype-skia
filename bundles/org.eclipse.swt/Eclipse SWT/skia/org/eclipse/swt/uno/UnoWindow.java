@@ -5,12 +5,16 @@ import com.sun.star.lang.*;
 
 public class UnoWindow extends UnoScrollableControl {
 
+	XWindow w;
+	XWindowPeer p;
+	XTopWindow tw;
+
 	public UnoWindow() {
 		super();
 //		createDialog(UnoLoader.xMCF);
 		createWindow();
 
-		w.addWindowListener(new XWindowListener() {
+		getWindow().addWindowListener(new XWindowListener() {
 
 			@Override
 			public void disposing(EventObject arg0) {
@@ -125,6 +129,16 @@ public class UnoWindow extends UnoScrollableControl {
 
 		tw = qi(XTopWindow.class, w);
 		p = qi(XWindowPeer.class, w);
+	}
+
+	@Override
+	protected XWindow getWindow() {
+		return w;
+	}
+
+	@Override
+	public XWindowPeer getPeer() {
+		return p;
 	}
 
 // Tried to use Dialog instead of a plain window in order to set the title. This did not work, because the method execute()
