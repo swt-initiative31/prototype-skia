@@ -32,6 +32,7 @@ public class Snippet56 {
 		final ProgressBar bar = new ProgressBar(shell, SWT.SMOOTH);
 		Rectangle clientArea = shell.getClientArea ();
 		bar.setBounds (clientArea.x, clientArea.y, 200, 32);
+		bar.setMaximum(100);
 		shell.open();
 		final int maximum = bar.getMaximum();
 		new Thread() {
@@ -40,10 +41,10 @@ public class Snippet56 {
 				for (final int[] i = new int[1]; i[0] <= maximum; i[0]++) {
 				try {Thread.sleep (100);} catch (Throwable th) {}
 					if (display.isDisposed()) return;
-//					display.asyncExec(() -> {
-//					if (bar.isDisposed ()) return;
-//						bar.setSelection(i[0]);
-//					});
+					display.asyncExec(() -> {
+					if (bar.isDisposed ()) return;
+						bar.setSelection(i[0]);
+					});
 				}
 			}
 		}.start();
