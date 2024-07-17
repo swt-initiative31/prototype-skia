@@ -38,7 +38,7 @@ import org.eclipse.swt.uno.*;
  *      information</a>
  * @noextend This class is not intended to be subclassed by clients.
  */
-public class Label extends Control<UnoLabelControl> {
+public class Label extends Control {
 	String text = "";
 	Image image;
 	boolean isImageMode; // Resolves ambiguity when both image and text are set
@@ -283,11 +283,17 @@ public class Label extends Control<UnoLabelControl> {
 	public void setText(String string) {
 		checkWidget();
 
-		handle.setText(string);
+		getHandle().setText(string);
 	}
 
 	void updateStyleBits(boolean isEnabled) {
 		// TODO: UNO implementation
+	}
+
+	@Override
+	protected UnoLabelControl getHandle() {
+		return (UnoLabelControl) super.getHandle();
+
 	}
 
 }

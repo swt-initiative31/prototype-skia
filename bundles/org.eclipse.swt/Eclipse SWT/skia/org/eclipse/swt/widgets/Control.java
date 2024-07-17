@@ -5,9 +5,9 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.uno.*;
 
-public abstract class Control <T extends UnoControl> extends Widget {
+public abstract class Control extends Widget {
 
-	public T handle;
+	public UnoControl handle;
 
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
@@ -57,7 +57,7 @@ public abstract class Control <T extends UnoControl> extends Widget {
 	 * @see Widget#checkSubclass
 	 * @see Widget#getStyle
 	 */
-	public Control(Composite parent, T handle, int style) {
+	public Control(Composite parent, UnoControl handle, int style) {
 		super(parent, style);
 		this.handle = handle;
 		this.parent = parent;
@@ -665,6 +665,14 @@ public abstract class Control <T extends UnoControl> extends Widget {
 
 	public void addPaintListener (PaintListener listener) {
 		addTypedListener(listener, SWT.Paint);
+	}
+
+	/**
+	 * This method should be overriden by subclasses and the return type should be changed to the proper subclass of <code>UnoControl</code>
+	 * @return the <code>handle</code>
+	 */
+	protected UnoControl getHandle() {
+		return handle;
 	}
 
 }

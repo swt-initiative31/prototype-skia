@@ -44,7 +44,7 @@ import org.eclipse.swt.uno.*;
  * @see <a href="http://www.eclipse.org/swt/">Sample code and further information</a>
  * @noextend This class is not intended to be subclassed by clients.
  */
-public class  Button extends Control<UnoButtonControl>  {
+public class  Button extends Control  {
 
 	public Button(Composite parent, int style) {
 		super(parent, new UnoButtonControl(parent.handle), style);
@@ -55,5 +55,11 @@ public class  Button extends Control<UnoButtonControl>  {
 	}
 
 	public void setText(String text) {
-		handle.setText(text);
-	}}
+		getHandle().setText(text);
+	}
+
+	@Override
+	protected UnoButtonControl getHandle() {
+		return (UnoButtonControl) handle;
+	}
+}

@@ -4,7 +4,7 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.uno.*;
 
-public abstract class Scrollable extends Control<UnoScrollableControl> {
+public abstract class Scrollable extends Control {
 	ScrollBar horizontalBar, verticalBar;
 
 	Scrollable() {
