@@ -12,7 +12,7 @@ public class UnoButtonControl extends UnoControl{
 	XButton xButton;
 
 	public UnoButtonControl(UnoControl parent) {
-		this.parent = parent;
+		super(parent);
 
 		XComponentContext xContext = UnoLoader.xContext;
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
@@ -108,8 +108,8 @@ public class UnoButtonControl extends UnoControl{
 	}
 
 	@Override
-	public XWindowPeer getPeer() {
-		return parent.getPeer();
+	protected XWindowPeer getPeer() {
+		return getParent().getPeer();
 	}
 
 }

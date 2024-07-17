@@ -15,7 +15,7 @@ public class UnoProgressBar extends UnoControl {
 	private int max;
 
 	public UnoProgressBar(UnoControl parent) {
-		this.parent = parent;
+		super(parent);
 
 		XComponentContext xContext = UnoLoader.xContext;
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
@@ -71,8 +71,8 @@ public class UnoProgressBar extends UnoControl {
 	}
 
 	@Override
-	public XWindowPeer getPeer() {
-		return parent.getPeer();
+	protected XWindowPeer getPeer() {
+		return getParent().getPeer();
 	}
 
 	@Override

@@ -7,12 +7,20 @@ import com.sun.star.uno.*;
 
 public abstract class UnoControl {
 
-	boolean disposed = false;
+	private final UnoControl parent;
 
-	UnoControl parent;
+	boolean disposed = false;
 
 	static {
 		UnoLoader.init();
+	}
+
+	public UnoControl(UnoControl parent) {
+		this.parent = parent;
+	}
+
+	protected UnoControl getParent() {
+		return parent;
 	}
 
 	protected static <T> T qi(Class<T> aType, Object o) {
@@ -52,7 +60,7 @@ public abstract class UnoControl {
 		setBounds(new Rectangle(current.x, current.y, width, height));
 	}
 
-	public abstract XWindowPeer getPeer();
-	
+	protected abstract XWindowPeer getPeer();
+
 	protected abstract XWindow getWindow();
 }

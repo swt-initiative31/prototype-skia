@@ -8,12 +8,11 @@ import com.sun.star.uno.Exception;
 
 public class UnoLabelControl extends UnoControl {
 
-	private final UnoControl parent;
-	XFixedText xFixedText;
+	private XFixedText xFixedText;
 	private XControl xControl;
 
 	public UnoLabelControl(UnoControl parent) {
-		this.parent = parent;
+		super(parent);
 
 		XComponentContext xContext = UnoLoader.xContext;
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
@@ -87,7 +86,7 @@ public class UnoLabelControl extends UnoControl {
 	}
 
 	@Override
-	public XWindowPeer getPeer() {
-		return parent.getPeer();
+	protected XWindowPeer getPeer() {
+		return getParent().getPeer();
 	}
 }

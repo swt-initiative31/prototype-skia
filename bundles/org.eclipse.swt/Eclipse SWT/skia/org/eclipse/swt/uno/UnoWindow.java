@@ -10,7 +10,7 @@ public class UnoWindow extends UnoScrollableControl {
 	XTopWindow tw;
 
 	public UnoWindow() {
-		super();
+		super(null);
 //		createDialog(UnoLoader.xMCF);
 		createWindow();
 
@@ -137,7 +137,7 @@ public class UnoWindow extends UnoScrollableControl {
 	}
 
 	@Override
-	public XWindowPeer getPeer() {
+	protected XWindowPeer getPeer() {
 		return p;
 	}
 
