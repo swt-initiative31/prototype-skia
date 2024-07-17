@@ -49,4 +49,15 @@ public abstract class UnoControl {
 		disposed = true;
 	}
 
+	public void setLocation(int x, int y) {
+		Rectangle current = getBounds();
+		setBounds(new Rectangle(x, y, current.width, current.height));
+	}
+
+	public void setSize(int width, int height) {
+		Rectangle current = getBounds();
+		setBounds(new Rectangle(current.x, current.y, width, height));
+	}
+
+
 }

@@ -2,8 +2,9 @@ package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.uno.*;
 
-public abstract class Scrollable extends Control {
+public abstract class Scrollable extends Control<UnoScrollableControl> {
 	ScrollBar horizontalBar, verticalBar;
 
 	Scrollable() {
@@ -46,7 +47,7 @@ public abstract class Scrollable extends Control {
 	 * @see Widget#getStyle
 	 */
 	public Scrollable(Composite parent, int style) {
-		super(parent, style);
+		super(parent, new UnoScrollableControl() ,style);
 	}
 
 	@Override

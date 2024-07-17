@@ -5,9 +5,9 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.uno.*;
 
-public abstract class Control extends Widget {
+public abstract class Control <T extends UnoControl> extends Widget {
 
-	public UnoControl handle;
+	public T handle;
 
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
@@ -18,7 +18,7 @@ public abstract class Control extends Widget {
 	Font font;
 
 	Control() {
-		/* Do nothing */
+		handle = null;
 	}
 
 	/**
@@ -57,8 +57,9 @@ public abstract class Control extends Widget {
 	 * @see Widget#checkSubclass
 	 * @see Widget#getStyle
 	 */
-	public Control(Composite parent, int style) {
+	public Control(Composite parent, T handle, int style) {
 		super(parent, style);
+		this.handle = handle;
 		this.parent = parent;
 		createWidget();
 	}
@@ -438,16 +439,69 @@ public abstract class Control extends Widget {
 		Display display = this.display;
 		Control oldIgnoreFocusControl = display.ignoreFocusControl;
 		display.ignoreFocusControl = this;
-		UnoControl topView = topView();
-//      ToDo
-//		if (move && resize) {
-//			topView.setBounds(x, y, width, height);
-//		} else if (move) {
-//			topView.setLocation(x, y);
-//		} else if (resize) {
-//			topView.setSize(width, height);
-//		}
+		if (move && resize) {
+			handle.setBounds(new Rectangle(x, y, width, height));
+		} else if (move) {
+			handle.setLocation(x, y);
+		} else if (resize) {
+			handle.setSize(width, height);
+		}
 		display.ignoreFocusControl = oldIgnoreFocusControl;
+	}
+
+	/**
+	 * Sets the receiver's size to the point specified by the arguments.
+	 * <p>
+	 * Note: Attempting to set the width or height of the
+	 * receiver to a negative number will cause that
+	 * value to be set to zero instead.
+	 * </p>
+	 * <p>
+	 * Note: On GTK, attempting to set the width or height of the
+	 * receiver to a number higher or equal 2^14 will cause them to be
+	 * set to (2^14)-1 instead.
+	 * </p>
+	 *
+	 * @param width the new width in points for the receiver
+	 * @param height the new height in points for the receiver
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setSize (int width, int height) {
+		checkWidget();
+		setBounds (0, 0, Math.max (0, width), Math.max (0, height), false, true);
+	}
+
+	/**
+	 * Sets the receiver's size to the point specified by the argument.
+	 * <p>
+	 * Note: Attempting to set the width or height of the
+	 * receiver to a negative number will cause them to be
+	 * set to zero instead.
+	 * </p>
+	 * <p>
+	 * Note: On GTK, attempting to set the width or height of the
+	 * receiver to a number higher or equal 2^14 will cause them to be
+	 * set to (2^14)-1 instead.
+	 * </p>
+	 *
+	 * @param size the new size in points for the receiver
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the point is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setSize (Point size) {
+		checkWidget ();
+		if (size == null) error (SWT.ERROR_NULL_ARGUMENT);
+		setBounds (0, 0, Math.max (0, size.x), Math.max (0, size.y), false, true);
 	}
 
 	/**
@@ -567,6 +621,24 @@ public abstract class Control extends Widget {
 		TypedListener typedListener = new TypedListener (listener);
 		addListener (SWT.Resize,typedListener);
 		addListener (SWT.Move,typedListener);
+	}
+
+	/**
+	 * Sets the receiver's location to the point specified by
+	 * the arguments which are relative to the receiver's
+	 * parent (or its display if its parent is null), unless
+	 * the receiver is a shell. In this case, the point is
+	 * relative to the display.
+	 *
+	 * @param location the new location for the receiver
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setLocation (Point location) {
+		setLocation(location.x, location.y);
 	}
 
 	/**

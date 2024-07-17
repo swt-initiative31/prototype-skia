@@ -7,6 +7,7 @@ import java.util.function.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.uno.*;
 
@@ -144,6 +145,10 @@ public class Display extends Device {
 	int loopCount;
 
 	GCData[] contexts;
+	private Image errorIcon;
+	private Image infoIcon;
+	private Image questionIcon;
+	private Image warningIcon;
 
 	/**
 	 * Constructs a new instance of this class.
@@ -903,4 +908,50 @@ public class Display extends Device {
 //		object.performSelectorOnMainThread(OS.sel_release, null, false);
 	}
 
+	public Image getSystemImage(int id) {
+		checkDevice();
+		switch (id) {
+		case SWT.ICON_ERROR: {
+			if (errorIcon != null)
+				return errorIcon;
+			return errorIcon = extracted(id);
+		}
+		case SWT.ICON_WORKING:
+		case SWT.ICON_INFORMATION: {
+			if (infoIcon != null)
+				return infoIcon;
+			return infoIcon = extracted(id);
+		}
+		case SWT.ICON_QUESTION: {
+			if (questionIcon != null)
+				return questionIcon;
+			return questionIcon = extracted(id);
+		}
+		case SWT.ICON_WARNING: {
+			if (warningIcon != null)
+				return warningIcon;
+			return warningIcon = extracted(id);
+		}
+		}
+		return null;
+	}
+
+	private Image extracted(int id) {
+		// TODO (visjee) get the proper image/icon from the system based on the
+		// parameter
+
+		// Create an image with a white background
+		Image image = new Image(this, 200, 200);
+		GC gc = new GC(image);
+		gc.setBackground(getSystemColor(SWT.COLOR_WHITE));
+		gc.fillRectangle(0, 0, 200, 200);
+
+		// Draw an oval shape on the image
+		gc.setBackground(getSystemColor(SWT.COLOR_BLACK));
+		gc.fillOval(50, 50, 100, 100);
+
+		// Dispose of the GC
+		gc.dispose();
+		return image;
+	}
 }

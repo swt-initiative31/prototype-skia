@@ -36,8 +36,11 @@ public static void main(String[] args) {
 	shell.setLayout (new GridLayout());
 	Button button = new Button(shell, SWT.PUSH);
 	button.setImage(image);
-	button.setText("Button");
-	shell.setSize(300, 300);
+	button.setText("Button fede");
+	button.setSize(100, 50);
+	button.setLocation(30, 10);
+
+	shell.setSize(300, 500);
 	shell.open();
 	while (!shell.isDisposed ()) {
 		if (!display.readAndDispatch ()) display.sleep ();

@@ -8,19 +8,17 @@ import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 import com.sun.star.uno.Exception;
 
-public class UnoButtonControl {
-	private final UnoWindow instance;
-	XWindow w;
+public class UnoButtonControl extends UnoControl{
 	XButton xButton;
 
-	public UnoButtonControl(UnoWindow instance) {
-		this.instance = instance;
+	public UnoButtonControl(UnoControl parent) {
+		this.parent = parent;
 
 		XComponentContext xContext = UnoLoader.xContext;
 		XMultiComponentFactory xMCF = UnoLoader.xMCF;
 		XToolkit xToolkit = UnoLoader.xToolkit;
 
-		XWindowPeer windowPeer = instance.getPeer();
+		XWindowPeer windowPeer = parent.getPeer();
 
 		Object buttonControl;
 		try {
@@ -66,6 +64,7 @@ public class UnoButtonControl {
 		xButton.setLabel(text);
 	}
 
+	@Override
 	public void setBounds(Rectangle rect) {
 
 		w.setPosSize(rect.x, rect.y, rect.width, rect.height, com.sun.star.awt.PosSize.POSSIZE);

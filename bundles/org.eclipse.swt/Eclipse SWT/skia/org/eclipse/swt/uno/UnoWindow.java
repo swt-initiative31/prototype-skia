@@ -3,7 +3,7 @@ package org.eclipse.swt.uno;
 import com.sun.star.awt.*;
 import com.sun.star.lang.*;
 
-public class UnoWindow extends UnoControl {
+public class UnoWindow extends UnoScrollableControl {
 
 	public UnoWindow() {
 		super();

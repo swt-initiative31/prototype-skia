@@ -449,6 +449,4 @@ public class Shell extends Decorations {
 		// TODO Auto-generated method stub
 
 	}
-
-
 }

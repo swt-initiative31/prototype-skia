@@ -38,11 +38,10 @@ import org.eclipse.swt.uno.*;
  *      information</a>
  * @noextend This class is not intended to be subclassed by clients.
  */
-public class Label extends Control {
+public class Label extends Control<UnoLabelControl> {
 	String text = "";
 	Image image;
 	boolean isImageMode; // Resolves ambiguity when both image and text are set
-	private UnoLabelControl unoControl;
 	static final int MARGIN = 4;
 
 	/**
@@ -89,8 +88,7 @@ public class Label extends Control {
 	 * @see Widget#getStyle
 	 */
 	public Label(Composite parent, int style) {
-		super(parent, checkStyle(style));
-		unoControl = new UnoLabelControl(parent.handle);
+		super(parent, new UnoLabelControl(parent.handle), checkStyle(style));
 	}
 
 	static int checkStyle(int style) {
@@ -285,9 +283,7 @@ public class Label extends Control {
 	public void setText(String string) {
 		checkWidget();
 
-		unoControl.setText(string);
-
-
+		handle.setText(string);
 	}
 
 	void updateStyleBits(boolean isEnabled) {

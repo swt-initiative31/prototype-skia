@@ -67,6 +67,22 @@ public class Composite extends Scrollable {
 	}
 
 	/**
+	 * Sets the layout which is associated with the receiver to be
+	 * the argument which may be null.
+	 *
+	 * @param layout the receiver's new layout or null
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setLayout (Layout layout) {
+		checkWidget ();
+		this.layout = layout;
+	}
+
+	/**
 	 * If the argument is <code>true</code>, causes subsequent layout
 	 * operations in the receiver or any of its children to be ignored.
 	 * No layout of any kind can occur in the receiver or any of its

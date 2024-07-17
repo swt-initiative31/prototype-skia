@@ -158,7 +158,7 @@ void ignoreNonDisposed() {
 }
 
 void init() {
-	if (device.tracking) device.new_Object(this);
+//	if (device.tracking) device.new_Object(this); // TODO (VISJEE) can't do, no devices yet
 }
 
 void initNonDisposeTracking() {

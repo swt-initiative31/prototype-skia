@@ -10,8 +10,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="lib" path="uno_jar/libreoffice.jar"/>
-	<classpathentry kind="lib" path="uno_jar/unoloader.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program"/>
+	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/org/libreoffice/libreoffice/24.2.3/libreoffice-24.2.3.jar" sourcepath="D:/dev/tools/maven/repository/org/libreoffice/libreoffice/24.2.3/libreoffice-24.2.3-sources.jar"/>
+	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/org/libreoffice/unoloader/24.2.3/unoloader-24.2.3.jar" sourcepath="D:/dev/tools/maven/repository/org/libreoffice/unoloader/24.2.3/unoloader-24.2.3-sources.jar"/>
+	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/io/github/humbleui/skija-shared/0.116.2/skija-shared-0.116.2.jar" sourcepath="D:/dev/tools/maven/repository/io/github/humbleui/skija-shared/0.116.2/skija-shared-0.116.2-sources.jar"/>
+	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/io/github/humbleui/skija-windows-x64/0.116.2/skija-windows-x64-0.116.2.jar" sourcepath="D:/dev/tools/maven/repository/io/github/humbleui/skija-windows-x64/0.116.2/skija-windows-x64-0.116.2-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
