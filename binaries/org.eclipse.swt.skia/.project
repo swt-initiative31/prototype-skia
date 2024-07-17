@@ -91,6 +91,11 @@
 			<type>2</type>
 			<locationURI>SWT_HOST_PLUGIN/Eclipse%20SWT%20WebKit</locationURI>
 		</link>
+		<link>
+			<name>Eclipse SWT Snippets</name>
+			<type>2</type>
+			<locationURI>SWT_HOST_PLUGIN/Eclipse%20SWT%20Snippets</locationURI>
+		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
