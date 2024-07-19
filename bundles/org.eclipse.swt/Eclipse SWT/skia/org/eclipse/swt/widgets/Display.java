@@ -150,6 +150,8 @@ public class Display extends Device implements Executor {
 	private Image infoIcon;
 	private Image questionIcon;
 	private Image warningIcon;
+	private Monitor[] monitors;
+	private Monitor primaryMonitor;
 
 	/**
 	 * Constructs a new instance of this class.
@@ -235,7 +237,7 @@ public class Display extends Device implements Executor {
 	void createDisplay (DeviceData data) {
 		// I guess this is not necessary for Swing, but most probably for UNO
 	}
-	
+
 	/**
 	 * Executes the given runnable in the user-interface thread of this Display.
 	 * <ul>
@@ -307,7 +309,7 @@ public class Display extends Device implements Executor {
 			synchronizer.asyncExec (runnable);
 		}
 	}
-	
+
 	/**
 	 * Causes the <code>run()</code> method of the runnable to
 	 * be invoked by the user-interface thread at the next
@@ -338,7 +340,7 @@ public class Display extends Device implements Executor {
 		}
 		synchronizer.syncExec (runnable);
 	}
-	
+
 	static void register (Display display) {
 		synchronized (Device.class) {
 			for (int i=0; i<Displays.length; i++) {
@@ -1057,5 +1059,40 @@ public class Display extends Device implements Executor {
 		// Dispose of the GC
 		gc.dispose();
 		return image;
+	}
+
+	public Monitor[] getMonitors() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+
+		if (monitors == null) {
+			monitors = new Monitor[]{getPrimaryMonitor()};
+		}
+
+		return monitors;
+	}
+
+	/**
+	 * Returns the primary monitor for that device.
+	 *
+	 * @return the primary monitor
+	 *
+	 * @since 3.0
+	 */
+	public Monitor getPrimaryMonitor () {
+		checkDevice ();
+		// The current implementation is bad
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		if (primaryMonitor == null) {
+			primaryMonitor = new Monitor();
+			primaryMonitor.clientX = 0;
+			primaryMonitor.clientY = 0;
+			primaryMonitor.width = 800;
+			primaryMonitor.height = 600;
+			primaryMonitor.clientHeight = primaryMonitor.height - 20;
+			primaryMonitor.clientWidth = primaryMonitor.width - 20;
+			primaryMonitor.zoom = 100;
+		}
+
+		return primaryMonitor;
 	}
 }
