@@ -126,4 +126,20 @@ public class  Button extends Control  {
 		eventTable.unhook (SWT.Selection, listener);
 		eventTable.unhook (SWT.DefaultSelection,listener);
 	}
+
+	public boolean getSelection() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return false;
+
+	}
+
+	public void setAlignment(int alignment) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+
+	}
+
+	public void setSelection(boolean b) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+
+	}
 }
