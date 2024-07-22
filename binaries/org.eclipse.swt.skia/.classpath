@@ -12,9 +12,42 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program"/>
-	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/org/libreoffice/libreoffice/24.2.3/libreoffice-24.2.3.jar" sourcepath="D:/dev/tools/maven/repository/org/libreoffice/libreoffice/24.2.3/libreoffice-24.2.3-sources.jar"/>
-	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/org/libreoffice/unoloader/24.2.3/unoloader-24.2.3.jar" sourcepath="D:/dev/tools/maven/repository/org/libreoffice/unoloader/24.2.3/unoloader-24.2.3-sources.jar"/>
-	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/io/github/humbleui/skija-shared/0.116.2/skija-shared-0.116.2.jar" sourcepath="D:/dev/tools/maven/repository/io/github/humbleui/skija-shared/0.116.2/skija-shared-0.116.2-sources.jar"/>
-	<classpathentry kind="lib" path="D:/dev/tools/maven/repository/io/github/humbleui/skija-windows-x64/0.116.2/skija-windows-x64-0.116.2.jar" sourcepath="D:/dev/tools/maven/repository/io/github/humbleui/skija-windows-x64/0.116.2/skija-windows-x64-0.116.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/bsh.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/commonwizards.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/flow-engine.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/flute-1.1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/form.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/hsqldb.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/java_uno.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/js.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/juh.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/jurt.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/libbase-1.1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/libfonts-1.1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/libformula-1.1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/liblayout.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/libloader-1.1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/libreoffice.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/librepository-1.1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/libserializer-1.1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/libxml-1.1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/officebean.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/query.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/report.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/reportbuilder.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/reportbuilderwizard.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/ridl.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/sac.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/ScriptFramework.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/ScriptProviderForBeanShell.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/ScriptProviderForJava.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/ScriptProviderForJavaScript.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/sdbc_hsqldb.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/smoketest.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/table.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/unoil.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/unoloader.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/xmerge.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/LibreOffice/program/classes/XMergeBridge.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -3,15 +3,21 @@ package org.eclipse.swt.widgets;
 import javax.swing.*;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.uno.*;
 
 public abstract class Composite extends Scrollable {
 	Layout layout;
 	int layoutCount, backgroundMode;
+	UnoWindow window ;
 
 
 	public Composite(Composite parent, int style) {
 
 		super(parent, style);
+
+		window = new UnoWindow( parent.getHandle() , style );
+
+
 
 	}
 

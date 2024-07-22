@@ -1,4 +1,4 @@
-package org.eclipse.swt.uno;
+package org.eclipse.swt.snippets;
 
 import java.lang.RuntimeException;
 
@@ -9,7 +9,7 @@ import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 import com.sun.star.uno.Exception;
 
-public class UnoLoader {
+public class LocalUnoLoader {
 
 	private static boolean loaded = false;
 
@@ -24,7 +24,7 @@ public class UnoLoader {
 	}
 
 	static {
-		UnoLoader.init();
+		LocalUnoLoader.init();
 	}
 
 
