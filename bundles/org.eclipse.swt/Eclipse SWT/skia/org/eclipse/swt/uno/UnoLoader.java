@@ -13,15 +13,20 @@ public class UnoLoader {
 
 	private static boolean loaded = false;
 
-	 static XComponentContext xContext;
-	 static XMultiComponentFactory xMCF;
-	 static XMultiServiceFactory xMSF;
-	 static XToolkit xToolkit;
-	 static XDesktop xDesktop;
-
+	public static XComponentContext xContext;     //TODO Remove Public
+	public static XMultiComponentFactory xMCF;    //TODO Remove Public
+	public static XMultiServiceFactory xMSF;      //TODO Remove Public
+	public static XToolkit xToolkit;              //TODO Remove Public
+	public static XDesktop xDesktop;              //TODO Remove Public
+                                                  //TODO Remove Public
 	private static <T> T qi(Class<T> aType, Object o) {
 		return UnoRuntime.queryInterface(aType, o);
 	}
+
+	static {
+		UnoLoader.init();
+	}
+
 
 	public static synchronized void init() {
 
