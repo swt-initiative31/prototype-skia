@@ -62,6 +62,7 @@ import org.eclipse.swt.uno.*;
 public final class GC extends Resource {
 	public UnoControl handle; //TODO set the right type
 	public GCData data;
+	private Drawable drawable;
 
 	final static int FOREGROUND = 1 << 0;
 	final static int BACKGROUND = 1 << 1;
@@ -986,7 +987,33 @@ public final class GC extends Resource {
 	 * @see #drawRectangle(int, int, int, int)
 	 */
 	public void fillRectangle (int x, int y, int width, int height) {
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+//		if (handle == null) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
+////			if (width < 0) {
+////				x = x + width;
+////				width = -width;
+////			}
+////			if (height < 0) {
+////				y = y + height;
+////				height = -height;
+////			}
+////			NSRect rect = new NSRect();
+////			rect.x = x;
+////			rect.y = y;
+////			rect.width = width;
+////			rect.height = height;
+////			NSBezierPath path = data.path;
+////			path.appendBezierPathWithRect(rect);
+////			Pattern pattern = data.backgroundPattern;
+////			if (pattern != null) setPatternPhase(pattern);
+////			if (pattern != null && pattern.gradient != null) {
+////				fillPattern(path, pattern);
+////			} else {
+////				path.fill();
+////			}
+////			path.removeAllPoints();
+//		} finally {
+////			uncheckGC(pool);
+//		}
 	}
 
 
@@ -1007,7 +1034,7 @@ public final class GC extends Resource {
 	 */
 	public void fillRectangle (Rectangle rect) {
 		if (rect == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		fillRectangle(rect.x, rect.y, rect.width, rect.height);
 	}
 
 	/**
@@ -1528,45 +1555,21 @@ public final class GC extends Resource {
 	}
 
 	void init(Drawable drawable, GCData data, UnoControl hDC) {
-//		int foreground = data.foreground;
-//		if (foreground != -1) {
-//			data.state &= ~(FOREGROUND | FOREGROUND_TEXT | PEN);
-//		} else {
-//			data.foreground = OS.GetTextColor(hDC);
-//		}
-//		int background = data.background;
-//		if (background != -1) {
-//			data.state &= ~(BACKGROUND | BACKGROUND_TEXT | BRUSH);
-//		} else {
-//			data.background = OS.GetBkColor(hDC);
-//		}
-//		data.state &= ~(NULL_BRUSH | NULL_PEN);
-//		Font font = data.font;
-//		if (font != null) {
-//			data.state &= ~FONT;
-//		} else {
-//			data.font = Font.win32_new(device, OS.GetCurrentObject(hDC, OS.OBJ_FONT));
-//		}
-//		if (data.nativeZoom == 0) {
-//			data.nativeZoom = extractZoom(hDC);
-//		}
+		if (data.foreground != null) data.state &= ~(FOREGROUND | FOREGROUND_FILL);
+		if (data.background != null)  data.state &= ~BACKGROUND;
+//		if (data.font != null) data.state &= ~FONT;
+		data.state &= ~DRAW_OFFSET;
+
 //		Image image = data.image;
-//		if (image != null) {
-//			data.hNullBitmap = OS.SelectObject(hDC, Image.win32_getHandle(image, DPIUtil.getZoomForAutoscaleProperty(data.nativeZoom)));
-//			image.memGC = this;
-//		}
-//		int layout = data.layout;
-//		if (layout != -1) {
-//			int flags = OS.GetLayout(hDC);
-//			if ((flags & OS.LAYOUT_RTL) != (layout & OS.LAYOUT_RTL)) {
-//				flags &= ~OS.LAYOUT_RTL;
-//				OS.SetLayout(hDC, flags | layout);
-//			}
-//			if ((data.style & SWT.RIGHT_TO_LEFT) != 0) data.style |= SWT.MIRRORED;
-//		}
-//		this.drawable = drawable;
+//		if (image != null) image.memGC = this;
+		this.drawable = drawable;
 		this.data = data;
-		handle = hDC;
+//		handle = new NSGraphicsContext(context);
+//		handle.retain();
+//		handle.saveGraphicsState();
+//		data.path = NSBezierPath.bezierPath();
+//		data.path.setWindingRule(data.fillRule == SWT.FILL_WINDING ? OS.NSNonZeroWindingRule : OS.NSEvenOddWindingRule);
+//		data.path.retain();
 	}
 	/**
 	 * Returns an integer hash code for the receiver. Any two

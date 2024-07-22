@@ -15,6 +15,7 @@ package org.eclipse.swt.graphics;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.internal.*;
+import org.eclipse.swt.uno.*;
 
 /**
  * This class is the abstract superclass of all device objects, such as the
@@ -44,6 +45,9 @@ public abstract class Device implements Drawable{
 
 	/* System Font */
 	Font systemFont;
+
+	UnoDevice unoDevice;
+
 
 	protected static Device CurrentDevice;
 	protected static Runnable DeviceFinder;
@@ -77,6 +81,7 @@ public abstract class Device implements Drawable{
 	 */
 	public Device(DeviceData data) {
 		synchronized (Device.class) {
+			unoDevice = new UnoDevice();
 			if (data != null) {
 				debug = data.debug;
 				tracking = data.tracking;
@@ -458,6 +463,7 @@ public abstract class Device implements Drawable{
 			errors = newErrors;
 		}
 	}
+
 
 
 }

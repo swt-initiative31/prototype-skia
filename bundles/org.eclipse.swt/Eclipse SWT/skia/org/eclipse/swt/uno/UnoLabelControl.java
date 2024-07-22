@@ -19,6 +19,7 @@ public class UnoLabelControl extends UnoControl {
 		XToolkit xToolkit = UnoLoader.xToolkit;
 
 		XWindowPeer parentWindowPeer = parent.getPeer();
+		parentWindowPeer.invalidate(InvalidateStyle.NOERASE);
 
 		Object fixedTextModel;
 		try {
@@ -36,37 +37,121 @@ public class UnoLabelControl extends UnoControl {
 			propFixedText.setPropertyValue("Name", "myText");
 			propFixedText.setPropertyValue("Label", "Dies ist ein Text");
 
-//		propFixedText.getPropertySetInfo();
+//			// Erzeugung der UnoControlFixedText-Instanz und Einsetzen des FixedText-Models
+//			Object oControl = xMCF.createInstanceWithContext("com.sun.star.awt.UnoControlFixedText", xContext);
+//			xControl = UnoRuntime.queryInterface(XControl.class, oControl);
+//			// das Modell setzen
+//			xControl.setModel(UnoRuntime.queryInterface(XControlModel.class, fixedTextModel));
+//
+//			xFixedText = UnoRuntime.queryInterface(XFixedText.class, xControl);
+//
+//			xFixedText.setText("1234");
+//
+//			xControl.createPeer(xToolkit, parentWindowPeer);
+//
+//
+			com.sun.star.awt.WindowDescriptor aDescriptor = new com.sun.star.awt.WindowDescriptor();
 
-			// Erzeugung der UnoControlFixedText-Instanz und Einsetzen des FixedText-Models
-			Object oControl = xMCF.createInstanceWithContext("com.sun.star.awt.UnoControlFixedText", xContext);
-			xControl = UnoRuntime.queryInterface(XControl.class, oControl);
-			// das Modell setzen
-			xControl.setModel(UnoRuntime.queryInterface(XControlModel.class, fixedTextModel));
+			aDescriptor.Type = com.sun.star.awt.WindowClass.CONTAINER;
+			aDescriptor.WindowServiceName = "window";
+			aDescriptor.ParentIndex = -1;
+			aDescriptor.Parent = parentWindowPeer;
+			aDescriptor.Bounds = new com.sun.star.awt.Rectangle(0, 0, 50, 50);
 
-			xFixedText = UnoRuntime.queryInterface(XFixedText.class, xControl);
+//			aDescriptor.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER
+//					| com.sun.star.awt.WindowAttribute.MOVEABLE | com.sun.star.awt.WindowAttribute.SIZEABLE
+//					| com.sun.star.awt.WindowAttribute.CLOSEABLE;
 
-			xFixedText.setText("1234");
+			XWindowPeer graphWinPeer = UnoLoader.xToolkit.createWindow(aDescriptor);
+			graphWinPeer.invalidate(InvalidateStyle.NOERASE);
+			XWindow graphWin = qi(com.sun.star.awt.XWindow.class, graphWinPeer);
+			graphWin.setVisible(true);
 
-			// test for setting colors: blue
 
-			xControl.createPeer(xToolkit, parentWindowPeer);
+			XWindow pWin = UnoRuntime.queryInterface(XWindow.class, parentWindowPeer);
+			pWin.setVisible(true);
+//
+//			XWindow win = UnoRuntime.queryInterface(XWindow.class, xControl.getPeer());
+			XDevice dev = UnoRuntime.queryInterface(XDevice.class, graphWin);
+
+//			win.setVisible(true);
+
+			XGraphics gr = dev.createGraphics();
+			gr.setLineColor(1234151);
+			gr.drawRect(0, 0, 20, 20);
+
+
+//			XCanvas xcan = UnoRuntime.queryInterface(XCanvas.class, gr);
+//			System.out.println("XCanvas: " + xcan);
+
+			graphWin.addPaintListener(new XPaintListener() {
+
+				@Override
+				public void disposing(EventObject arg0) {
+
+				}
+
+				@Override
+				public void windowPaint(PaintEvent arg0) {
+
+//					Object o = arg0.Source;
+//					Rectangle updateRect = arg0.UpdateRect;
+//					XWindow w = (XWindow)o;
+//
+//					XWindowPeer peer = qi(XWindowPeer.class, w);
+//
+//					w.setVisible(true);
+//
+//					XDevice dev = UnoRuntime.queryInterface(XDevice.class, o);
+//
+//					XGraphics gr = dev.createGraphics();
+//					gr.setLineColor(1234151);
+//					gr.setFillColor(255*255*255);
+//					gr.drawRect(0, 0, updateRect.Width, updateRect.Height);
+
+
+				}
+			});
+
+
+
+			Object canvasFactory = xMCF.createInstanceWithContext("com.sun.star.rendering.CanvasFactory", xContext);
+			XMultiComponentFactory xCanvasFactory = UnoRuntime.queryInterface(XMultiComponentFactory.class, canvasFactory);
+
+
+//			UnoDevice device = new UnoDevice();
+//
+//			XGraphics graphics = device.getDevice().createGraphics();
+//			graphics.drawRect(10, 10, 20, 20);
+//
+//
+//			Object canvas = xCanvasFactory.createInstanceWithContext("com.sun.star.rendering.Canvas", xContext);
+//			XCanvas xCanvas = UnoRuntime.queryInterface(XCanvas.class, canvas);
+
+//			xSimpleCanvas.drawRect(new RealRectangle2D(0,0,20,20));
+//			xCanvas.drawLine(new RealPoint2D(0,0),new RealPoint2D(20,20), null, null);
+
+//			System.out.println(xCanvas.getDevice().getPhysicalResolution().toString());
+
+//			XControl xCanvasControl = UnoRuntime.queryInterface(XControl.class, canvas);
+//			xCanvasControl.createPeer(xToolkit, parentWindowPeer);
+
 
 //		-------------------------------------- just some testing, not important...
-			XView view = xControl.getView();
-			if (view != null)
-				System.out.println("view: " + view.getSize().Height + "  " + view.getSize().Width);
-			else
-				System.out.println("view is null");
-
-			Object context = xControl.getContext();
-			System.out.println("Context: " + context);
-
-			XControlModel model = xControl.getModel();
-			System.out.println("XControlModel: " + model);
-
-			// There seems to be a bug, we have to reset the position...
-			getWindow().setPosSize(0, 0, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
+//			XView view = xControl.getView();
+//			if (view != null)
+//				System.out.println("view: " + view.getSize().Height + "  " + view.getSize().Width);
+//			else
+//				System.out.println("view is null");
+//
+//			Object context = xControl.getContext();
+//			System.out.println("Context: " + context);
+//
+//			XControlModel model = xControl.getModel();
+//			System.out.println("XControlModel: " + model);
+//
+//			// There seems to be a bug, we have to reset the position...
+//			getWindow().setPosSize(0, 0, 500, 500, com.sun.star.awt.PosSize.POSSIZE);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -11,10 +11,6 @@ public abstract class UnoControl {
 
 	boolean disposed = false;
 
-	static {
-		UnoLoader.init();
-	}
-
 	public UnoControl(UnoControl parent) {
 		this.parent = parent;
 	}

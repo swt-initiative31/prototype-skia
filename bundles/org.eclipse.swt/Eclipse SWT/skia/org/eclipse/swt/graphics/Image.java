@@ -180,16 +180,8 @@ public final class Image extends Resource implements Drawable {
 	 */
 	public Image(Device device, ImageData data) {
 		super(device);
-//		NSAutoreleasePool pool = null;
-//		if (!NSThread.isMainThread())
-//			pool = (NSAutoreleasePool) new NSAutoreleasePool().alloc().init();
-//		try {
-//			init(data);
+			init(data);
 			init();
-//		} finally {
-//			if (pool != null)
-//				pool.release();
-//		}
 	}
 
 	/**
@@ -234,14 +226,8 @@ public final class Image extends Resource implements Drawable {
 	 */
 	public Image(Device device, int width, int height) {
 		super(device);
-//		NSAutoreleasePool pool = null;
-//		if (!NSThread.isMainThread()) pool = (NSAutoreleasePool) new NSAutoreleasePool().alloc().init();
-		try {
-//			init(width, height);
-			init();
-		} finally {
-//			if (pool != null) pool.release();
-		}
+		init(width, height);
+		init();
 	}
 
 	/**
@@ -611,32 +597,46 @@ public final class Image extends Resource implements Drawable {
 		return DPIUtil.autoScaleImageData(device, getImageData(100), zoom, 100);
 	}
 
+	void init(ImageData imageData) {
+		if (imageData == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
+
+//		if (handle != null) handle.release();
+
+		init(imageData.width, imageData.height);
+//		if (alphaInfo_100 == null) alphaInfo_100 = new AlphaInfo();
+//		NSBitmapImageRep rep = createRepresentation(image, alphaInfo_100);
+//		handle.addRepresentation(rep);
+//		rep.release();
+//		handle.setCacheMode(OS.NSImageCacheNever);
+	}
+
+	void init(int width, int height) {
+		if (width <= 0 || height <= 0) {
+			SWT.error (SWT.ERROR_INVALID_ARGUMENT);
+		}
+		this.type = SWT.BITMAP;
+		this.width = width;
+		this.height = height;
+		handle = new UnoImage(this.device.unoDevice);
+		handle = handle.initWithSize(width, height);
+//
+//		handle = (NSImage)new NSImage().alloc();
+//		NSSize size = new NSSize();
+//		size.width = width;
+//		size.height = height;
+//		handle = handle.initWithSize(size);
+//		NSBitmapImageRep rep = (NSBitmapImageRep)new NSBitmapImageRep().alloc();
+//		rep = rep.initWithBitmapDataPlanes(0, width, height, 8, 3, false, false, OS.NSDeviceRGBColorSpace, OS.NSAlphaFirstBitmapFormat | OS.NSAlphaNonpremultipliedBitmapFormat, width * 4, 32);
+//		C.memset(rep.bitmapData(), 0xFF, width * height * 4);
+//		handle.addRepresentation(rep);
+//		rep.release();
+//		handle.setCacheMode(OS.NSImageCacheNever);
+//		if (alphaInfo_100 == null) alphaInfo_100 = new AlphaInfo();
+	}
+
 	public Rectangle getBounds() {
 		if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-		return getBounds (100);
+		return new Rectangle(0, 0, width, height);
 	}
-
-	Rectangle getBounds(int zoom) {
-		if (isDisposed()) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-		// Read the bounds in pixels from native layer.
-		Rectangle bounds = getBoundsInPixelsFromNative();
-		if (bounds != null && zoom != currentDeviceZoom) {
-			bounds = DPIUtil.autoScaleBounds(bounds, zoom, currentDeviceZoom);
-		}
-		return bounds;
-	}
-
-	private Rectangle getBoundsInPixelsFromNative() {
-
-		// TODO: UNO implementation
-		switch (type) {
-			case SWT.BITMAP:
-			case SWT.ICON:
-			default:
-				SWT.error(SWT.ERROR_INVALID_IMAGE);
-				return null;
-		}
-	}
-
 
 }
