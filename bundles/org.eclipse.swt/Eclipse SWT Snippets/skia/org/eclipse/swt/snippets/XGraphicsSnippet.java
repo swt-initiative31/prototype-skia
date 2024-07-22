@@ -3,7 +3,7 @@ package org.eclipse.swt.snippets;
 import com.sun.star.awt.*;
 import com.sun.star.uno.*;
 
-public class VCLSnippet {
+public class XGraphicsSnippet {
 
 	static int calls = 0;
 
@@ -26,47 +26,39 @@ public class VCLSnippet {
 		XWindowPeer peer = LocalUnoLoader.xToolkit.createWindow(aDescriptor);
 		XWindow w = UnoRuntime.queryInterface(com.sun.star.awt.XWindow.class, peer);
 
-		XTopWindow top = UnoRuntime.queryInterface(com.sun.star.awt.XTopWindow.class, peer);
-
 		w.setVisible(true);
 
-		short flags = com.sun.star.awt.InvalidateStyle.NOCHILDREN;
-		peer.invalidate(flags);
 		aDescriptor = null;
 
-		aDescriptor = new com.sun.star.awt.WindowDescriptor();
 
-		aDescriptor.Type = com.sun.star.awt.WindowClass.CONTAINER;
-		aDescriptor.WindowServiceName = "window";
-		aDescriptor.ParentIndex = 1;
-		aDescriptor.Parent = peer;
-		aDescriptor.Bounds = new com.sun.star.awt.Rectangle(0, 0, 400, 400);
+		com.sun.star.awt.WindowDescriptor childDesc  = new com.sun.star.awt.WindowDescriptor();
 
-		aDescriptor.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER
+		childDesc.Type = com.sun.star.awt.WindowClass.CONTAINER;
+		childDesc.WindowServiceName = "window";
+		childDesc.ParentIndex = 1;
+		childDesc.Parent = peer;
+		childDesc.Bounds = new com.sun.star.awt.Rectangle(0, 0, 400, 400);
+
+		childDesc.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER
 				| com.sun.star.awt.WindowAttribute.MOVEABLE | com.sun.star.awt.WindowAttribute.SIZEABLE
 				| com.sun.star.awt.WindowAttribute.CLOSEABLE;
 
-		XWindowPeer childPeer = LocalUnoLoader.xToolkit.createWindow(aDescriptor);
+		XWindowPeer childPeer = LocalUnoLoader.xToolkit.createWindow(childDesc);
 		XWindow childW = UnoRuntime.queryInterface(com.sun.star.awt.XWindow.class, childPeer);
 
-		short childFlag = com.sun.star.awt.InvalidateStyle.NOERASE;
 
-		childPeer.invalidate(childFlag);
 		childPeer.setBackground(255 * 255 * 255);
 		childW.setVisible(true);
-//		childW.setPosSize(0, 0, 100, 100, com.sun.star.awt.PosSize.POSSIZE);
-//		childPeer.invalidate(childFlag);
 
 		XDevice dev = UnoRuntime.queryInterface(XDevice.class, childW);
 
 		XGraphics gr = dev.createGraphics();
 		gr.setLineColor(1234151);
 		gr.setFillColor(1234151);
-//		gr.drawRect(0, 0, 100, 100);
 		gr.drawEllipse(0, 0, 100, 100);
 
-//		childPeer.invalidate(childFlag);
-//		peer.invalidate(com.sun.star.awt.InvalidateStyle.NOERASE);
+		// This circle vanishes after a resize or any kind of redraw.
+
 
 		w.addPaintListener(new XPaintListener() {
 
@@ -87,9 +79,7 @@ public class VCLSnippet {
 
 
 				calls++;
-//				XWindowPeer peer = UnoRuntime.queryInterface(XWindowPeer.class, w);
 
-//				w.setVisible(true);
 
 				XDevice dev = UnoRuntime.queryInterface(XDevice.class, o);
 

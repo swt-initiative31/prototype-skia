@@ -8,11 +8,12 @@ public class UnoWindow extends UnoScrollableControl {
 	XWindow w;
 	XWindowPeer p;
 	XTopWindow tw;
+	private int style;
 
 	public UnoWindow() {
 		super(null);
 //		createDialog(UnoLoader.xMCF);
-		createWindow();
+		createWindow(null);
 
 		getWindow().addWindowListener(new XWindowListener() {
 
@@ -103,32 +104,46 @@ public class UnoWindow extends UnoScrollableControl {
 
 	}
 
+	public UnoWindow(UnoControl unoControl, int style) {
+		super(unoControl);
+		this.style = style;
+
+		createWindow(  unoControl.getPeer() );
+	}
+
 	// This is most probably wrong. In UNO there isn't something like a content pane
 	public UnoWindow getContentPane() {
 		return this;
 	}
 
-	private void createWindow() {
+	private void createWindow(XWindowPeer topPeer) {
 		// Describe the properties of the container window.
 		// Tip: It is possible to use native window handle of a java window
 		// as parent for this. see chapter "OfficeBean" for further informations
 		com.sun.star.awt.WindowDescriptor aDescriptor = new com.sun.star.awt.WindowDescriptor();
 
-		aDescriptor.Type = com.sun.star.awt.WindowClass.TOP;
+		WindowClass type = null;
+
+		if(topPeer == null ) {
+			type = com.sun.star.awt.WindowClass.TOP;
+		}else {
+			type = com.sun.star.awt.WindowClass.CONTAINER;
+		}
+
+
+		aDescriptor.Type = type ;
 		aDescriptor.WindowServiceName = "window";
 		aDescriptor.ParentIndex = -1;
-		aDescriptor.Parent = null;
+		aDescriptor.Parent = topPeer;
 		aDescriptor.Bounds = new com.sun.star.awt.Rectangle(100, 100, 800, 800);
 
 		aDescriptor.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER
 				| com.sun.star.awt.WindowAttribute.MOVEABLE | com.sun.star.awt.WindowAttribute.SIZEABLE
 				| com.sun.star.awt.WindowAttribute.CLOSEABLE;
 
-		XWindowPeer parentPeer = UnoLoader.xToolkit.createWindow(aDescriptor);
-		w = qi(com.sun.star.awt.XWindow.class, parentPeer);
-
+		p = UnoLoader.xToolkit.createWindow(aDescriptor);
+		w = qi(com.sun.star.awt.XWindow.class, p);
 		tw = qi(XTopWindow.class, w);
-		p = qi(XWindowPeer.class, w);
 	}
 
 	@Override
