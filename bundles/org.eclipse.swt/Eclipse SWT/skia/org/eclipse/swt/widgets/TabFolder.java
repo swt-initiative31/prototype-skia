@@ -434,4 +434,9 @@ protected UnoControl getHandle() {
 	return null;
 
 }
+
+public void setFocus() {
+	System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+
+}
 }
