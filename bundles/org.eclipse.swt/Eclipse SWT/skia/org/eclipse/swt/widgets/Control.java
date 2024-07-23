@@ -718,21 +718,21 @@ public abstract class Control extends Widget implements Drawable {
 	}
 
 	public Color getBackground() {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 
 	public Color getForeground() {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 
 	public void setBackground(Color c) {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
 	public void setForeground(Color c) {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
 	/**
@@ -1240,20 +1240,19 @@ public abstract class Control extends Widget implements Drawable {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Causes the receiver to have the <em>keyboard focus</em>,
-	 * such that all keyboard events will be delivered to it.  Focus
-	 * reassignment will respect applicable platform constraints.
+	 * <<<<<<< HEAD Causes the receiver to have the <em>keyboard focus</em>, such
+	 * that all keyboard events will be delivered to it. Focus reassignment will
+	 * respect applicable platform constraints.
 	 *
-	 * @return <code>true</code> if the control got focus, and <code>false</code> if it was unable to.
-=======
-	 * Returns a point which is the result of converting the argument, which is
-	 * specified in display relative coordinates, to coordinates relative to the
-	 * receiver.
-	 * <p>
-	 * NOTE: To properly map a rectangle or a corner of a rectangle on a
-	 * right-to-left platform, use {@link Display#map(Control, Control, Rectangle)}.
-	 * </p>
+	 * @return <code>true</code> if the control got focus, and <code>false</code> if
+	 *         it was unable to. ======= Returns a point which is the result of
+	 *         converting the argument, which is specified in display relative
+	 *         coordinates, to coordinates relative to the receiver.
+	 *         <p>
+	 *         NOTE: To properly map a rectangle or a corner of a rectangle on a
+	 *         right-to-left platform, use
+	 *         {@link Display#map(Control, Control, Rectangle)}.
+	 *         </p>
 	 *
 	 * @param point the point to be translated (must not be null)
 	 * @return the translated coordinates
@@ -1563,7 +1562,7 @@ public abstract class Control extends Widget implements Drawable {
 	 */
 	public Font getFont() {
 		checkWidget();
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 
@@ -1585,7 +1584,7 @@ public abstract class Control extends Widget implements Drawable {
 	 */
 	public int getTextDirection() {
 		checkWidget();
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return SWT.LEFT_TO_RIGHT;
 	}
 
@@ -1623,7 +1622,7 @@ public abstract class Control extends Widget implements Drawable {
 		 * visible. The fix is to track the visibility state while drawing is turned off
 		 * and restore it when drawing is turned back on.
 		 */
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
 	/**
@@ -1769,7 +1768,7 @@ public abstract class Control extends Widget implements Drawable {
 	boolean dragDetect(int button, int count, int stateMask, int x, int y) {
 		if (button != 1 || count != 1)
 			return false;
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return false;
 	}
 
@@ -1804,19 +1803,20 @@ public abstract class Control extends Widget implements Drawable {
 		/* Do nothing */
 	}
 
-
 	public boolean setRadioFocus(boolean tabbing) {
 		return false;
 	}
-	public void setOrientation (int orientation) {
-		checkWidget ();
+
+	public void setOrientation(int orientation) {
+		checkWidget();
 		int flags = SWT.RIGHT_TO_LEFT | SWT.LEFT_TO_RIGHT;
-		if ((orientation & flags) == 0 || (orientation & flags) == flags) return;
+		if ((orientation & flags) == 0 || (orientation & flags) == flags)
+			return;
 		style &= ~SWT.MIRRORED;
 		style &= ~flags;
 		style |= orientation & flags;
 		style &= ~SWT.FLIP_TEXT_DIRECTION;
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
 	/**
@@ -1828,16 +1828,19 @@ public abstract class Control extends Widget implements Drawable {
 	 * that is consistent with the new orientation.
 	 * </p>
 	 * <p>
-	 * <b>Warning</b>: This API is currently only implemented on Windows.
-	 * It doesn't set the base text direction on GTK and Cocoa.
+	 * <b>Warning</b>: This API is currently only implemented on Windows. It doesn't
+	 * set the base text direction on GTK and Cocoa.
 	 * </p>
 	 *
 	 * @param textDirection the base text direction style
 	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
+	 * @exception SWTException
+	 *                         <ul>
+	 *                         <li>ERROR_WIDGET_DISPOSED - if the receiver has been
+	 *                         disposed</li>
+	 *                         <li>ERROR_THREAD_INVALID_ACCESS - if not called from
+	 *                         the thread that created the receiver</li>
+	 *                         </ul>
 	 *
 	 * @see SWT#LEFT_TO_RIGHT
 	 * @see SWT#RIGHT_TO_LEFT
@@ -1847,9 +1850,9 @@ public abstract class Control extends Widget implements Drawable {
 	 * @since 3.102
 	 */
 	public void setTextDirection(int textDirection) {
-		checkWidget ();
+		checkWidget();
 		textDirection &= (SWT.RIGHT_TO_LEFT | SWT.LEFT_TO_RIGHT);
-		updateTextDirection (textDirection);
+		updateTextDirection(textDirection);
 		if (textDirection == AUTO_TEXT_DIRECTION) {
 			state |= HAS_AUTO_DIRECTION;
 		} else {
@@ -1857,8 +1860,8 @@ public abstract class Control extends Widget implements Drawable {
 		}
 	}
 
-	boolean updateTextDirection (int textDirection) {
-		System.err.println(new IllegalStateException().getStackTrace());
+	boolean updateTextDirection(int textDirection) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return true;
 	}
 

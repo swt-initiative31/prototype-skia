@@ -114,7 +114,7 @@ public abstract class Canvas extends Composite {
 	 * @since 3.2
 	 */
 	public void drawBackground(GC gc, int x, int y, int width, int height) {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
 	/**

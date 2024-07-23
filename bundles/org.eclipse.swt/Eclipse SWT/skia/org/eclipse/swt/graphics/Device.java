@@ -465,14 +465,14 @@ public abstract class Device implements Drawable{
 	}
 
 	public int getDepth () {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 
 		return 0;
 	}
 
 	public Rectangle getClientArea() {
 
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 
@@ -480,7 +480,7 @@ public abstract class Device implements Drawable{
 	public Point getDPI () {
 		checkDevice ();
 		long hDC = internal_new_GC (null);
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		internal_dispose_GC (hDC, null);
 		return null;
 	}
@@ -492,7 +492,7 @@ public abstract class Device implements Drawable{
 
 	private Rectangle getBoundsInPixels () {
 		long hDC = internal_new_GC (null);
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		internal_dispose_GC (hDC, null);
 		return null;
 	}

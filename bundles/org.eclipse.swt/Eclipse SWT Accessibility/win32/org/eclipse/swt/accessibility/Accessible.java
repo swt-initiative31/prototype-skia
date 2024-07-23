@@ -137,7 +137,7 @@ public class Accessible {
 //		createIAccessible();
 //		AddRef();
 		
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
 	Accessible(Accessible parent, long iaccessible_address) {

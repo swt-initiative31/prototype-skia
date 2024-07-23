@@ -1410,7 +1410,7 @@ public class Display extends Device implements Executor {
 	public Control getFocusControl() {
 		checkDevice();
 
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 
 		return null;
 	}
@@ -1424,7 +1424,7 @@ public class Display extends Device implements Executor {
 
 	Rectangle getClientAreaInPixels() {
 		checkDevice();
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 
@@ -1434,7 +1434,7 @@ public class Display extends Device implements Executor {
 	}
 
 	Point getCursorLocationInPixels() {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 
@@ -1447,7 +1447,7 @@ public class Display extends Device implements Executor {
 
 	Rectangle getBoundsInPixels () {
 		checkDevice ();
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 
@@ -1459,7 +1459,7 @@ public class Display extends Device implements Executor {
 	}
 
 	Point mapInPixels (Control from, Control to, int x, int y) {
-		System.err.println(new IllegalStateException().getStackTrace());
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 		return null;
 	}
 

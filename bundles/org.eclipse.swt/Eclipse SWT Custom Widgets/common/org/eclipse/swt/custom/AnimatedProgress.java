@@ -209,14 +209,4 @@ public synchronized void stop() {
 	//checkWidget();
 	active = false;
 }
-@Override
-public long internal_new_GC(GCData data) {
-	System.err.println(new IllegalStateException().getStackTrace());
-	return 0;
-}
-@Override
-public void internal_dispose_GC(long handle, GCData data) {
-	System.err.println(new IllegalStateException().getStackTrace());
-
-}
 }
