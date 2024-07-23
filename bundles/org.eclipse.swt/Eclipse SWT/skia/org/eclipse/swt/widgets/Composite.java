@@ -24,6 +24,11 @@ public abstract class Composite extends Scrollable {
 	Composite () {
 	}
 
+	@Override
+	protected void checkSubclass () {
+		/* Do nothing - Subclassing is allowed */
+	}
+
 	/**
 	 * Returns a (possibly empty) array containing the receiver's children.
 	 * Children are returned in the order that they are drawn.  The topmost
