@@ -231,52 +231,6 @@ public final class Image extends Resource implements Drawable {
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
-	/**
-	 * Constructs an instance of this class, whose type is
-	 * <code>SWT.ICON</code>, from the two given <code>ImageData</code>
-	 * objects. The two images must be the same size. Pixel transparency
-	 * in either image will be ignored.
-	 * <p>
-	 * The mask image should contain white wherever the icon is to be visible,
-	 * and black wherever the icon is to be transparent. In addition,
-	 * the source image should contain black wherever the icon is to be
-	 * transparent.
-	 * </p>
-	 * <p>
-	 * You must dispose the image when it is no longer required.
-	 * </p>
-	 *
-	 * @param device the device on which to create the icon
-	 * @param source the color data for the icon
-	 * @param mask the mask data for the icon
-	 *
-	 * @exception IllegalArgumentException <ul>
-	 *    <li>ERROR_NULL_ARGUMENT - if device is null and there is no current device</li>
-	 *    <li>ERROR_NULL_ARGUMENT - if either the source or mask is null </li>
-	 *    <li>ERROR_INVALID_ARGUMENT - if source and mask are different sizes</li>
-	 * </ul>
-	 * @exception SWTError <ul>
-	 *    <li>ERROR_NO_HANDLES if a handle could not be obtained for image creation</li>
-	 * </ul>
-	 *
-	 * @see #dispose()
-	 */
-	public Image(Device device, ImageData source, ImageData mask) {
-		super(device);
-		if (source == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-		if (mask == null) SWT.error(SWT.ERROR_NULL_ARGUMENT);
-		if (source.width != mask.width || source.height != mask.height) {
-			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-		}
-//		initialNativeZoom = DPIUtil.getNativeDeviceZoom();
-//		this.dataAtBaseZoom = new ElementAtZoom<>(applyMask(source, ImageData.convertMask(mask)), 100);
-		source = DPIUtil.autoScaleUp(device, source);
-		mask = DPIUtil.autoScaleUp(device, mask);
-		mask = ImageData.convertMask(mask);
-//		init(this.device, this, source, mask, 100);
-		init();
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-	}
 
 	/**
 	 * Constructs an empty instance of this class with the specified width and
