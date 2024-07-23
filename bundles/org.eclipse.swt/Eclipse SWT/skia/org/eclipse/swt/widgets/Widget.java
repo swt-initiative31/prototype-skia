@@ -893,25 +893,4 @@ public abstract class Widget {
 		if (eventTable == null) return new Listener[0];
 		return eventTable.getListeners(eventType);
 	}
-
-	/**
-	 * Returns the <code>Display</code> that is associated with
-	 * the receiver.
-	 * <p>
-	 * A widget's display is either provided when it is created
-	 * (for example, top level <code>Shell</code>s) or is the
-	 * same as its parent's display.
-	 * </p>
-	 *
-	 * @return the receiver's display
-	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 * </ul>
-	 */
-	public Display getDisplay () {
-		Display display = this.display;
-		if (display == null) error (SWT.ERROR_WIDGET_DISPOSED);
-		return display;
-	}
 }
