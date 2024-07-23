@@ -870,25 +870,20 @@ public abstract class Widget implements Drawable {
 		eventTable.unhook (eventType, listener);
 	}
 
-	/**
-	 * Returns an array of {@link Listener listeners} who will be notified when an event
-	 * of the given type occurs. The event type is one of the event constants
-	 * defined in class {@link SWT}.
-	 *
-	 * @param eventType the type of event to listen for
-	 * @return an array of listeners that will be notified when the event occurs
-	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
-	 *
-	 * @see #addListener(int, Listener)
-	 * @see #removeListener(int, Listener)
-	 * @see #notifyListeners
-	 *
-	 * @since 3.4
-	 */
+	public boolean isListening (int eventType) {
+		checkWidget();
+		return hooks (eventType);
+	}
+
+	boolean hooks (int eventType) {
+		if (eventTable == null) return false;
+		return eventTable.hooks (eventType);
+	}
+
+	Menu getMenu () {
+		return null;
+	}
+
 	public Listener[] getListeners (int eventType) {
 		checkWidget();
 		if (eventTable == null) return new Listener[0];
@@ -905,4 +900,19 @@ public abstract class Widget implements Drawable {
 	public void internal_dispose_GC(long handle, GCData data) {
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
+
+	/**
+	 * Returns <code>true</code> if the widget has auto text direction,
+	 * and <code>false</code> otherwise.
+	 *
+	 * @return <code>true</code> when the widget has auto direction and <code>false</code> otherwise
+	 *
+	 * @see SWT#AUTO_TEXT_DIRECTION
+	 *
+	 * @since 3.105
+	 */
+	public boolean isAutoDirection () {
+		return (state & HAS_AUTO_DIRECTION) != 0;
+	}
+
 }

@@ -5,6 +5,73 @@ import org.eclipse.swt.graphics.*;
 
 public class ScrollBar extends Widget {
 
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Point getSize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public int getSelection() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getMaximum() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Object getMinimum() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean getVisible() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+
+	public void setVisible(boolean alwaysShowScroll) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	public int getThumb() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Object getIncrement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setValues(int selection, Object minimum, int inactive, int inactive2, Object increment, int inactive3) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Listener[] getListeners(int selection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	Scrollable parent;
 
 	/**
@@ -107,80 +174,29 @@ public class ScrollBar extends Widget {
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
-	public void setVisible(boolean visible) {
-		checkWidget();
-		if (visible == getVisible ()) return;
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-	}
-
-	/**
-	 * Returns <code>true</code> if the receiver is visible, and
-	 * <code>false</code> otherwise.
-	 * <p>
-	 * If one of the receiver's ancestors is not visible or some
-	 * other condition makes the receiver not visible, this method
-	 * may still indicate that it is considered visible even though
-	 * it may not actually be showing.
-	 * </p>
-	 *
-	 * @return the receiver's visibility state
-	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
-	 */
-	public boolean getVisible () {
-		checkWidget();
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return true;
-	}
-
-	/**
-	 * Returns a point describing the receiver's size. The
-	 * x coordinate of the result is the width of the receiver.
-	 * The y coordinate of the result is the height of the
-	 * receiver.
-	 *
-	 * @return the receiver's size
-	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
-	 */
-	public Point getSize () {
-		checkWidget();
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return new Point(10, 20);
-	}
-	/**
-	 * Returns the single 'selection' that is the receiver's value.
-	 *
-	 * @return the selection
-	 *
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
-	 */
-	public int getSelection() {
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	@Override
+	public long internal_new_GC(GCData data) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
+	public void internal_dispose_GC(long handle, GCData data) {
+		// TODO Auto-generated method stub
+
+	}
+
 	/**
-	 * Sets the single <em>selection</em> that is the receiver's
-	 * value to the argument which must be greater than or equal
-	 * to zero.
+	 * Returns the receiver's parent, which must be a Scrollable.
 	 *
-	 * @param selection the new selection (must be zero or greater)
+	 * @return the receiver's parent
 	 *
 	 * @exception SWTException <ul>
 	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
 	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
 	 * </ul>
 	 */
+
 	public void setSelection(int y) {
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
@@ -218,6 +234,11 @@ public class ScrollBar extends Widget {
 	 */
 	public void setPageIncrement(int width) {
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
+	public Scrollable getParent () {
+		checkWidget ();
+		return parent;
 	}
 
 }

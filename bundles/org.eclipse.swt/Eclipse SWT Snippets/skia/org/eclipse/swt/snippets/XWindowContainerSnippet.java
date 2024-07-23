@@ -1,6 +1,7 @@
 package org.eclipse.swt.snippets;
 
 import com.sun.star.awt.*;
+import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 
 public class XWindowContainerSnippet {
@@ -26,6 +27,46 @@ public class XWindowContainerSnippet {
 
 		w.setVisible(true);
 
+		XTopWindow top = UnoRuntime.queryInterface(com.sun.star.awt.XTopWindow.class, peer);
+
+		top.addTopWindowListener(new XTopWindowListener() {
+
+			@Override
+			public void disposing(EventObject arg0) {
+			}
+
+			@Override
+			public void windowOpened(EventObject arg0) {
+			}
+
+			@Override
+			public void windowNormalized(EventObject arg0) {
+			}
+
+			@Override
+			public void windowMinimized(EventObject arg0) {
+			}
+
+			@Override
+			public void windowDeactivated(EventObject arg0) {
+
+			}
+
+			@Override
+			public void windowClosing(EventObject arg0) {
+
+			}
+
+			@Override
+			public void windowClosed(EventObject arg0) {
+				w.dispose();
+			}
+
+			@Override
+			public void windowActivated(EventObject arg0) {
+			}
+		});
+
 		short flags = com.sun.star.awt.InvalidateStyle.NOCHILDREN;
 		peer.invalidate(flags);
 		aDescriptor = null;
@@ -38,16 +79,14 @@ public class XWindowContainerSnippet {
 		childDesc.Parent = peer;
 		childDesc.Bounds = new com.sun.star.awt.Rectangle(0, 0, 400, 400);
 
-		childDesc.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER
-				| com.sun.star.awt.WindowAttribute.MOVEABLE | com.sun.star.awt.WindowAttribute.SIZEABLE
-				| com.sun.star.awt.WindowAttribute.CLOSEABLE;
+		childDesc.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER | com.sun.star.awt.WindowAttribute.MOVEABLE
+				| com.sun.star.awt.WindowAttribute.SIZEABLE | com.sun.star.awt.WindowAttribute.CLOSEABLE;
 
 		XWindowPeer childPeer = LocalUnoLoader.xToolkit.createWindow(childDesc);
 		XWindow childW = UnoRuntime.queryInterface(com.sun.star.awt.XWindow.class, childPeer);
 
 		childPeer.setBackground(255 * 255 * 255);
 		childW.setVisible(true);
-
 
 	}
 }

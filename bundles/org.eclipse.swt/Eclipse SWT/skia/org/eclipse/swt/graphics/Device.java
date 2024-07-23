@@ -464,6 +464,38 @@ public abstract class Device implements Drawable{
 		}
 	}
 
+	public int getDepth () {
+		System.err.println(new IllegalStateException().getStackTrace());
+
+		return 0;
+	}
+
+	public Rectangle getClientArea() {
+
+		System.err.println(new IllegalStateException().getStackTrace());
+		return null;
+	}
+
+
+	public Point getDPI () {
+		checkDevice ();
+		long hDC = internal_new_GC (null);
+		System.err.println(new IllegalStateException().getStackTrace());
+		internal_dispose_GC (hDC, null);
+		return null;
+	}
+
+	public Rectangle getBounds() {
+		checkDevice ();
+		return DPIUtil.autoScaleDown(getBoundsInPixels());
+	}
+
+	private Rectangle getBoundsInPixels () {
+		long hDC = internal_new_GC (null);
+		System.err.println(new IllegalStateException().getStackTrace());
+		internal_dispose_GC (hDC, null);
+		return null;
+	}
 
 
 }

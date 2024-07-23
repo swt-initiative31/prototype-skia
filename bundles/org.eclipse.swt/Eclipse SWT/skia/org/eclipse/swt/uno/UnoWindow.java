@@ -86,7 +86,6 @@ public class UnoWindow extends UnoScrollableControl {
 			public void windowClosing(EventObject arg0) {
 				System.out.println("windowClosing");
 				dispose();
-//				UnoLoader.terminate();
 			}
 
 			@Override

@@ -127,6 +127,10 @@ public class Shell extends Decorations {
 		this ((Display) null);
 	}
 
+	public Shell (Shell parent, int style) {
+		this (parent != null ? parent.display : null, parent, style, 0, false);
+	}
+
 	/**
 	 * Constructs a new instance of this class given only the style
 	 * value describing its behavior and appearance. This is equivalent
@@ -450,7 +454,7 @@ public class Shell extends Decorations {
 	}
 
 	@Override
-	protected UnoWindow getHandle() {
+	public UnoWindow getHandle() {
 		return window;
 	}
 

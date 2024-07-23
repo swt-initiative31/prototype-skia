@@ -11,6 +11,8 @@ public abstract class Composite extends Scrollable {
 	UnoWindow window ;
 
 
+
+
 	public Composite(Composite parent, int style) {
 
 		super(parent, style);
@@ -20,6 +22,13 @@ public abstract class Composite extends Scrollable {
 
 
 	}
+
+	@Override
+	public UnoControl getHandle() {
+		return window;
+	}
+
+
 
 	Composite () {
 	}
@@ -322,6 +331,7 @@ public abstract class Composite extends Scrollable {
 		updateLayout (all);
 	}
 
+
 	/**
 	 * Forces a lay out (that is, sets the size and location) of all widgets that
 	 * are in the parent hierarchy of the changed control up to and including the
@@ -478,18 +488,6 @@ public abstract class Composite extends Scrollable {
 		}
 	}
 
-	@Override
-	void markLayout (boolean changed, boolean all) {
-		if (layout != null) {
-			state |= LAYOUT_NEEDED;
-			if (changed) state |= LAYOUT_CHANGED;
-		}
-		if (all) {
-			for (Control element : _getChildren ()) {
-				element.markLayout (changed, all);
-			}
-		}
-	}
 
 	@Override
 	void createHandle () {

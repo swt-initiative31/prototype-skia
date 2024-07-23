@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.swt.graphics;
 
+import org.eclipse.swt.printing.*;
+
 /**
  * Instances of this class manage operating system resources that
  * define how text looks when it is displayed. Fonts may be constructed
@@ -47,6 +49,18 @@ public final class Font extends Resource {
 
 	Font(Device device) {
 		super(device);
+	}
+
+	public Font(Printer printer, String name, int height, int normal) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Font(Printer printer, FontData[] fontData) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Font(Device device, FontData[] fontData) {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -90,6 +104,11 @@ public final class Font extends Resource {
 		 */
 		font.ignoreNonDisposed();
 		return font;
+	}
+
+	public FontData[] getFontData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 //

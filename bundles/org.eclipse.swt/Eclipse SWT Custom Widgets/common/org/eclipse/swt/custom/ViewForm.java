@@ -499,7 +499,7 @@ public void setTopCenterSeparate(boolean show) {
 }
 
 @Override
-protected UnoControl getHandle() {
+public UnoControl getHandle() {
 	System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	return null;
 }

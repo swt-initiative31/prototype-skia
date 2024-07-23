@@ -2273,4 +2273,9 @@ public final class GC extends Resource {
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
+	public void drawImage(Object image, int x, int y) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

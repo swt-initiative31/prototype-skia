@@ -1,6 +1,7 @@
 package org.eclipse.swt.snippets;
 
 import com.sun.star.awt.*;
+import com.sun.star.lang.*;
 import com.sun.star.uno.*;
 
 public class VCLSnippet {
@@ -27,6 +28,44 @@ public class VCLSnippet {
 		XWindow w = UnoRuntime.queryInterface(com.sun.star.awt.XWindow.class, peer);
 
 		XTopWindow top = UnoRuntime.queryInterface(com.sun.star.awt.XTopWindow.class, peer);
+
+		top.addTopWindowListener(new XTopWindowListener() {
+
+			@Override
+			public void disposing(EventObject arg0) {
+			}
+
+			@Override
+			public void windowOpened(EventObject arg0) {
+			}
+
+			@Override
+			public void windowNormalized(EventObject arg0) {
+			}
+
+			@Override
+			public void windowMinimized(EventObject arg0) {
+			}
+
+			@Override
+			public void windowDeactivated(EventObject arg0) {
+
+			}
+
+			@Override
+			public void windowClosing(EventObject arg0) {
+
+			}
+
+			@Override
+			public void windowClosed(EventObject arg0) {
+			w.dispose();
+			}
+
+			@Override
+			public void windowActivated(EventObject arg0) {
+			}
+		});
 
 		w.setVisible(true);
 
