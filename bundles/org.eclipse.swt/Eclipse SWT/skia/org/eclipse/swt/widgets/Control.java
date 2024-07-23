@@ -14,6 +14,7 @@ public abstract class Control extends Widget {
 	Object layoutData;
 
 	Font font;
+	Cursor cursor;
 
 	Control() {
 	}
@@ -682,6 +683,66 @@ public abstract class Control extends Widget {
 
 	public void setVisible(boolean b) {
 		getHandle().setVisible(b);
+	}
+
+	/**
+	 * Returns the receiver's cursor, or null if it has not been set.
+	 * <p>
+	 * When the mouse pointer passes over a control its appearance
+	 * is changed to match the control's cursor.
+	 * </p>
+	 *
+	 * @return the receiver's cursor or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @since 3.3
+	 */
+	public Cursor getCursor () {
+		checkWidget ();
+		return cursor;
+	}
+
+	/**
+	 * Sets the receiver's cursor to the cursor specified by the
+	 * argument, or to the default cursor for that kind of control
+	 * if the argument is null.
+	 * <p>
+	 * When the mouse pointer passes over a control its appearance
+	 * is changed to match the control's cursor.
+	 * </p>
+	 *
+	 * @param cursor the new cursor (or null)
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_INVALID_ARGUMENT - if the argument has been disposed</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setCursor (Cursor cursor) {
+		checkWidget ();
+		if (cursor != null && cursor.isDisposed()) error(SWT.ERROR_INVALID_ARGUMENT);
+		this.cursor = cursor;
+//		long hwndCursor = OS.GetCapture ();
+//		if (hwndCursor == 0) {
+//			POINT pt = new POINT ();
+//			if (!OS.GetCursorPos (pt)) return;
+//			long hwnd = hwndCursor = OS.WindowFromPoint (pt);
+//			while (hwnd != 0 && hwnd != handle) {
+//				hwnd = OS.GetParent (hwnd);
+//			}
+//			if (hwnd == 0) return;
+//		}
+//		Control control = display.getControl (hwndCursor);
+//		if (control == null) control = this;
+//		control.setCursor ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 
 }
