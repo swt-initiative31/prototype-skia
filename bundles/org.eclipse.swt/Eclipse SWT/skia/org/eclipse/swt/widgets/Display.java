@@ -153,6 +153,28 @@ public class Display extends Device implements Executor {
 	private Monitor[] monitors;
 	private Monitor primaryMonitor;
 
+	/*
+	* TEMPORARY CODE.  Install the runnable that
+	* gets the current display. This code will
+	* be removed in the future.
+	*/
+	static {
+		DeviceFinder = () -> {
+			Device device = getCurrent ();
+			if (device == null) {
+				device = getDefault ();
+			}
+			setDevice (device);
+		};
+	}
+
+	/*
+	* TEMPORARY CODE... yeah, right
+	*/
+	static void setDevice (Device device) {
+		CurrentDevice = device;
+	}
+
 	/**
 	 * Constructs a new instance of this class.
 	 * <p>
