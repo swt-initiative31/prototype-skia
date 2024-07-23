@@ -512,6 +512,27 @@ public abstract class Widget {
 	}
 
 	/**
+	 * Returns the <code>Display</code> that is associated with
+	 * the receiver.
+	 * <p>
+	 * A widget's display is either provided when it is created
+	 * (for example, top level <code>Shell</code>s) or is the
+	 * same as its parent's display.
+	 * </p>
+	 *
+	 * @return the receiver's display
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 */
+	public Display getDisplay () {
+		Display display = this.display;
+		if (display == null) error (SWT.ERROR_WIDGET_DISPOSED);
+		return display;
+	}
+
+	/**
 	 * Returns the application defined property of the receiver with the specified
 	 * name, or null if it has not been set.
 	 * <p>
@@ -686,6 +707,17 @@ public abstract class Widget {
 		eventTable.hook (eventType, listener);
 	}
 
+	protected void addTypedListener (EventListener listener, int... eventTypes) {
+		checkWidget();
+		if (listener == null) {
+			SWT.error(SWT.ERROR_NULL_ARGUMENT);
+		}
+		TypedListener typedListener = new TypedListener(listener);
+		for (int eventType : eventTypes) {
+			_addListener(eventType, typedListener);
+		}
+	}
+
 	/**
 	 * Adds the listener to the collection of listeners who will
 	 * be notified when the widget is disposed. When the widget is
@@ -707,41 +739,6 @@ public abstract class Widget {
 	 */
 	public void addDisposeListener (DisposeListener listener) {
 		addTypedListener(listener, SWT.Dispose);
-	}
-
-	/**
-	 * Removes the listener from the collection of listeners who will
-	 * be notified when the widget is disposed.
-	 *
-	 * @param listener the listener which should no longer be notified
-	 *
-	 * @exception IllegalArgumentException <ul>
-	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
-	 * </ul>
-	 * @exception SWTException <ul>
-	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
-	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
-	 * </ul>
-	 *
-	 * @see DisposeListener
-	 * @see #addDisposeListener
-	 */
-	public void removeDisposeListener (DisposeListener listener) {
-		checkWidget();
-		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
-		if (eventTable == null) return;
-		eventTable.unhook (SWT.Dispose, listener);
-	}
-
-	protected void addTypedListener (EventListener listener, int... eventTypes) {
-		checkWidget();
-		if (listener == null) {
-			SWT.error(SWT.ERROR_NULL_ARGUMENT);
-		}
-		TypedListener typedListener = new TypedListener(listener);
-		for (int eventType : eventTypes) {
-			_addListener(eventType, typedListener);
-		}
 	}
 
 	void _addListener (int eventType, Listener listener) {
@@ -775,6 +772,96 @@ public abstract class Widget {
 		checkWidget();
 		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
 		_removeListener (eventType, listener);
+	}
+
+
+	/**
+	 * Removes the listener from the collection of listeners who will
+	 * be notified when an event of the given type occurs.
+	 * <p>
+	 * <b>IMPORTANT:</b> This method is <em>not</em> part of the SWT
+	 * public API. It is marked public only so that it can be shared
+	 * within the packages provided by SWT. It should never be
+	 * referenced from application code.
+	 * </p>
+	 *
+	 * @param eventType the type of event to listen for
+	 * @param listener the listener which should no longer be notified
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see Listener
+	 * @see #addListener
+	 *
+	 * @noreference This method is not intended to be referenced by clients.
+	 * @nooverride This method is not intended to be re-implemented or extended by clients.
+	 */
+	protected void removeListener (int eventType, SWTEventListener listener) {
+		removeTypedListener(eventType, listener);
+	}
+
+	/**
+	 * Removes the listener from the collection of listeners who will
+	 * be notified when an event of the given type occurs.
+	 * <p>
+	 * <b>IMPORTANT:</b> This method is <em>not</em> part of the SWT
+	 * public API. It is marked public only so that it can be shared
+	 * within the packages provided by SWT. It should never be
+	 * referenced from application code.
+	 * </p>
+	 *
+	 * @param eventType the type of event to listen for
+	 * @param listener the listener which should no longer be notified
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see Listener
+	 * @see #addListener
+	 *
+	 * @noreference This method is not intended to be referenced by clients.
+	 * @nooverride This method is not intended to be re-implemented or extended by clients.
+	 */
+	protected void removeTypedListener (int eventType, EventListener listener) {
+		checkWidget();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (eventTable == null) return;
+		eventTable.unhook (eventType, listener);
+	}
+
+	/**
+	 * Removes the listener from the collection of listeners who will
+	 * be notified when the widget is disposed.
+	 *
+	 * @param listener the listener which should no longer be notified
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see DisposeListener
+	 * @see #addDisposeListener
+	 */
+	public void removeDisposeListener (DisposeListener listener) {
+		checkWidget();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (eventTable == null) return;
+		eventTable.unhook (SWT.Dispose, listener);
 	}
 
 	void _removeListener (int eventType, Listener listener) {

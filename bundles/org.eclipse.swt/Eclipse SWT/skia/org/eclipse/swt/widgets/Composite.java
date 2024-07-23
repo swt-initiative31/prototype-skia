@@ -517,5 +517,108 @@ public abstract class Composite extends Scrollable {
 //			view.setAutoresizingMask(OS.NSViewWidthSizable | OS.NSViewHeightSizable);
 //		}
 	}
+	/**
+	 * If the receiver has a layout, asks the layout to <em>lay out</em>
+	 * (that is, set the size and location of) the receiver's children.
+	 * If the argument is <code>true</code> the layout must not rely
+	 * on any information it has cached about the immediate children. If it
+	 * is <code>false</code> the layout may (potentially) optimize the
+	 * work it is doing by assuming that none of the receiver's
+	 * children has changed state since the last layout.
+	 * If the receiver does not have a layout, do nothing.
+	 * <p>
+	 * It is normally more efficient to invoke {@link Control#requestLayout()}
+	 * on every control which has changed in the layout than it is to invoke
+	 * this method on the layout itself. Clients are encouraged to use
+	 * {@link Control#requestLayout()} where possible instead of calling
+	 * this method.
+	 * </p>
+	 * <p>
+	 * If a child is resized as a result of a call to layout, the
+	 * resize event will invoke the layout of the child.  The layout
+	 * will cascade down through all child widgets in the receiver's widget
+	 * tree until a child is encountered that does not resize.  Note that
+	 * a layout due to a resize will not flush any cached information
+	 * (same as <code>layout(false)</code>).
+	 * </p>
+	 * <p>
+	 * Note: Layout is different from painting. If a child is
+	 * moved or resized such that an area in the parent is
+	 * exposed, then the parent will paint. If no child is
+	 * affected, the parent will not paint.
+	 * </p>
+	 *
+	 * @param changed <code>true</code> if the layout must flush its caches, and <code>false</code> otherwise
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void layout (boolean changed) {
+		checkWidget ();
+		if (layout == null) return;
+		layout (changed, false);
+	}
 
+	/**
+	 * If the receiver has a layout, asks the layout to <em>lay out</em>
+	 * (that is, set the size and location of) the receiver's children.
+	 * If the changed argument is <code>true</code> the layout must not rely
+	 * on any information it has cached about its children. If it
+	 * is <code>false</code> the layout may (potentially) optimize the
+	 * work it is doing by assuming that none of the receiver's
+	 * children has changed state since the last layout.
+	 * If the all argument is <code>true</code> the layout will cascade down
+	 * through all child widgets in the receiver's widget tree, regardless of
+	 * whether the child has changed size.  The changed argument is applied to
+	 * all layouts.  If the all argument is <code>false</code>, the layout will
+	 * <em>not</em> cascade down through all child widgets in the receiver's widget
+	 * tree.  However, if a child is resized as a result of a call to layout, the
+	 * resize event will invoke the layout of the child.  Note that
+	 * a layout due to a resize will not flush any cached information
+	 * (same as <code>layout(false)</code>).
+	 * <p>
+	 * It is normally more efficient to invoke {@link Control#requestLayout()}
+	 * on every control which has changed in the layout than it is to invoke
+	 * this method on the layout itself. Clients are encouraged to use
+	 * {@link Control#requestLayout()} where possible instead of calling
+	 * this method.
+	 * </p>
+	 * <p>
+	 * Note: Layout is different from painting. If a child is
+	 * moved or resized such that an area in the parent is
+	 * exposed, then the parent will paint. If no child is
+	 * affected, the parent will not paint.
+	 * </p>
+	 *
+	 * @param changed <code>true</code> if the layout must flush its caches, and <code>false</code> otherwise
+	 * @param all <code>true</code> if all children in the receiver's widget tree should be laid out, and <code>false</code> otherwise
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @since 3.1
+	 */
+	public void layout (boolean changed, boolean all) {
+		checkWidget ();
+		if (layout == null && !all) return;
+		markLayout (changed, all);
+		updateLayout (all);
+	}
+
+	@Override
+	void markLayout (boolean changed, boolean all) {
+		if (layout != null) {
+			state |= LAYOUT_NEEDED;
+			if (changed) state |= LAYOUT_CHANGED;
+		}
+		if (all) {
+			for (Control element : _getChildren ()) {
+				element.markLayout (changed, all);
+			}
+		}
+	}
 }

@@ -297,11 +297,11 @@ public abstract class Control extends Widget {
 		return parent.isTransparent();
 	}
 
-	void updateLayout(boolean all) {
+	void markLayout (boolean changed, boolean all) {
 		/* Do nothing */
 	}
 
-	void markLayout (boolean changed, boolean all) {
+	void updateLayout(boolean all) {
 		/* Do nothing */
 	}
 
@@ -459,6 +459,25 @@ public abstract class Control extends Widget {
 			getHandle().setSize(width, height);
 		}
 		display.ignoreFocusControl = oldIgnoreFocusControl;
+	}
+
+	/**
+	 * Returns a point describing the receiver's size in points. The
+	 * x coordinate of the result is the width of the receiver.
+	 * The y coordinate of the result is the height of the
+	 * receiver.
+	 *
+	 * @return the receiver's size
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public Point getSize (){
+		checkWidget ();
+		Rectangle bounds = getHandle().getBounds();
+		return new Point(bounds.width, bounds.height);
 	}
 
 	/**
@@ -785,4 +804,77 @@ public abstract class Control extends Widget {
 		return getHandle().getLocation();
 	}
 
+	/**
+	 * Causes the rectangular area of the receiver specified by
+	 * the arguments to be marked as needing to be redrawn.
+	 * The next time a paint request is processed, that area of
+	 * the receiver will be painted, including the background.
+	 * If the <code>all</code> flag is <code>true</code>, any
+	 * children of the receiver which intersect with the specified
+	 * area will also paint their intersecting areas. If the
+	 * <code>all</code> flag is <code>false</code>, the children
+	 * will not be painted.
+	 * <p>
+	 * Schedules a paint request if the invalidated area is visible
+	 * or becomes visible later. It is not necessary for the caller
+	 * to explicitly call {@link #update()} after calling this method,
+	 * but depending on the platform, the automatic repaints may be
+	 * delayed considerably.
+	 * </p>
+	 *
+	 * @param x the x coordinate of the area to draw
+	 * @param y the y coordinate of the area to draw
+	 * @param width the width of the area to draw
+	 * @param height the height of the area to draw
+	 * @param all <code>true</code> if children should redraw, and <code>false</code> otherwise
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #update()
+	 * @see PaintListener
+	 * @see SWT#Paint
+	 * @see SWT#NO_BACKGROUND
+	 * @see SWT#NO_REDRAW_RESIZE
+	 * @see SWT#NO_MERGE_PAINTS
+	 * @see SWT#DOUBLE_BUFFERED
+	 */
+	public void redraw (int x, int y, int width, int height, boolean all) {
+		checkWidget ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		getHandle().redraw(x,y,width, height, all);
+	}
+
+	/**
+	 * Causes the entire bounds of the receiver to be marked
+	 * as needing to be redrawn. The next time a paint request
+	 * is processed, the control will be completely painted,
+	 * including the background.
+	 * <p>
+	 * Schedules a paint request if the invalidated area is visible
+	 * or becomes visible later. It is not necessary for the caller
+	 * to explicitly call {@link #update()} after calling this method,
+	 * but depending on the platform, the automatic repaints may be
+	 * delayed considerably.
+	 * </p>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #update()
+	 * @see PaintListener
+	 * @see SWT#Paint
+	 * @see SWT#NO_BACKGROUND
+	 * @see SWT#NO_REDRAW_RESIZE
+	 * @see SWT#NO_MERGE_PAINTS
+	 * @see SWT#DOUBLE_BUFFERED
+	 */
+	public void redraw () {
+		checkWidget ();
+		getHandle().redraw();
+	}
 }

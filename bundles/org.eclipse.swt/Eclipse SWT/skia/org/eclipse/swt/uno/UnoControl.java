@@ -69,4 +69,13 @@ public abstract class UnoControl {
 		Rectangle bounds = getBounds();
 		return new Point(bounds.x, bounds.y);
 	}
+	
+	public void redraw(int x, int y, int width, int height, boolean all) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
+	public void redraw() {
+		Rectangle bounds = getBounds();
+		redraw(bounds.x, bounds.y, bounds.width, bounds.height, true);
+	}
 }
