@@ -518,4 +518,18 @@ public abstract class Composite extends Scrollable {
 //		}
 	}
 
+	@Override
+	public boolean setFocus () {
+		checkWidget ();
+		Control [] children = _getChildren ();
+		for (Control child : children) {
+			if (child.getVisible() && child.setRadioFocus (false)) return true;
+		}
+		for (Control child : children) {
+			if (child.getVisible() && child.setFocus ()) return true;
+		}
+		return super.setFocus ();
+	}
+
+
 }

@@ -85,6 +85,22 @@ public abstract class Scrollable extends Control {
 	}
 
 	/**
+	 * Returns the receiver's vertical scroll bar if it has
+	 * one, and null if it does not.
+	 *
+	 * @return the vertical scroll bar (or null)
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public ScrollBar getVerticalBar () {
+		checkWidget ();
+		return verticalBar;
+	}
+
+	/**
 	 * Returns a rectangle which describes the area of the receiver which is capable
 	 * of displaying data (that is, not covered by the "trimmings").
 	 *

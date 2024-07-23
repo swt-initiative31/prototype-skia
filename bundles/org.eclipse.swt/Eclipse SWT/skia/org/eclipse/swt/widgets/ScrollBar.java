@@ -1,6 +1,7 @@
 package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
+import org.eclipse.swt.graphics.*;
 
 public class ScrollBar extends Widget {
 
@@ -105,4 +106,118 @@ public class ScrollBar extends Widget {
 		if (value < 1) return;
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
+
+	public void setVisible(boolean visible) {
+		checkWidget();
+		if (visible == getVisible ()) return;
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
+	/**
+	 * Returns <code>true</code> if the receiver is visible, and
+	 * <code>false</code> otherwise.
+	 * <p>
+	 * If one of the receiver's ancestors is not visible or some
+	 * other condition makes the receiver not visible, this method
+	 * may still indicate that it is considered visible even though
+	 * it may not actually be showing.
+	 * </p>
+	 *
+	 * @return the receiver's visibility state
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public boolean getVisible () {
+		checkWidget();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return true;
+	}
+
+	/**
+	 * Returns a point describing the receiver's size. The
+	 * x coordinate of the result is the width of the receiver.
+	 * The y coordinate of the result is the height of the
+	 * receiver.
+	 *
+	 * @return the receiver's size
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public Point getSize () {
+		checkWidget();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return new Point(10, 20);
+	}
+	/**
+	 * Returns the single 'selection' that is the receiver's value.
+	 *
+	 * @return the selection
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public int getSelection() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return 0;
+	}
+
+	/**
+	 * Sets the single <em>selection</em> that is the receiver's
+	 * value to the argument which must be greater than or equal
+	 * to zero.
+	 *
+	 * @param selection the new selection (must be zero or greater)
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setSelection(int y) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
+	/**
+	 * Sets the amount that the receiver's value will be
+	 * modified by when the up/down (or right/left) arrows
+	 * are pressed to the argument, which must be at least
+	 * one.
+	 *
+	 * @param value the new increment (must be greater than zero)
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setIncrement(int averageCharacterWidth) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+
+	}
+
+	/**
+	 * Sets the amount that the receiver's value will be
+	 * modified by when the page increment/decrement areas
+	 * are selected to the argument, which must be at least
+	 * one.
+	 *
+	 * @param value the page increment (must be greater than zero)
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setPageIncrement(int width) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
 }

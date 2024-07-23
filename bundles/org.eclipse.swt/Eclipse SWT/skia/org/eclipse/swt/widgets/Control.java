@@ -877,4 +877,52 @@ public abstract class Control extends Widget {
 		checkWidget ();
 		getHandle().redraw();
 	}
+
+	public boolean getVisible() {
+		checkWidget ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return getHandle().isVisible();
+	}
+
+	/**
+	 * Returns <code>true</code> if the receiver has the user-interface
+	 * focus, and <code>false</code> otherwise.
+	 *
+	 * @return the receiver's focus state
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public boolean isFocusControl () {
+		checkWidget ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return false;
+	}
+
+	/**
+	 * Causes the receiver to have the <em>keyboard focus</em>,
+	 * such that all keyboard events will be delivered to it.  Focus
+	 * reassignment will respect applicable platform constraints.
+	 *
+	 * @return <code>true</code> if the control got focus, and <code>false</code> if it was unable to.
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #forceFocus
+	 */
+	public boolean setFocus () {
+		checkWidget ();
+		if ((style & SWT.NO_FOCUS) != 0) return false;
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return false;
+	}
+
+	public boolean setRadioFocus(boolean tabbing) {
+		return false;
+	}
 }

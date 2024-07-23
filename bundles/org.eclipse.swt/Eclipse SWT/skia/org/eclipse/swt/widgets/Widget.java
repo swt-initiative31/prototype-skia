@@ -4,9 +4,10 @@ import java.util.*;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
+import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.internal.*;
 
-public abstract class Widget {
+public abstract class Widget implements Drawable {
 	int style, state;
 	Display display;
 	EventTable eventTable;
@@ -892,5 +893,16 @@ public abstract class Widget {
 		checkWidget();
 		if (eventTable == null) return new Listener[0];
 		return eventTable.getListeners(eventType);
+	}
+
+	@Override
+	public long internal_new_GC(GCData data) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return -1;
+	}
+
+	@Override
+	public void internal_dispose_GC(long handle, GCData data) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 }

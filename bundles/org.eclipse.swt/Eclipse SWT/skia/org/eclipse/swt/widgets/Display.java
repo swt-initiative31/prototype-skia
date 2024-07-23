@@ -1389,4 +1389,22 @@ public class Display extends Device implements Executor {
 		if (eventTable == null) return;
 		eventTable.unhook (eventType, listener);
 	}
+
+	/**
+	 * Returns the control which currently has keyboard focus,
+	 * or null if keyboard events are not currently going to
+	 * any of the controls built by the currently running
+	 * application.
+	 *
+	 * @return the focus control or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 */
+	public Control getFocusControl() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return null;
+	}
 }
