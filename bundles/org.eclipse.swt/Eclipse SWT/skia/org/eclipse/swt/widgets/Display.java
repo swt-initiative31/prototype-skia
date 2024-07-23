@@ -8,6 +8,7 @@ import java.util.function.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.uno.*;
@@ -152,6 +153,8 @@ public class Display extends Device implements Executor {
 	private Image warningIcon;
 	private Monitor[] monitors;
 	private Monitor primaryMonitor;
+
+	Cursor [] cursors = new Cursor [SWT.CURSOR_HAND + 1];
 
 	/*
 	* TEMPORARY CODE.  Install the runnable that
@@ -1093,6 +1096,10 @@ public class Display extends Device implements Executor {
 		return monitors;
 	}
 
+	public void timerExec(int wakeTime, Runnable runnable) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
 	/**
 	 * Returns the primary monitor for that device.
 	 *
@@ -1116,5 +1123,62 @@ public class Display extends Device implements Executor {
 		}
 
 		return primaryMonitor;
+	}
+
+	public Shell[] getShells() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return null;
+
+	}
+
+	/**
+	 * Returns the matching standard platform cursor for the given
+	 * constant, which should be one of the cursor constants
+	 * specified in class <code>SWT</code>. This cursor should
+	 * not be free'd because it was allocated by the system,
+	 * not the application.  A value of <code>null</code> will
+	 * be returned if the supplied constant is not an SWT cursor
+	 * constant.
+	 *
+	 * @param id the SWT cursor constant
+	 * @return the corresponding cursor or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see SWT#CURSOR_ARROW
+	 * @see SWT#CURSOR_WAIT
+	 * @see SWT#CURSOR_CROSS
+	 * @see SWT#CURSOR_APPSTARTING
+	 * @see SWT#CURSOR_HELP
+	 * @see SWT#CURSOR_SIZEALL
+	 * @see SWT#CURSOR_SIZENESW
+	 * @see SWT#CURSOR_SIZENS
+	 * @see SWT#CURSOR_SIZENWSE
+	 * @see SWT#CURSOR_SIZEWE
+	 * @see SWT#CURSOR_SIZEN
+	 * @see SWT#CURSOR_SIZES
+	 * @see SWT#CURSOR_SIZEE
+	 * @see SWT#CURSOR_SIZEW
+	 * @see SWT#CURSOR_SIZENE
+	 * @see SWT#CURSOR_SIZESE
+	 * @see SWT#CURSOR_SIZESW
+	 * @see SWT#CURSOR_SIZENW
+	 * @see SWT#CURSOR_UPARROW
+	 * @see SWT#CURSOR_IBEAM
+	 * @see SWT#CURSOR_NO
+	 * @see SWT#CURSOR_HAND
+	 *
+	 * @since 3.0
+	 */
+	public Cursor getSystemCursor (int id) {
+		checkDevice ();
+		if (!(0 <= id && id < cursors.length)) return null;
+		if (cursors [id] == null) {
+			cursors [id] = new Cursor (this, id);
+		}
+		return cursors [id];
 	}
 }
