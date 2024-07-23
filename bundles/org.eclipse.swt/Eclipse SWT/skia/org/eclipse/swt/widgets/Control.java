@@ -14,6 +14,7 @@ public abstract class Control extends Widget {
 	Object layoutData;
 
 	Font font;
+	Cursor cursor;
 
 	Control() {
 	}
@@ -166,7 +167,6 @@ public abstract class Control extends Widget {
 		checkBackground();
 		checkBuffered();
 		setDefaultFont();
-		setZOrder();
 		setRelations();
 		if ((state & PARENT_BACKGROUND) != 0) {
 			setBackground();
@@ -227,12 +227,6 @@ public abstract class Control extends Widget {
 
 	java.awt.Font defaultNSFont() {
 		return display.getSystemFont().handle;
-	}
-
-	void setZOrder() {
-		UnoControl topView = topView();
-		// TODO
-//		parent.contentView().add(topView, OS.NSWindowBelow, null);
 	}
 
 	UnoControl topView() {
@@ -301,6 +295,10 @@ public abstract class Control extends Widget {
 		if (background != null)
 			return false;
 		return parent.isTransparent();
+	}
+
+	void markLayout (boolean changed, boolean all) {
+		/* Do nothing */
 	}
 
 	void updateLayout(boolean all) {
@@ -461,6 +459,25 @@ public abstract class Control extends Widget {
 			getHandle().setSize(width, height);
 		}
 		display.ignoreFocusControl = oldIgnoreFocusControl;
+	}
+
+	/**
+	 * Returns a point describing the receiver's size in points. The
+	 * x coordinate of the result is the width of the receiver.
+	 * The y coordinate of the result is the height of the
+	 * receiver.
+	 *
+	 * @return the receiver's size
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public Point getSize (){
+		checkWidget ();
+		Rectangle bounds = getHandle().getBounds();
+		return new Point(bounds.width, bounds.height);
 	}
 
 	/**
@@ -691,4 +708,221 @@ public abstract class Control extends Widget {
 		getHandle().setVisible(b);
 	}
 
+	/**
+	 * Returns the receiver's cursor, or null if it has not been set.
+	 * <p>
+	 * When the mouse pointer passes over a control its appearance
+	 * is changed to match the control's cursor.
+	 * </p>
+	 *
+	 * @return the receiver's cursor or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @since 3.3
+	 */
+	public Cursor getCursor () {
+		checkWidget ();
+		return cursor;
+	}
+
+	/**
+	 * Sets the receiver's cursor to the cursor specified by the
+	 * argument, or to the default cursor for that kind of control
+	 * if the argument is null.
+	 * <p>
+	 * When the mouse pointer passes over a control its appearance
+	 * is changed to match the control's cursor.
+	 * </p>
+	 *
+	 * @param cursor the new cursor (or null)
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_INVALID_ARGUMENT - if the argument has been disposed</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public void setCursor (Cursor cursor) {
+		checkWidget ();
+		if (cursor != null && cursor.isDisposed()) error(SWT.ERROR_INVALID_ARGUMENT);
+		this.cursor = cursor;
+//		long hwndCursor = OS.GetCapture ();
+//		if (hwndCursor == 0) {
+//			POINT pt = new POINT ();
+//			if (!OS.GetCursorPos (pt)) return;
+//			long hwnd = hwndCursor = OS.WindowFromPoint (pt);
+//			while (hwnd != 0 && hwnd != handle) {
+//				hwnd = OS.GetParent (hwnd);
+//			}
+//			if (hwnd == 0) return;
+//		}
+//		Control control = display.getControl (hwndCursor);
+//		if (control == null) control = this;
+//		control.setCursor ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
+	/**
+	 * Returns a rectangle describing the receiver's size and location in points
+	 * relative to its parent (or its display if its parent is null),
+	 * unless the receiver is a shell. In this case, the location is
+	 * relative to the display.
+	 *
+	 * @return the receiver's bounding rectangle
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public Rectangle getBounds() {
+		checkWidget();
+		return getHandle().getBounds();
+	}
+
+	/**
+	 * Returns a point describing the receiver's location relative
+	 * to its parent in points (or its display if its parent is null), unless
+	 * the receiver is a shell. In this case, the point is
+	 * relative to the display.
+	 *
+	 * @return the receiver's location
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public Point getLocation () {
+		checkWidget ();
+		return getHandle().getLocation();
+	}
+
+	/**
+	 * Causes the rectangular area of the receiver specified by
+	 * the arguments to be marked as needing to be redrawn.
+	 * The next time a paint request is processed, that area of
+	 * the receiver will be painted, including the background.
+	 * If the <code>all</code> flag is <code>true</code>, any
+	 * children of the receiver which intersect with the specified
+	 * area will also paint their intersecting areas. If the
+	 * <code>all</code> flag is <code>false</code>, the children
+	 * will not be painted.
+	 * <p>
+	 * Schedules a paint request if the invalidated area is visible
+	 * or becomes visible later. It is not necessary for the caller
+	 * to explicitly call {@link #update()} after calling this method,
+	 * but depending on the platform, the automatic repaints may be
+	 * delayed considerably.
+	 * </p>
+	 *
+	 * @param x the x coordinate of the area to draw
+	 * @param y the y coordinate of the area to draw
+	 * @param width the width of the area to draw
+	 * @param height the height of the area to draw
+	 * @param all <code>true</code> if children should redraw, and <code>false</code> otherwise
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #update()
+	 * @see PaintListener
+	 * @see SWT#Paint
+	 * @see SWT#NO_BACKGROUND
+	 * @see SWT#NO_REDRAW_RESIZE
+	 * @see SWT#NO_MERGE_PAINTS
+	 * @see SWT#DOUBLE_BUFFERED
+	 */
+	public void redraw (int x, int y, int width, int height, boolean all) {
+		checkWidget ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		getHandle().redraw(x,y,width, height, all);
+	}
+
+	/**
+	 * Causes the entire bounds of the receiver to be marked
+	 * as needing to be redrawn. The next time a paint request
+	 * is processed, the control will be completely painted,
+	 * including the background.
+	 * <p>
+	 * Schedules a paint request if the invalidated area is visible
+	 * or becomes visible later. It is not necessary for the caller
+	 * to explicitly call {@link #update()} after calling this method,
+	 * but depending on the platform, the automatic repaints may be
+	 * delayed considerably.
+	 * </p>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #update()
+	 * @see PaintListener
+	 * @see SWT#Paint
+	 * @see SWT#NO_BACKGROUND
+	 * @see SWT#NO_REDRAW_RESIZE
+	 * @see SWT#NO_MERGE_PAINTS
+	 * @see SWT#DOUBLE_BUFFERED
+	 */
+	public void redraw () {
+		checkWidget ();
+		getHandle().redraw();
+	}
+
+	public boolean getVisible() {
+		checkWidget ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return getHandle().isVisible();
+	}
+
+	/**
+	 * Returns <code>true</code> if the receiver has the user-interface
+	 * focus, and <code>false</code> otherwise.
+	 *
+	 * @return the receiver's focus state
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public boolean isFocusControl () {
+		checkWidget ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return false;
+	}
+
+	/**
+	 * Causes the receiver to have the <em>keyboard focus</em>,
+	 * such that all keyboard events will be delivered to it.  Focus
+	 * reassignment will respect applicable platform constraints.
+	 *
+	 * @return <code>true</code> if the control got focus, and <code>false</code> if it was unable to.
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #forceFocus
+	 */
+	public boolean setFocus () {
+		checkWidget ();
+		if ((style & SWT.NO_FOCUS) != 0) return false;
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return false;
+	}
+
+	public boolean setRadioFocus(boolean tabbing) {
+		return false;
+	}
 }

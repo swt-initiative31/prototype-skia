@@ -435,8 +435,11 @@ protected UnoControl getHandle() {
 
 }
 
+<<<<<<< HEAD
 public void setFocus() {
 	System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 
 }
+=======
+>>>>>>> branch 'skia-poc' of https://github.com/swt-initiative31/prototype-skia.git
 }

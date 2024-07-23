@@ -8,7 +8,9 @@ import java.util.function.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.uno.*;
 
@@ -152,6 +154,33 @@ public class Display extends Device implements Executor {
 	private Image warningIcon;
 	private Monitor[] monitors;
 	private Monitor primaryMonitor;
+
+	Cursor [] cursors = new Cursor [SWT.CURSOR_HAND + 1];
+
+	// TODO (visjee) doesn't do anything (yet)
+	boolean externalEventLoop; // events are dispatched outside SWT, e.g. TrackPopupMenu or DoDragDrop
+
+	/*
+	* TEMPORARY CODE.  Install the runnable that
+	* gets the current display. This code will
+	* be removed in the future.
+	*/
+	static {
+		DeviceFinder = () -> {
+			Device device = getCurrent ();
+			if (device == null) {
+				device = getDefault ();
+			}
+			setDevice (device);
+		};
+	}
+
+	/*
+	* TEMPORARY CODE... yeah, right
+	*/
+	static void setDevice (Device device) {
+		CurrentDevice = device;
+	}
 
 	/**
 	 * Constructs a new instance of this class.
@@ -1071,6 +1100,10 @@ public class Display extends Device implements Executor {
 		return monitors;
 	}
 
+	public void timerExec(int wakeTime, Runnable runnable) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
 	/**
 	 * Returns the primary monitor for that device.
 	 *
@@ -1094,5 +1127,284 @@ public class Display extends Device implements Executor {
 		}
 
 		return primaryMonitor;
+	}
+
+	public Shell[] getShells() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return null;
+	}
+
+	/**
+	 * Returns the currently active <code>Shell</code>, or null
+	 * if no shell belonging to the currently running application
+	 * is active.
+	 *
+	 * @return the active shell or null
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 */
+	public Shell getActiveShell () {
+		checkDevice ();
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return getShells()[0];
+	}
+
+	/**
+	 * Returns the matching standard platform cursor for the given
+	 * constant, which should be one of the cursor constants
+	 * specified in class <code>SWT</code>. This cursor should
+	 * not be free'd because it was allocated by the system,
+	 * not the application.  A value of <code>null</code> will
+	 * be returned if the supplied constant is not an SWT cursor
+	 * constant.
+	 *
+	 * @param id the SWT cursor constant
+	 * @return the corresponding cursor or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see SWT#CURSOR_ARROW
+	 * @see SWT#CURSOR_WAIT
+	 * @see SWT#CURSOR_CROSS
+	 * @see SWT#CURSOR_APPSTARTING
+	 * @see SWT#CURSOR_HELP
+	 * @see SWT#CURSOR_SIZEALL
+	 * @see SWT#CURSOR_SIZENESW
+	 * @see SWT#CURSOR_SIZENS
+	 * @see SWT#CURSOR_SIZENWSE
+	 * @see SWT#CURSOR_SIZEWE
+	 * @see SWT#CURSOR_SIZEN
+	 * @see SWT#CURSOR_SIZES
+	 * @see SWT#CURSOR_SIZEE
+	 * @see SWT#CURSOR_SIZEW
+	 * @see SWT#CURSOR_SIZENE
+	 * @see SWT#CURSOR_SIZESE
+	 * @see SWT#CURSOR_SIZESW
+	 * @see SWT#CURSOR_SIZENW
+	 * @see SWT#CURSOR_UPARROW
+	 * @see SWT#CURSOR_IBEAM
+	 * @see SWT#CURSOR_NO
+	 * @see SWT#CURSOR_HAND
+	 *
+	 * @since 3.0
+	 */
+	public Cursor getSystemCursor (int id) {
+		checkDevice ();
+		if (!(0 <= id && id < cursors.length)) return null;
+		if (cursors [id] == null) {
+			cursors [id] = new Cursor (this, id);
+		}
+		return cursors [id];
+	}
+
+	void addLayoutDeferred (Composite comp) {
+		if (layoutDeferred == null) layoutDeferred = new Composite [64];
+		if (layoutDeferredCount == layoutDeferred.length) {
+			Composite [] temp = new Composite [layoutDeferred.length + 64];
+			System.arraycopy (layoutDeferred, 0, temp, 0, layoutDeferred.length);
+			layoutDeferred = temp;
+		}
+		layoutDeferred[layoutDeferredCount++] = comp;
+	}
+
+	/**
+	 * Maps a point from one coordinate system to another.
+	 * When the control is null, coordinates are mapped to
+	 * the display.
+	 * <p>
+	 * NOTE: On right-to-left platforms where the coordinate
+	 * systems are mirrored, special care needs to be taken
+	 * when mapping coordinates from one control to another
+	 * to ensure the result is correctly mirrored.
+	 *
+	 * Mapping a point that is the origin of a rectangle and
+	 * then adding the width and height is not equivalent to
+	 * mapping the rectangle.  When one control is mirrored
+	 * and the other is not, adding the width and height to a
+	 * point that was mapped causes the rectangle to extend
+	 * in the wrong direction.  Mapping the entire rectangle
+	 * instead of just one point causes both the origin and
+	 * the corner of the rectangle to be mapped.
+	 * </p>
+	 *
+	 * @param from the source <code>Control</code> or <code>null</code>
+	 * @param to the destination <code>Control</code> or <code>null</code>
+	 * @param rectangle to be mapped
+	 * @return rectangle with mapped coordinates
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the rectangle is null</li>
+	 *    <li>ERROR_INVALID_ARGUMENT - if the Control from or the Control to have been disposed</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @since 2.1.2
+	 */
+	public Rectangle map (Control from, Control to, Rectangle rectangle) {
+		checkDevice ();
+		if (rectangle == null) error (SWT.ERROR_NULL_ARGUMENT);
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return rectangle;
+	}
+
+	/**
+	 * Removes the listener from the collection of listeners who will
+	 * be notified when an event of the given type occurs anywhere in
+	 * a widget. The event type is one of the event constants defined
+	 * in class <code>SWT</code>.
+	 *
+	 * @param eventType the type of event to listen for
+	 * @param listener the listener which should no longer be notified when the event occurs
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see Listener
+	 * @see SWT
+	 * @see #addFilter
+	 * @see #addListener
+	 *
+	 * @since 3.0
+	 */
+	public void removeFilter (int eventType, Listener listener) {
+		checkDevice ();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (filterTable == null) return;
+		filterTable.unhook (eventType, listener);
+		if (filterTable.size () == 0) filterTable = null;
+	}
+
+	/**
+	 * Adds the listener to the collection of listeners who will
+	 * be notified when an event of the given type occurs anywhere
+	 * in a widget. The event type is one of the event constants
+	 * defined in class <code>SWT</code>. When the event does occur,
+	 * the listener is notified by sending it the <code>handleEvent()</code>
+	 * message.
+	 * <p>
+	 * Setting the type of an event to <code>SWT.None</code> from
+	 * within the <code>handleEvent()</code> method can be used to
+	 * change the event type and stop subsequent Java listeners
+	 * from running. Because event filters run before other listeners,
+	 * event filters can both block other listeners and set arbitrary
+	 * fields within an event. For this reason, event filters are both
+	 * powerful and dangerous. They should generally be avoided for
+	 * performance, debugging and code maintenance reasons.
+	 * </p>
+	 *
+	 * @param eventType the type of event to listen for
+	 * @param listener the listener which should be notified when the event occurs
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see Listener
+	 * @see SWT
+	 * @see #removeFilter
+	 * @see #removeListener
+	 *
+	 * @since 3.0
+	 */
+	public void addFilter (int eventType, Listener listener) {
+		checkDevice ();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (filterTable == null) filterTable = new EventTable ();
+		filterTable.hook (eventType, listener);
+	}
+
+	/**
+	 * Adds the listener to the collection of listeners who will
+	 * be notified when an event of the given type occurs. The event
+	 * type is one of the event constants defined in class <code>SWT</code>.
+	 * When the event does occur in the display, the listener is notified by
+	 * sending it the <code>handleEvent()</code> message.
+	 *
+	 * @param eventType the type of event to listen for
+	 * @param listener the listener which should be notified when the event occurs
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see Listener
+	 * @see SWT
+	 * @see #removeListener
+	 *
+	 * @since 2.0
+	 */
+	public void addListener (int eventType, Listener listener) {
+		checkDevice ();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (eventTable == null) eventTable = new EventTable ();
+		eventTable.hook (eventType, listener);
+	}
+
+	/**
+	 * Removes the listener from the collection of listeners who will
+	 * be notified when an event of the given type occurs. The event type
+	 * is one of the event constants defined in class <code>SWT</code>.
+	 *
+	 * @param eventType the type of event to listen for
+	 * @param listener the listener which should no longer be notified
+	 *
+	 * @exception IllegalArgumentException <ul>
+	 *    <li>ERROR_NULL_ARGUMENT - if the listener is null</li>
+	 * </ul>
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see Listener
+	 * @see SWT
+	 * @see #addListener
+	 *
+	 * @since 2.0
+	 */
+	public void removeListener (int eventType, Listener listener) {
+		checkDevice ();
+		if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		if (eventTable == null) return;
+		eventTable.unhook (eventType, listener);
+	}
+
+	/**
+	 * Returns the control which currently has keyboard focus,
+	 * or null if keyboard events are not currently going to
+	 * any of the controls built by the currently running
+	 * application.
+	 *
+	 * @return the focus control or <code>null</code>
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 *    <li>ERROR_DEVICE_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 */
+	public Control getFocusControl() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return null;
 	}
 }

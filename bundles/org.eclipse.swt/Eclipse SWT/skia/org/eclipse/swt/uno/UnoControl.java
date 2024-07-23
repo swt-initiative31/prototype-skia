@@ -1,5 +1,6 @@
 package org.eclipse.swt.uno;
 
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
 import com.sun.star.awt.*;
@@ -25,6 +26,11 @@ public abstract class UnoControl {
 
 	public void setVisible(boolean visible) {
 		getWindow().setVisible(visible);
+	}
+
+	public boolean isVisible() {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+		return true;
 	}
 
 	public boolean isDisposed() {
@@ -59,4 +65,18 @@ public abstract class UnoControl {
 	protected abstract XWindowPeer getPeer();
 
 	protected abstract XWindow getWindow();
+
+	public Point getLocation() {
+		Rectangle bounds = getBounds();
+		return new Point(bounds.x, bounds.y);
+	}
+
+	public void redraw(int x, int y, int width, int height, boolean all) {
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
+	public void redraw() {
+		Rectangle bounds = getBounds();
+		redraw(bounds.x, bounds.y, bounds.width, bounds.height, true);
+	}
 }
