@@ -23,8 +23,6 @@ public abstract class Widget {
 	static final int RESIZED = 1 << 7;
 	static final int EXPANDING = 1 << 8;
 	static final int IGNORE_WHEEL = 1 << 9;
-	static final int PARENT_BACKGROUND = 1 << 10;
-	static final int THEME_BACKGROUND = 1 << 11;
 
 	/* A layout was requested on this widget */
 	static final int LAYOUT_NEEDED = 1 << 12;
@@ -62,6 +60,14 @@ public abstract class Widget {
 	/* Default size for widgets */
 	static final int DEFAULT_WIDTH = 64;
 	static final int DEFAULT_HEIGHT = 64;
+
+	/* Background flags */
+	static final int THEME_BACKGROUND = 1<<8;
+	static final int DRAW_BACKGROUND = 1<<9;
+	static final int PARENT_BACKGROUND = 1<<10;
+
+	/* Ignore WM_CHANGEUISTATE */
+	static final int IGNORE_WM_CHANGEUISTATE = 1<<20;
 
 	Widget() {
 		notifyCreationTracker();

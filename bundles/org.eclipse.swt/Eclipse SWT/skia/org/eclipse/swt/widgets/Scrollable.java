@@ -49,6 +49,15 @@ public abstract class Scrollable extends Control {
 		super(parent, style);
 	}
 
+	ScrollBar createScrollBar (int type) {
+		ScrollBar bar = new ScrollBar (this, type);
+		if ((state & CANVAS) != 0) {
+			bar.setMaximum (100);
+			bar.setThumb (10);
+		}
+		return bar;
+	}
+
 	@Override
 	void createWidget() {
 		super.createWidget();
@@ -58,44 +67,21 @@ public abstract class Scrollable extends Control {
 			verticalBar = createScrollBar(SWT.V_SCROLL);
 	}
 
-	ScrollBar createScrollBar(int style) {
-		// TODO
 
-//	if (scrollView == null) return null;
-//	ScrollBar bar = new ScrollBar ();
-//	bar.parent = this;
-//	bar.style = style;
-//	bar.display = display;
-//	NSScroller scroller;
-//	long actionSelector;
-//	NSRect rect = new NSRect();
-//	if ((style & SWT.H_SCROLL) != 0) {
-//		rect.width = 1;
-//	} else {
-//		rect.height = 1;
-//	}
-//	scroller = (NSScroller)new SWTScroller().alloc();
-//	scroller.initWithFrame(rect);
-//	if ((style & SWT.H_SCROLL) != 0) {
-//		scrollView.setHorizontalScroller(scroller);
-//		actionSelector = OS.sel_sendHorizontalSelection;
-//	} else {
-//		scrollView.setVerticalScroller(scroller);
-//		actionSelector = OS.sel_sendVerticalSelection;
-//	}
-//	bar.view = scroller;
-//	bar.createJNIRef();
-//	bar.register();
-//	if ((state & CANVAS) == 0) {
-//		bar.target = scroller.target();
-//		bar.actionSelector = scroller.action();
-//	}
-//	scroller.setTarget(scrollView);
-//	scroller.setAction(actionSelector);
-//	if ((state & CANVAS) != 0) {
-//		bar.updateBar(0, 0, 100, 10);
-//	}
-		return null;
+	/**
+	 * Returns the receiver's horizontal scroll bar if it has
+	 * one, and null if it does not.
+	 *
+	 * @return the horizontal scroll bar (or null)
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public ScrollBar getHorizontalBar () {
+		checkWidget ();
+		return horizontalBar;
 	}
 
 	/**
