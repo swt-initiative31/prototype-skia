@@ -166,7 +166,6 @@ public abstract class Control extends Widget {
 		checkBackground();
 		checkBuffered();
 		setDefaultFont();
-		setZOrder();
 		setRelations();
 		if ((state & PARENT_BACKGROUND) != 0) {
 			setBackground();
@@ -227,12 +226,6 @@ public abstract class Control extends Widget {
 
 	java.awt.Font defaultNSFont() {
 		return display.getSystemFont().handle;
-	}
-
-	void setZOrder() {
-		UnoControl topView = topView();
-		// TODO
-//		parent.contentView().add(topView, OS.NSWindowBelow, null);
 	}
 
 	UnoControl topView() {
