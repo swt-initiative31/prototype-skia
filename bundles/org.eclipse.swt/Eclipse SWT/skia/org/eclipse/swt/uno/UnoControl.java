@@ -1,5 +1,6 @@
 package org.eclipse.swt.uno;
 
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
 import com.sun.star.awt.*;
@@ -63,4 +64,9 @@ public abstract class UnoControl {
 	protected abstract XWindowPeer getPeer();
 
 	protected abstract XWindow getWindow();
+
+	public Point getLocation() {
+		Rectangle bounds = getBounds();
+		return new Point(bounds.x, bounds.y);
+	}
 }

@@ -301,6 +301,10 @@ public abstract class Control extends Widget {
 		/* Do nothing */
 	}
 
+	void markLayout (boolean changed, boolean all) {
+		/* Do nothing */
+	}
+
 	/**
 	 * Returns the preferred size (in points) of the receiver.
 	 * <p>
@@ -743,6 +747,42 @@ public abstract class Control extends Widget {
 //		if (control == null) control = this;
 //		control.setCursor ();
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	}
+
+	/**
+	 * Returns a rectangle describing the receiver's size and location in points
+	 * relative to its parent (or its display if its parent is null),
+	 * unless the receiver is a shell. In this case, the location is
+	 * relative to the display.
+	 *
+	 * @return the receiver's bounding rectangle
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public Rectangle getBounds() {
+		checkWidget();
+		return getHandle().getBounds();
+	}
+
+	/**
+	 * Returns a point describing the receiver's location relative
+	 * to its parent in points (or its display if its parent is null), unless
+	 * the receiver is a shell. In this case, the point is
+	 * relative to the display.
+	 *
+	 * @return the receiver's location
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 */
+	public Point getLocation () {
+		checkWidget ();
+		return getHandle().getLocation();
 	}
 
 }
