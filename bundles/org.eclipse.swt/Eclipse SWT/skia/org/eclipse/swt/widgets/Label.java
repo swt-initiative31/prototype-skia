@@ -328,12 +328,11 @@ public class Label extends Control {
 
 			this.image = image;
 			isImageMode = true;
-//			NSImage current = imageView.image();
-//			if (current != null && current.id == image.handle.id) {
-//				imageView.setImage(null);
-//			}
-//			imageView.setImage(image.handle);
-//			((NSBox) view).setContentView(imageView);
+			this.image.handle.showOn(this.unoLabel.getParent());
+
+			Point oldLocation = this.unoLabel.getLocation();
+			Rectangle imageBounds = image.getBounds();
+			this.unoLabel.setLocation(imageBounds.x + imageBounds.width, oldLocation.y);
 		} else {
 			if (this.image == null)
 				return; // do nothing if image is already null

@@ -60,7 +60,7 @@ import org.eclipse.swt.uno.*;
  *      information</a>
  */
 public final class GC extends Resource {
-	public UnoControl handle; //TODO set the right type
+	public UnoGraphics handle;
 	public GCData data;
 	private Drawable drawable;
 
@@ -162,6 +162,7 @@ public final class GC extends Resource {
 		GCData data = new GCData ();
 		data.style = checkStyle(style);
 		long hDC = drawable.internal_new_GC(data);
+		handle = UnoGraphics.Get(hDC);
 		setDevice(data);
 		init (drawable, data, null);// TODO (VISJEE) pass the handle
 		init();
@@ -987,33 +988,7 @@ public final class GC extends Resource {
 	 * @see #drawRectangle(int, int, int, int)
 	 */
 	public void fillRectangle (int x, int y, int width, int height) {
-//		if (handle == null) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-////			if (width < 0) {
-////				x = x + width;
-////				width = -width;
-////			}
-////			if (height < 0) {
-////				y = y + height;
-////				height = -height;
-////			}
-////			NSRect rect = new NSRect();
-////			rect.x = x;
-////			rect.y = y;
-////			rect.width = width;
-////			rect.height = height;
-////			NSBezierPath path = data.path;
-////			path.appendBezierPathWithRect(rect);
-////			Pattern pattern = data.backgroundPattern;
-////			if (pattern != null) setPatternPhase(pattern);
-////			if (pattern != null && pattern.gradient != null) {
-////				fillPattern(path, pattern);
-////			} else {
-////				path.fill();
-////			}
-////			path.removeAllPoints();
-//		} finally {
-////			uncheckGC(pool);
-//		}
+		handle.fillRectangle(x, y, width, height);
 	}
 
 
@@ -1564,7 +1539,6 @@ public final class GC extends Resource {
 //		if (image != null) image.memGC = this;
 		this.drawable = drawable;
 		this.data = data;
-//		handle = new NSGraphicsContext(context);
 //		handle.retain();
 //		handle.saveGraphicsState();
 //		data.path = NSBezierPath.bezierPath();
@@ -2269,7 +2243,7 @@ public final class GC extends Resource {
 	}
 
 	private void checkHandle() {
-//		if (handle == null) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
+		if (handle == null) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
 	}
 

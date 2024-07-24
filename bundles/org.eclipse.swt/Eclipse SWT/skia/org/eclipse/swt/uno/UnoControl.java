@@ -16,7 +16,7 @@ public abstract class UnoControl {
 		this.parent = parent;
 	}
 
-	protected UnoControl getParent() {
+	public UnoControl getParent() {
 		return parent;
 	}
 

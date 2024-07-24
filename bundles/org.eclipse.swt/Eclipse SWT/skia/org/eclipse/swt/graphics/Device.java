@@ -497,5 +497,9 @@ public abstract class Device implements Drawable{
 		return null;
 	}
 
+	public UnoDevice getUnoDevice() {
+		return unoDevice;
+	}
+
 
 }

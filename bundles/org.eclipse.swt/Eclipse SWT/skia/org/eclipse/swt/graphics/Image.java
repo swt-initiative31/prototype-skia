@@ -89,6 +89,7 @@ public final class Image extends Resource implements Drawable {
 
 	private int currentDeviceZoom = 100;
 
+
 	/**
 	 * the handle to the OS image resource (Warning: This field is platform
 	 * dependent)
@@ -483,50 +484,8 @@ public final class Image extends Resource implements Drawable {
 	 */
 	@Override
 	public long internal_new_GC(GCData data) {
-		return 0;
-
-//		if (handle == null) SWT.error(SWT.ERROR_GRAPHIC_DISPOSED);
-//		if (type != SWT.BITMAP || memGC != null) {
-//			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
-//		}
-//		NSAutoreleasePool pool = null;
-//		if (!NSThread.isMainThread()) pool = (NSAutoreleasePool) new NSAutoreleasePool().alloc().init();
-//		try {
-//			int scaleFactor = DPIUtil.getDeviceZoom() / 100;
-//			NSBitmapImageRep imageRep = getRepresentation();
-//
-//			NSGraphicsContext context = NSGraphicsContext.graphicsContextWithBitmapImageRep(imageRep);
-//			if (context == null) {
-//				imageRep.setAlpha(false);
-//				context = NSGraphicsContext.graphicsContextWithBitmapImageRep(imageRep);
-//			}
-//			NSGraphicsContext flippedContext = NSGraphicsContext.graphicsContextWithGraphicsPort(context.graphicsPort(), true);
-//			context = flippedContext;
-//			context.retain();
-//			if (data != null) data.flippedContext = flippedContext;
-//			NSGraphicsContext.static_saveGraphicsState();
-//			NSGraphicsContext.setCurrentContext(context);
-//			NSAffineTransform transform = NSAffineTransform.transform();
-//			NSSize size = handle.size();
-//			transform.translateXBy(0, size.height * scaleFactor);
-//			transform.scaleXBy(scaleFactor, -scaleFactor);
-//			transform.set();
-//			NSGraphicsContext.static_restoreGraphicsState();
-//			if (data != null) {
-//				int mask = SWT.LEFT_TO_RIGHT | SWT.RIGHT_TO_LEFT;
-//				if ((data.style & mask) == 0) {
-//					data.style |= SWT.LEFT_TO_RIGHT;
-//				}
-//				data.device = device;
-//				data.background = device.COLOR_WHITE.handle;
-//				data.foreground = device.COLOR_BLACK.handle;
-//				data.font = device.systemFont;
-//				data.image = this;
-//			}
-//			return context.id;
-//		} finally {
-//			if (pool != null) pool.release();
-//		}
+		UnoGraphics unoGraphics = new UnoGraphics(this.device.unoDevice, handle);
+		return unoGraphics.getId();
 	}
 
 	/**
@@ -665,7 +624,7 @@ public final class Image extends Resource implements Drawable {
 		this.type = SWT.BITMAP;
 		this.width = width;
 		this.height = height;
-		handle = new UnoImage(this.device.unoDevice);
+		handle = new UnoImage(this.device.unoDevice, this.width, this.height);
 		handle = handle.initWithSize(width, height);
 //
 //		handle = (NSImage)new NSImage().alloc();
