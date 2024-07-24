@@ -1,6 +1,6 @@
 package org.eclipse.swt.graphics;
 
-import javafx.print.*;
+import org.eclipse.swt.printing.*;
 
 public class TextLayout extends Resource {
 
