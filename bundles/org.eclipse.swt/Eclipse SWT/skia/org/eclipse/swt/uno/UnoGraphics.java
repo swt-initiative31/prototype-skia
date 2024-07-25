@@ -2,8 +2,6 @@ package org.eclipse.swt.uno;
 
 import java.util.*;
 
-import org.eclipse.swt.graphics.*;
-
 import com.sun.star.awt.*;
 import com.sun.star.uno.*;
 
@@ -16,15 +14,12 @@ public class UnoGraphics {
 		return graphicsMap.get(Long.valueOf(id));
 	}
 
-
-	private GCData data;
 	private XGraphics xGraphics;
 	private XDevice xDevice;
 	private UnoDrawable unoDrawable;
 	private long id;
 
-	public UnoGraphics(GCData data, UnoDevice unoDevice, UnoDrawable unoDrawable) {
-		this.data = data;
+	public UnoGraphics(UnoDevice unoDevice, UnoDrawable unoDrawable) {
 		XWindow xWindow = unoDrawable.getXWindow();
 
 		xDevice  = UnoRuntime.queryInterface(XDevice.class, xWindow);
