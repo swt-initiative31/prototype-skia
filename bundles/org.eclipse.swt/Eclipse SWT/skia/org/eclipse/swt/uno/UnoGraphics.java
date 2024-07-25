@@ -40,14 +40,13 @@ public class UnoGraphics {
 
 	public void fillRectangle(int x, int y, int width, int height) {
 		XWindow window = unoDrawable.getXWindow();
-		Rectangle posSize = window.getPosSize();
+		com.sun.star.awt.Rectangle posSize = window.getPosSize();
 
-		xGraphics.setFillColor(data.background);
-		xGraphics.setLineColor(data.background);
+		xGraphics.setFillColor(255);
+		xGraphics.setLineColor(255);
 		xGraphics.drawRect(x,y, width, height);
 
 		XBitmap bitmap = xDevice.createBitmap(0, 0, posSize.Width, posSize.Height);
-		XDisplayBitmap displayBitmap = xDevice.createDisplayBitmap(bitmap);
 
 		unoDrawable.setXBitmap(bitmap);
 	}
