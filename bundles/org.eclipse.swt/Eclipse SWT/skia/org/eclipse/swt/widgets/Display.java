@@ -1447,8 +1447,8 @@ public class Display extends Device implements Executor {
 
 	Rectangle getBoundsInPixels () {
 		checkDevice ();
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return null;
+		Point p = UnoLoader.GetScreenSize();
+		return new Rectangle(0, 0, p.x	, p.x);
 	}
 
 	public Point map (Control from, Control to, int x, int y) {

@@ -491,10 +491,9 @@ public abstract class Device implements Drawable{
 	}
 
 	private Rectangle getBoundsInPixels () {
-		long hDC = internal_new_GC (null);
+		// in UNO it does not seem we can get sizes for all devices. Also not possible in GTK
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		internal_dispose_GC (hDC, null);
-		return null;
+		return new Rectangle(0, 0, 0, 0);
 	}
 
 	public UnoDevice getUnoDevice() {

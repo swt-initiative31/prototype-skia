@@ -25,6 +25,10 @@ package org.eclipse.swt.graphics;
  */
 public final class FontMetrics {
 
+	 int ascentInPoints;
+	 int descentInPoints;
+	 int averageCharWidthInPoints;
+
 	/**
 	 * Prevents instances from being created outside the package.
 	 */
@@ -32,23 +36,22 @@ public final class FontMetrics {
 	}
 
 	/**
-	 * Compares the argument to the receiver, and returns true if they represent the
-	 * <em>same</em> object using a class specific comparison.
+	 * Compares the argument to the receiver, and returns true
+	 * if they represent the <em>same</em> object using a class
+	 * specific comparison.
 	 *
 	 * @param object the object to compare with this object
-	 * @return <code>true</code> if the object is the same as this object and
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if the object is the same as this object and <code>false</code> otherwise
 	 *
 	 * @see #hashCode
 	 */
 	@Override
-	public boolean equals(Object object) {
-		if (object == this)
-			return true;
-		if (!(object instanceof FontMetrics))
-			return false;
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return false;
+	public boolean equals (Object object) {
+		if (object == this) return true;
+		if (!(object instanceof FontMetrics)) return false;
+		FontMetrics metrics = (FontMetrics)object;
+		return ascentInPoints == metrics.ascentInPoints && descentInPoints == metrics.descentInPoints &&
+			averageCharWidthInPoints == metrics.averageCharWidthInPoints;
 	}
 
 	/**
@@ -59,8 +62,8 @@ public final class FontMetrics {
 	 * @return the ascent of the font
 	 */
 	public int getAscent() {
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return -1;
+
+		return ascentInPoints;
 	}
 
 	/**
@@ -83,8 +86,7 @@ public final class FontMetrics {
 	 */
 	@Deprecated
 	public int getAverageCharWidth() {
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return -1;
+		return averageCharWidthInPoints;
 	}
 
 	/**
@@ -95,8 +97,8 @@ public final class FontMetrics {
 	 * @return the descent of the font
 	 */
 	public int getDescent() {
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return -1;
+
+		return descentInPoints;
 	}
 
 	/**
@@ -110,8 +112,7 @@ public final class FontMetrics {
 	 * @see #getLeading
 	 */
 	public int getHeight() {
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return -1;
+		return ascentInPoints + descentInPoints;
 	}
 
 	/**
@@ -148,7 +149,6 @@ public final class FontMetrics {
 	 */
 	@Override
 	public int hashCode() {
-		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return -1;
+		return ascentInPoints ^ descentInPoints ^ averageCharWidthInPoints;
 	}
 }

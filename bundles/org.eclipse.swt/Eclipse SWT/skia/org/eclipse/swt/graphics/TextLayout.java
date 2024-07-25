@@ -1,11 +1,14 @@
 package org.eclipse.swt.graphics;
 
+import org.eclipse.swt.*;
 import org.eclipse.swt.printing.*;
 
 public class TextLayout extends Resource {
 
 	public TextLayout(Device device) {
-		// TODO Auto-generated constructor stub
+
+		this.device = device;
+
 	}
 
 	public TextLayout(Printer printer) {
@@ -39,8 +42,9 @@ public class TextLayout extends Resource {
 	}
 
 	public Rectangle getBounds() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return this.device.getBounds();
+
 	}
 
 	public int getLineCount() {
@@ -133,9 +137,29 @@ public class TextLayout extends Resource {
 		return null;
 	}
 
-	public Point getLocation(int offsetInLine, boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+
+	/**
+	 * Returns the location for the specified character offset. The
+	 * <code>trailing</code> argument indicates whether the offset
+	 * corresponds to the leading or trailing edge of the cluster.
+	 *
+	 * @param offset the character offset
+	 * @param trailing the trailing flag
+	 * @return the location of the character offset
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_GRAPHIC_DISPOSED - if the receiver has been disposed</li>
+	 * </ul>
+	 *
+	 * @see #getOffset(Point, int[])
+	 * @see #getOffset(int, int, int[])
+	 */
+
+	public Point getLocation(int offsetInLine, boolean trailing) {
+
+		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+
+		return new Point(0,0);
 	}
 
 	public int getOffset(int x, int y, int[] trailing) {
@@ -147,7 +171,6 @@ public class TextLayout extends Resource {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	public void draw(GC gc, int paintX, int paintY, int start, int i, Color selectionFg, Color selectionBg, int flags) {
 		// TODO Auto-generated method stub
@@ -179,7 +202,7 @@ public class TextLayout extends Resource {
 
 	}
 
-		// TODO Auto-generated method stub
+	// TODO Auto-generated method stub
 	public void setTabs(int[] tabs) {
 
 	}

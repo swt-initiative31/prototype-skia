@@ -1257,7 +1257,14 @@ public final class GC extends Resource {
 	 */
 	public FontMetrics getFontMetrics() {
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return null;
+
+		FontMetrics fm = new FontMetrics();
+
+		fm.ascentInPoints = 100;
+		fm.descentInPoints = 100;
+		fm.averageCharWidthInPoints = 100;
+
+		return fm;
 	}
 
 	/**
@@ -2141,7 +2148,7 @@ public final class GC extends Resource {
 	public Point stringExtent (String string) {
 		if (string == null) SWT.error (SWT.ERROR_NULL_ARGUMENT);
 		System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
-		return null;
+		return new Point(100,100);
 	}
 
 	/**
