@@ -1,25 +1,32 @@
 package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.uno.*;
+
+import com.sun.star.awt.*;
 
 public class Text extends Scrollable {
 
-	public Text(Control control, int textStyle) {
-		// TODO Auto-generated constructor stub
+	private final UnoTextControl handle;
+	private Font font;
+
+	public Text(Composite parent, int style) {
+		super(parent, style);
+		handle = new UnoTextControl(parent.getHandle(), this);
+
 	}
 
 	@Override
 	protected UnoControl getHandle() {
-		// TODO Auto-generated method stub
-		return null;
+		return handle;
 	}
 
 	public String getText() {
-		// TODO Auto-generated method stub
-		return null;
+		return handle.getText();
 	}
 
+	@Override
 	public String getToolTipText() {
 		// TODO Auto-generated method stub
 		return null;
@@ -35,6 +42,7 @@ public class Text extends Scrollable {
 		return 0;
 	}
 
+	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return false;
@@ -45,14 +53,24 @@ public class Text extends Scrollable {
 		return false;
 	}
 
+	@Override
 	public boolean isFocusControl() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	@Override
 	public Font getFont() {
-		// TODO Auto-generated method stub
-		return null;
+
+		FontDescriptor fd = handle.getFontDescriptor();
+
+		FontData d = new FontData();
+		d.setStyle(this.style);
+		d.setHeight(fd.Height);
+
+		font = new Font(display, new FontData[]{d});
+
+		return font;
 	}
 
 	@Override
@@ -62,10 +80,11 @@ public class Text extends Scrollable {
 	}
 
 	public void setText(String textValue) {
-		// TODO Auto-generated method stub
+		handle.setText(textValue);
 
 	}
 
+	@Override
 	public void setToolTipText(String tooltip) {
 		// TODO Auto-generated method stub
 
@@ -86,6 +105,7 @@ public class Text extends Scrollable {
 
 	}
 
+	@Override
 	public boolean setFocus() {
 		// TODO Auto-generated method stub
 
@@ -93,6 +113,7 @@ public class Text extends Scrollable {
 
 	}
 
+	@Override
 	public void setMenu(Menu menu) {
 		// TODO Auto-generated method stub
 
@@ -133,6 +154,7 @@ public class Text extends Scrollable {
 		return null;
 	}
 
+	@Override
 	public boolean traverse(int event) {
 		// TODO Auto-generated method stub
 		return false;

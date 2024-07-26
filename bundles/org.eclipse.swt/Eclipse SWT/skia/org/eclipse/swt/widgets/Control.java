@@ -5,9 +5,14 @@ import java.util.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.accessibility.*;
 import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.*;
 import org.eclipse.swt.uno.*;
+
+import com.sun.star.awt.*;
 
 public abstract class Control extends Widget implements Drawable {
 
@@ -159,10 +164,16 @@ public abstract class Control extends Widget implements Drawable {
 				error(SWT.ERROR_INVALID_ARGUMENT);
 		}
 		this.font = font;
-		setFont(font != null ? font.handle : defaultFont().handle);
+
+		if(this.font == null)
+			this.font = defaultFont();
 	}
 
-	void setFont(java.awt.Font font) {
+	private Font defaultFont() {
+		return null;
+	}
+
+	void setFont(FontDescriptor font) {
 //      TODO
 //		if (view instanceof java.awt.Component) {
 //			((java.awt.Component) view).setFont(font);
@@ -216,16 +227,11 @@ public abstract class Control extends Widget implements Drawable {
 
 	void setDefaultFont() {
 		if (display.smallFonts) {
-			setFont(defaultFont().handle);
+			setFont(defaultFont());
 			setSmallSize();
 		}
 	}
 
-	Font defaultFont() {
-		if (display.smallFonts)
-			return display.getSystemFont();
-		return Font.swing_new(display, defaultNSFont());
-	}
 
 	void setSmallSize() {
 		// TODO
@@ -235,9 +241,6 @@ public abstract class Control extends Widget implements Drawable {
 //		}
 	}
 
-	java.awt.Font defaultNSFont() {
-		return display.getSystemFont().handle;
-	}
 
 	UnoControl topView() {
 		return getHandle();

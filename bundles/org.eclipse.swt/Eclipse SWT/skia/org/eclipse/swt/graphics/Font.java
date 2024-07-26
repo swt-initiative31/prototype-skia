@@ -14,6 +14,10 @@
 package org.eclipse.swt.graphics;
 
 import org.eclipse.swt.printing.*;
+import org.eclipse.swt.widgets.*;
+
+import com.sun.star.awt.*;
+
 
 /**
  * Instances of this class manage operating system resources that
@@ -33,6 +37,9 @@ import org.eclipse.swt.printing.*;
  */
 public final class Font extends Resource {
 
+	private Device d;
+	private FontData[] fd;
+
 	/**
 	 * the handle to the OS font resource
 	 * (Warning: This field is platform dependent)
@@ -45,22 +52,27 @@ public final class Font extends Resource {
 	 *
 	 * @noreference This field is not intended to be referenced by clients.
 	 */
-	public java.awt.Font handle;
 
 	Font(Device device) {
-		super(device);
+		this( device , null );
 	}
 
 	public Font(Printer printer, String name, int height, int normal) {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Font(Printer printer, FontData[] fontData) {
-		// TODO Auto-generated constructor stub
+
+		this((Device)printer,fontData);
+
 	}
 
 	public Font(Device device, FontData[] fontData) {
-		// TODO Auto-generated constructor stub
+
+		super(device);
+
+		this.device = device;
+		fd = fontData;
+
 	}
 
 	/**
@@ -75,38 +87,16 @@ public final class Font extends Resource {
 	 */
 	@Override
 	public boolean isDisposed() {
-		return handle == null;
+		return device.isDisposed();
 	}
 
 
-	/**
-	 * Invokes Swing to allocate a new font.
-	 * <p>
-	 * <b>IMPORTANT:</b> This method is <em>not</em> part of the public
-	 * API for <code>Font</code>. It is marked public only so that it
-	 * can be shared within the packages provided by SWT. It is not
-	 * available on all platforms, and should never be called from
-	 * application code.
-	 * </p>
-	 *
-	 * @param device the device on which to allocate the color
-	 * @param handle the handle for the font
-	 *
-	 * @noreference This method is not intended to be referenced by clients.
-	 */
-	public static Font swing_new(Device device, java.awt.Font handle) {
-		Font font = new Font(device);
-		font.handle = handle;
-		/*
-		 * When created this way, Font doesn't own its .handle, and
-		 * for this reason it can't be disposed. Tell leak detector
-		 * to just ignore it.
-		 */
-		font.ignoreNonDisposed();
-		return font;
-	}
 
 	public FontData[] getFontData() {
+		return fd;
+	}
+
+	public static FontDescriptor skia_new(Display display, FontDescriptor defaultNSFont) {
 		// TODO Auto-generated method stub
 		return null;
 	}

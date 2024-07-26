@@ -40,30 +40,36 @@ package org.eclipse.swt.graphics;
  */
 public final class FontData {
 
+	private String name;
+	private int height;
+	private String locale;
+	private int style;
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
-
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return height;
 	}
-
+	public void setHeight(int height) {
+		this.height = height;
+	}
 	public String getLocale() {
-		// TODO Auto-generated method stub
-		return null;
+		return locale;
 	}
-
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
 	public int getStyle() {
-		// TODO Auto-generated method stub
-		return 0;
+		return style;
 	}
-
 	public void setStyle(int style) {
-		// TODO Auto-generated method stub
-
+		this.style = style;
 	}
+
+
 
 
 }
