@@ -64,8 +64,6 @@ public class XTextFieldSnippet {
 
 			Font defaultFont = UIManager.getDefaults().getFont("Label.font");
 
-			defaultFont = null;
-
 			FontDescriptor fontDescriptor = new FontDescriptor();
 			if (defaultFont != null) {
 			    fontDescriptor.Name = defaultFont.getName(); // Set the font face name from the system's default
