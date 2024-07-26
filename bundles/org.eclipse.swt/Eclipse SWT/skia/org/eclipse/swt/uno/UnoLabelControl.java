@@ -27,10 +27,10 @@ public class UnoLabelControl extends UnoControl {
 
 			XPropertySet propFixedText = UnoRuntime.queryInterface(XPropertySet.class, fixedTextModel);
 
-			propFixedText.setPropertyValue("PositionX", 500);
-			propFixedText.setPropertyValue("PositionY", 500);
-			propFixedText.setPropertyValue("Width", 800);
-			propFixedText.setPropertyValue("Height", 400);
+			propFixedText.setPropertyValue("PositionX", 0);
+			propFixedText.setPropertyValue("PositionY", 0);
+			propFixedText.setPropertyValue("Width", 100);
+			propFixedText.setPropertyValue("Height", 16);
 			propFixedText.setPropertyValue("Name", "myText");
 
 			Object oControl = xMCF.createInstanceWithContext("com.sun.star.awt.UnoControlFixedText", xContext);

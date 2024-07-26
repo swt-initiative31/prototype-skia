@@ -657,9 +657,47 @@ public abstract class Control extends Widget implements Drawable {
 // TODO: UNO implementation
 	}
 
-	public void pack() {
-		// TODO Auto-generated method stub
+	/**
+	 * Causes the receiver to be resized to its preferred size.
+	 * For a composite, this involves computing the preferred size
+	 * from its layout, if there is one.
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #computeSize(int, int, boolean)
+	 */
+	public void pack () {
+		checkWidget();
+		pack (true);
+	}
 
+	/**
+	 * Causes the receiver to be resized to its preferred size.
+	 * For a composite, this involves computing the preferred size
+	 * from its layout, if there is one.
+	 * <p>
+	 * If the changed flag is <code>true</code>, it indicates that the receiver's
+	 * <em>contents</em> have changed, therefore any caches that a layout manager
+	 * containing the control may have been keeping need to be flushed. When the
+	 * control is resized, the changed flag will be <code>false</code>, so layout
+	 * manager caches can be retained.
+	 * </p>
+	 *
+	 * @param changed whether or not the receiver's contents have changed
+	 *
+	 * @exception SWTException <ul>
+	 *    <li>ERROR_WIDGET_DISPOSED - if the receiver has been disposed</li>
+	 *    <li>ERROR_THREAD_INVALID_ACCESS - if not called from the thread that created the receiver</li>
+	 * </ul>
+	 *
+	 * @see #computeSize(int, int, boolean)
+	 */
+	public void pack (boolean changed) {
+		checkWidget();
+		setSize (computeSize (SWT.DEFAULT, SWT.DEFAULT, changed));
 	}
 
 	public void addControlListener(ControlListener listener) {
