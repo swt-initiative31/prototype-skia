@@ -117,16 +117,11 @@ public class UnoImage implements UnoDrawable{
 		XWindow parentWindow = unoControl.getWindow();
 		XWindowPeer parentWindowPeer = UnoRuntime.queryInterface(XWindowPeer.class, parentWindow);
 
-
 		aDescriptor.Type = com.sun.star.awt.WindowClass.CONTAINER;
 		aDescriptor.WindowServiceName = "window";
 		aDescriptor.ParentIndex = -1;
 		aDescriptor.Parent = parentWindowPeer;
 		aDescriptor.Bounds = new com.sun.star.awt.Rectangle(0, 0, this.width, this.height);
-
-//		aDescriptor.WindowAttributes = com.sun.star.awt.WindowAttribute.BORDER
-//				| com.sun.star.awt.WindowAttribute.MOVEABLE | com.sun.star.awt.WindowAttribute.SIZEABLE
-//				| com.sun.star.awt.WindowAttribute.CLOSEABLE;
 
 		XWindowPeer xWindowPeer = UnoLoader.xToolkit.createWindow(aDescriptor);
 		xWindow = UnoRuntime.queryInterface(XWindow.class, xWindowPeer);

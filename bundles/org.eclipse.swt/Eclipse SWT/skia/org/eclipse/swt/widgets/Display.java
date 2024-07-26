@@ -118,7 +118,7 @@ public class Display extends Device implements Executor {
 	boolean smallFonts;
 
 	/* System Colors */
-	double[][] colors;
+	int[][] colors;
 	int[] alternateSelectedControlTextColor, selectedControlTextColor;
 	private int[] alternateSelectedControlColor, secondarySelectedControlColor;
 

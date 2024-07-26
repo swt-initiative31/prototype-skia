@@ -13,8 +13,6 @@
  *******************************************************************************/
 package org.eclipse.swt.graphics;
 
-import java.util.regex.*;
-
 import org.eclipse.swt.uno.*;
 
 /**
@@ -33,7 +31,7 @@ public final class GCData {
 	public Device device;
 	public int style, state = -1;
 
-	public double [] foreground, background;
+	public int [] foreground, background;
 	public Pattern foregroundPattern;
 	public Pattern backgroundPattern;
 //	public Font font;

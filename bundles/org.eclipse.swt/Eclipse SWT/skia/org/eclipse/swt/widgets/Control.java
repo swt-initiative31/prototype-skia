@@ -13,7 +13,7 @@ public abstract class Control extends Widget implements Drawable {
 
 	Composite parent;
 	int drawCount, backgroundAlpha = 255;
-	double[] foreground, background;
+	int[] foreground, background;
 
 	Object layoutData;
 
@@ -276,7 +276,7 @@ public abstract class Control extends Widget implements Drawable {
 //		if (control.backgroundImage != null) {
 //			setBackgroundImage (control.backgroundImage.handle);
 //		} else {
-		double[] color = control.background != null ? control.background : control.defaultBackground().handle;
+		int[] color = control.background != null ? control.background : control.defaultBackground().handle;
 		UnoColor unoColor = new UnoColor(color[0], color[1], color[2], color[3]);
 		setBackgroundColor(unoColor);
 //		}

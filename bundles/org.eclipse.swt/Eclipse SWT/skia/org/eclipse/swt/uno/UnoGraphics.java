@@ -33,12 +33,11 @@ public class UnoGraphics {
 		graphicsMap.put(Long.valueOf(id), this);
 	}
 
+
 	public void fillRectangle(int x, int y, int width, int height) {
 		XWindow window = unoDrawable.getXWindow();
 		com.sun.star.awt.Rectangle posSize = window.getPosSize();
 
-		xGraphics.setFillColor(255);
-		xGraphics.setLineColor(255);
 		xGraphics.drawRect(x,y, width, height);
 
 		XBitmap bitmap = xDevice.createBitmap(0, 0, posSize.Width, posSize.Height);
@@ -50,6 +49,10 @@ public class UnoGraphics {
 		return id;
 	}
 
-
+	public void fillRectangle(int x, int y, int width, int height, UnoColor unoColor) {
+		xGraphics.setFillColor(unoColor.getColor());
+		xGraphics.setLineColor(unoColor.getColor());
+		fillRectangle(x, y, width, height);
+	}
 
 }

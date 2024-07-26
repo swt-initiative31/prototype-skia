@@ -46,7 +46,7 @@ public final class Color extends Resource {
 	 *
 	 * @noreference This field is not intended to be referenced by clients.
 	 */
-	public double [] handle;
+	public int [] handle;
 
 Color() {
 	super();
@@ -330,7 +330,7 @@ public boolean equals(Object object) {
 	if (object == this) return true;
 	if (!(object instanceof Color color)) return false;
 	if (isDisposed() || color.isDisposed()) return false;
-	double [] rgbColor = color.handle;
+	int [] rgbColor = color.handle;
 	if (handle == rgbColor) return true;
 	return
 		handle[0] == rgbColor[0] &&
@@ -463,7 +463,7 @@ void init(int red, int green, int blue, int alpha) {
 		(alpha > 255) || (alpha < 0)) {
 			SWT.error(SWT.ERROR_INVALID_ARGUMENT);
 	}
-	double [] rgbColor = new double [4];
+	int [] rgbColor = new int [4];
 	rgbColor[0] = red;
 	rgbColor[1] = green;
 	rgbColor[2] = blue;
@@ -521,8 +521,8 @@ public String toString () {
  *
  * @noreference This method is not intended to be referenced by clients.
  */
-public static Color skia_new(Device device, double [] handle) {
-	double [] rgbColor = handle;
+public static Color skia_new(Device device, int [] handle) {
+	int [] rgbColor = handle;
 	Color color = new Color(device);
 	color.handle = rgbColor;
 	return color;

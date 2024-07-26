@@ -988,7 +988,7 @@ public final class GC extends Resource {
 	 * @see #drawRectangle(int, int, int, int)
 	 */
 	public void fillRectangle (int x, int y, int width, int height) {
-		handle.fillRectangle(x, y, width, height);
+			handle.fillRectangle(x, y, width, height, new UnoColor(data.background));
 	}
 
 
