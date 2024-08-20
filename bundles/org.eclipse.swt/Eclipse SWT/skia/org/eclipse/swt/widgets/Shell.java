@@ -458,4 +458,9 @@ public class Shell extends Decorations {
 		return window;
 	}
 
+	@Override
+	Composite findDeferredControl () {
+		return layoutCount > 0 ? this : null;
+	}
+
 }

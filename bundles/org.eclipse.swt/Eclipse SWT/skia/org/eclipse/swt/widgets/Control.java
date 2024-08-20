@@ -1906,4 +1906,8 @@ public abstract class Control extends Widget implements Drawable {
 		return true;
 	}
 
+	public void addKeyListener(KeyListener listener) {
+		addTypedListener(listener, SWT.KeyUp, SWT.KeyDown);
+	}
+
 }

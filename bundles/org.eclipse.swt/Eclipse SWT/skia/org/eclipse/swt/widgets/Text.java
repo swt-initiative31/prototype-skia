@@ -1,5 +1,7 @@
 package org.eclipse.swt.widgets;
 
+import org.eclipse.swt.*;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.uno.*;
@@ -168,6 +170,10 @@ public class Text extends Scrollable {
 	public int getCaretPosition() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void addModifyListener (ModifyListener listener) {
+		addTypedListener(listener, SWT.Modify);
 	}
 
 }
