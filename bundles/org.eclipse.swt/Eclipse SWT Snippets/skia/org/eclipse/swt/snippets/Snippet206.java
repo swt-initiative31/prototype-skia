@@ -41,9 +41,8 @@ public static void main(String[] args) {
 	button.addSelectionListener(widgetSelectedAdapter(e -> System.out.println("Received evt: " + e )));
 
 	button.setImage(image);
-	button.setText("Button hola");
-	button.setSize(133, 150);
-	button.setLocation(120, 110);
+	button.setText("Button");
+	button.setBounds(0, 0,  100, 100);
 
 	shell.setSize(300, 500);
 	shell.open();
