@@ -24,3 +24,4 @@ Export-Package: org.eclipse.swt.examples.accessibility,
 Require-Bundle: org.eclipse.swt
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.swt.examples
+Import-Package: org.eclipse.swt.widgets

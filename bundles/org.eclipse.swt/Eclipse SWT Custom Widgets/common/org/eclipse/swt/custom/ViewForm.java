@@ -16,6 +16,7 @@ package org.eclipse.swt.custom;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.uno.*;
 import org.eclipse.swt.widgets.*;
 
 /**
@@ -495,5 +496,11 @@ public void setTopCenterSeparate(boolean show) {
 	checkWidget();
 	separateTopCenter = show;
 	layout(false);
+}
+
+@Override
+public UnoControl getHandle() {
+	System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	return null;
 }
 }

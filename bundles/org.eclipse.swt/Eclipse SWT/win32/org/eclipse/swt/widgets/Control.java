@@ -3586,17 +3586,7 @@ public void setMenu (Menu menu) {
  *
  * @since 3.7
  */
-public void setOrientation (int orientation) {
-	checkWidget ();
-	int flags = SWT.RIGHT_TO_LEFT | SWT.LEFT_TO_RIGHT;
-	if ((orientation & flags) == 0 || (orientation & flags) == flags) return;
-	style &= ~SWT.MIRRORED;
-	style &= ~flags;
-	style |= orientation & flags;
-	style &= ~SWT.FLIP_TEXT_DIRECTION;
-	updateOrientation ();
-	checkMirrored ();
-}
+
 
 boolean setRadioFocus (boolean tabbing) {
 	return false;

@@ -364,4 +364,9 @@ void setLocation (int x, int y) {
 public String toString () {
 	return "Event {type=" + type + " " + widget + " time=" + time + " data=" + data + " x=" + x + " y=" + y + " width=" + width + " height=" + height + " detail=" + detail + "}";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 }
+
+public Point getLocationInPixels() {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

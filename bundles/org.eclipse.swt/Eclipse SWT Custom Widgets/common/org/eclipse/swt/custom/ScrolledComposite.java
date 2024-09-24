@@ -15,6 +15,7 @@ package org.eclipse.swt.custom;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.uno.*;
 import org.eclipse.swt.widgets.*;
 
 /**
@@ -707,5 +708,11 @@ void vScroll() {
 	ScrollBar vBar = getVerticalBar ();
 	int vSelection = vBar.getSelection ();
 	content.setLocation (location.x, -vSelection);
+}
+
+@Override
+public UnoControl getHandle() {
+	System.out.println("WARN: Not implemented yet: " + new Throwable().getStackTrace()[0]);
+	return null;
 }
 }

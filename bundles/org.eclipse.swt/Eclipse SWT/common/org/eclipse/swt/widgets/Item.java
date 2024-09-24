@@ -16,7 +16,6 @@ package org.eclipse.swt.widgets;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
-import org.eclipse.swt.internal.*;
 
 /**
  * This class is the abstract superclass of all non-windowed
@@ -213,7 +212,7 @@ boolean updateTextDirection(int textDirection) {
 	 */
 	if (textDirection == AUTO_TEXT_DIRECTION) {
 		state |= HAS_AUTO_DIRECTION;
-		textDirection = (style ^ BidiUtil.resolveTextDirection (text)) == 0 ? 0 : SWT.FLIP_TEXT_DIRECTION;
+	// TODO	textDirection = (style ^ BidiUtil.resolveTextDirection (text)) == 0 ? 0 : SWT.FLIP_TEXT_DIRECTION;
 	} else {
 		state &= ~HAS_AUTO_DIRECTION;
 	}
